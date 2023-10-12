@@ -1,0 +1,60 @@
+site_name: ETH - Documentation for CS
+site_url: https://baeriswyln.github.io/eth-cs/
+theme: 
+    name: material
+    palette:
+      - media: "(prefers-color-scheme: dark)"
+        scheme: slate
+        primary: red
+        accent: red
+        toggle:
+          icon: material/weather-sunny
+          name: Switch to light mode
+      - media: "(prefers-color-scheme: light)"
+        scheme: default
+        toggle:
+          icon: material/weather-night
+          name: Switch do dark mode
+    features:
+      - navigation.instant
+      - navigation.tabs
+      - navitaiion.top
+      - search.suggest
+      - search.highlight
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/baeriswyln
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/in/nicolas-baeriswyl/
+copyright: Copyright &copy; 2023 - 2023 Nicolas Baeriswyl
+repo_url: https://github.com/baeriswyln/eth-cs
+repo_name: baeriswyln/eth-cs
+markdown_extensions:
+  - footnotes
+  - admonition
+  - abbr
+  - attr_list
+  - md_in_html
+  - pymdownx.highlight:
+      linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.superfences
+  - pymdownx.snippets
+  - pymdownx.snippets
+  - pymdownx.details
+  - pymdownx.caret
+  - pymdownx.tilde
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.arithmatex:
+        generic: true
+plugins:
+  - search
+  - git-revision-date-localized:
+      type: date
+      enable_creation_date: true
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://polyfill.io/v3/polyfill.min.js?features=es6
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
