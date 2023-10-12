@@ -14,7 +14,7 @@ theme:
         scheme: default
         toggle:
           icon: material/weather-night
-          name: Switch do dark mode
+          name: Switch to dark mode
     features:
       - navigation.instant
       - navigation.tabs
