@@ -6,22 +6,37 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://baeriswyln.github.io/eth-cs/bachelors/algorithms-and-datastructures/</loc>
+         <loc>https://baeriswyln.github.io/eth-cs/bachelors/</loc>
          <lastmod>2023-10-12</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://baeriswyln.github.io/eth-cs/bachelors/linera-algebra/</loc>
+         <loc>https://baeriswyln.github.io/eth-cs/bachelors/ads/</loc>
          <lastmod>2023-10-12</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://baeriswyln.github.io/eth-cs/bachelors/theoretical-cs/</loc>
+         <loc>https://baeriswyln.github.io/eth-cs/bachelors/la/</loc>
          <lastmod>2023-10-12</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://baeriswyln.github.io/eth-cs/data/reliable-and-trustworthy-ai/</loc>
+         <loc>https://baeriswyln.github.io/eth-cs/bachelors/tcs/</loc>
+         <lastmod>2023-10-12</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://baeriswyln.github.io/eth-cs/data/</loc>
+         <lastmod>2023-10-12</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://baeriswyln.github.io/eth-cs/data/rtai/</loc>
+         <lastmod>2023-10-12</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://baeriswyln.github.io/eth-cs/general/</loc>
          <lastmod>2023-10-12</lastmod>
          <changefreq>daily</changefreq>
     </url>
@@ -31,7 +46,32 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://baeriswyln.github.io/eth-cs/security/zero-knowledge-proof/</loc>
+         <loc>https://baeriswyln.github.io/eth-cs/security/</loc>
+         <lastmod>2023-10-12</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://baeriswyln.github.io/eth-cs/security/zkp/</loc>
+         <lastmod>2023-10-12</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://baeriswyln.github.io/eth-cs/security/zkp/intro-definitions/</loc>
+         <lastmod>2023-10-12</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://baeriswyln.github.io/eth-cs/security/zkp/non-interactive-zk/</loc>
+         <lastmod>2023-10-12</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://baeriswyln.github.io/eth-cs/security/zkp/sigma/</loc>
+         <lastmod>2023-10-12</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://baeriswyln.github.io/eth-cs/security/zkp/zk-arguments-and-proofs/</loc>
          <lastmod>2023-10-12</lastmod>
          <changefreq>daily</changefreq>
     </url>
