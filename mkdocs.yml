@@ -1,4 +1,4 @@
-site_name: ETH - Documentation for CS
+site_name: ETH - Summaries for CS
 site_url: https://baeriswyln.github.io/eth-cs/
 theme: 
     name: material
@@ -18,9 +18,38 @@ theme:
     features:
       - navigation.instant
       - navigation.tabs
-      - navitaiion.top
+      - navigation.top
+      - navigation.indexes
+      - navigation.footer
       - search.suggest
       - search.highlight
+nav:
+  - Welcome:
+    - index.md
+  - Bachelors:
+    - bachelors/index.md
+    - Linear Algebra:
+      - bachelors/la/index.md
+    - Algorithms and Datastructures:
+      - bachelors/ads/index.md
+    - Theoretical Computer Science:
+      - bachelors/tcs/index.md
+  - Security:
+    - security/index.md
+    - Zero-Knowledge Proof:
+      - security/zkp/index.md
+      - security/zkp/intro-definitions.md
+      - security/zkp/sigma.md
+      - security/zkp/zk-arguments-and-proofs.md
+      - security/zkp/non-interactive-zk.md
+  - Data:
+    - data/index.md
+    - Reliable and Trustworthy AI:
+      - data/rtai/index.md
+  - General:
+    - general/index.md
+    - Placeholder:
+      - general/placeholder/index.md
 extra:
   social:
     - icon: fontawesome/brands/github
