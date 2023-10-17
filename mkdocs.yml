@@ -39,9 +39,9 @@ nav:
     - Zero-Knowledge Proof:
       - security/zkp/index.md
       - security/zkp/intro-definitions.md
-      - security/zkp/sigma.md
-      - security/zkp/zk-arguments-and-proofs.md
-      - security/zkp/non-interactive-zk.md
+      - Sigma Protocols: security/zkp/sigma.md
+      - Arguments and proofs: security/zkp/zk-arguments-and-proofs.md
+      - Non-interactive Zero Knowledge: security/zkp/non-interactive-zk.md
   - Data:
     - data/index.md
     - Reliable and Trustworthy AI:
