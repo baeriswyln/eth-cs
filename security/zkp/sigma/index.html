@@ -880,6 +880,67 @@
     Composition
   </a>
   
+    <nav class="md-nav" aria-label="Composition">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#and-composition" class="md-nav__link">
+    AND composition
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#or-composition" class="md-nav__link">
+    OR composition
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#multi-party-computation" class="md-nav__link">
+    Multi-Party computation
+  </a>
+  
+    <nav class="md-nav" aria-label="Multi-Party computation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#view" class="md-nav__link">
+    View
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sigma-protocol-with-mpc-in-the-head" class="md-nav__link">
+    Sigma-Protocol with MPC in the head
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fiat-shamir-heuristic" class="md-nav__link">
+    Fiat-Shamir Heuristic
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sigma-protocol-against-malicious-verifiers" class="md-nav__link">
+    Sigma protocol against malicious verifiers
+  </a>
+  
 </li>
       
     </ul>
@@ -1249,6 +1310,67 @@
     Composition
   </a>
   
+    <nav class="md-nav" aria-label="Composition">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#and-composition" class="md-nav__link">
+    AND composition
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#or-composition" class="md-nav__link">
+    OR composition
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#multi-party-computation" class="md-nav__link">
+    Multi-Party computation
+  </a>
+  
+    <nav class="md-nav" aria-label="Multi-Party computation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#view" class="md-nav__link">
+    View
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sigma-protocol-with-mpc-in-the-head" class="md-nav__link">
+    Sigma-Protocol with MPC in the head
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fiat-shamir-heuristic" class="md-nav__link">
+    Fiat-Shamir Heuristic
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sigma-protocol-against-malicious-verifiers" class="md-nav__link">
+    Sigma protocol against malicious verifiers
+  </a>
+  
 </li>
       
     </ul>
@@ -1283,7 +1405,7 @@ put into a (cryptographic) envelope, that can then no longer be opened by some o
 certain message and nobody is able to change this without the others noticing it.</p>
 <p>The commitment scheme is a collection of three algorithms:</p>
 <ul>
-<li><strong><span class="arithmatex">\(Setup(1^\delta\)</span>)</strong>: public parameters <strong>pp</strong> are generated. Message space <span class="arithmatex">\(\mathfrak{M}\)</span>, randomness space
+<li><strong><span class="arithmatex">\(Setup(1^\delta)\)</span></strong>: public parameters <strong>pp</strong> are generated. Message space <span class="arithmatex">\(\mathfrak{M}\)</span>, randomness space
   <span class="arithmatex">\(\mathfrak{R}\)</span>, decommitment space <span class="arithmatex">\(\mathfrak{D}\)</span> and commitment space <span class="arithmatex">\(\mathfrak{C}\)</span>.</li>
 <li><strong><span class="arithmatex">\(Commit(pp,m\in\mathfrak{M}, r \gets_\$ \mathfrak{R})\)</span></strong>: creates a commitment and a decommitment <span class="arithmatex">\((c,d)\)</span>.</li>
 <li><strong><span class="arithmatex">\(Verify(pp,c\in\mathfrak{C},d\in\mathfrak{D},m\in\mathfrak{M})\)</span></strong>: asks question if message was in commitment, and
@@ -1345,9 +1467,100 @@ that the simulator is kind of going backwards in the protocol.</p>
 <h2 id="composition">Composition</h2>
 <p>Often, protocols are repeated to improve the completeness/soundness errors. This might happen in <strong>sequence repetition</strong>
 or <strong>parallel repetition</strong>. The <span class="arithmatex">\(\Sigma\)</span>-protocols are often used with parallel repetition. The protocol stays largely
-unchanged, but instead of sending a single message, multiple messages are sent at once from the prover to the verifier. </p>
+unchanged, but instead of sending a single message, multiple messages are sent at once from the prover to the verifier.</p>
 <p>A 2-sound <span class="arithmatex">\(\Sigma\)</span>-protocol for example sends two messages in parallel, which will reduce the soundness error from
 <span class="arithmatex">\(\frac{1}{|C|}\)</span> to <span class="arithmatex">\(\frac{1}{|C|}\)</span>.</p>
+<h3 id="and-composition">AND composition</h3>
+<p>The sigma protocol is capable of combining two relations <span class="arithmatex">\(R\)</span> and <span class="arithmatex">\(R'\)</span> into a single relation <span class="arithmatex">\(R_\land\)</span>. The messages
+exchanged are similar to the parallel repetition.</p>
+<p>For this composition to work, both <span class="arithmatex">\(R\)</span> and <span class="arithmatex">\(R'\)</span> require that the verifier's challenge space $\mathfrak{C} is identical.</p>
+<ol>
+<li><strong>P</strong> then sends first messages using both sigma protocols for <span class="arithmatex">\(R\)</span> and <span class="arithmatex">\(R'\)</span></li>
+<li><strong>V</strong> sends a single challenge <span class="arithmatex">\(c\)</span>. This is valid because the relations must share the challenge space</li>
+<li><strong>P</strong> sends back a message according to the challenge</li>
+<li><strong>V</strong> must then accept both individual verifiers</li>
+</ol>
+<p>The AND composition of two sigma protocol is pretty straight forward. The simulator for <span class="arithmatex">\(R_\land\)</span> is the combination for
+the individual relations: <span class="arithmatex">\(S^\land(x,x',c) := (S(x,c),S'(x',c))\)</span>.</p>
+<p>The protocol is complete, k-special-sound and SHVZK.</p>
+<h3 id="or-composition">OR composition</h3>
+<p>The preconditions for this composition is the same as for the AND composition. There is, however, a difference in how
+the prover and verifier work together. To start, the prover has only a witness for one of the relations. The prover for
+the second relation is simulated using a simulator.</p>
+<ol>
+<li><strong>P</strong> generates message <span class="arithmatex">\(a\)</span> using prover <span class="arithmatex">\(P_1\)</span></li>
+<li><strong>P</strong> generates a random <span class="arithmatex">\(c'\)</span> from the challenge space</li>
+<li><strong>P</strong> simulates the message <span class="arithmatex">\(a'\)</span> and <span class="arithmatex">\(z'\)</span> using <span class="arithmatex">\(c'\)</span></li>
+<li><strong>P</strong> sends both <span class="arithmatex">\(a\)</span> and <span class="arithmatex">\(a'\)</span> to the verifier</li>
+<li><strong>V</strong> responds with a new random <span class="arithmatex">\(c''\)</span></li>
+<li><strong>P</strong> computes <span class="arithmatex">\(c := c''-c'\)</span>, which is then used to compute <span class="arithmatex">\(z\)</span></li>
+<li><strong>P</strong> sends <span class="arithmatex">\(z,z'\)</span> and <span class="arithmatex">\(c,c'\)</span> to the verifier</li>
+<li><strong>V</strong> checks that both challenges were correctly answered, and <span class="arithmatex">\(c+c' == c''\)</span></li>
+</ol>
+<p>The protocol is complete, k-special-sound and SHVZK.</p>
+<h2 id="multi-party-computation">Multi-Party computation</h2>
+<p>In this protocol <span class="arithmatex">\(\Pi\)</span>, multiple players <span class="arithmatex">\(P_i\)</span> want to arrive at a common conclusion (joint function) without leaking
+any of their private information <span class="arithmatex">\(w_i\)</span>, which also function as the private inputs. The players interact with each other
+over multiple rounds, and in the end all players should get the output. Additional inputs are a public input <span class="arithmatex">\(x\)</span>, and
+private randomness <span class="arithmatex">\(r_i\)</span>.</p>
+<p>The protocol is then specified by a <strong>next message function</strong>, specifying what message <span class="arithmatex">\(m\)</span> a player <span class="arithmatex">\(i\)</span> will send in
+round <span class="arithmatex">\(j\)</span> to some other player <span class="arithmatex">\(k, k\neq i\)</span>. The output is the message that is going to be sent by player <span class="arithmatex">\(P_i\)</span> in round
+<span class="arithmatex">\(j+1\)</span>. <span class="arithmatex">\(M\)</span> are all messages that were received by a certain player. </p>
+<div class="arithmatex">\[
+\Pi \big(i,x,w_i,r_i,(M_1,...,M_j)\big) \to (m_{j+1,i\to k})
+\]</div>
+<p>The protocol is correct, if all players get the correct output. If one input is not in the relation, all players 
+will get 0. </p>
+<p>The protocol has also <strong>t-privacy</strong>. This means that up to <span class="arithmatex">\(t\)</span> players can be corrupted until the protocol looses its
+privacy. </p>
+<h3 id="view">View</h3>
+<p>A player's <strong>view</strong> is defined as <span class="arithmatex">\(View_i =(x,w_i,r_i,M_1,...,M_k)\)</span> where <span class="arithmatex">\(M_j\)</span> is the set of all messages player <span class="arithmatex">\(P_i\)</span>
+received from all other players in a specific round <span class="arithmatex">\(j\)</span>.</p>
+<p>Two views <span class="arithmatex">\(View_i, View_j\)</span> are called <strong>consistent</strong>, if the messages in <span class="arithmatex">\(View_i\)</span> sent by <span class="arithmatex">\(View_j\)</span> actually match the 
+messages that can be computed using <span class="arithmatex">\(View_j\)</span> and <span class="arithmatex">\(\Pi\)</span>. This is called <em>local consistency</em></p>
+<p>To get global consistency, all combinations of views must be pairwise consistent. If this is the case, there exists a 
+protocol with input <span class="arithmatex">\(x\)</span> that matches all views.  </p>
+<h3 id="sigma-protocol-with-mpc-in-the-head">Sigma-Protocol with MPC in the head</h3>
+<p>This protocol is called 'in the head' because the prover imagines the graph of players and computes all their witness
+and their views by themselfs. We now have <span class="arithmatex">\(P(pp,x,w)\)</span> and <span class="arithmatex">\(V(pp,x\)</span>) with <span class="arithmatex">\(pp\)</span> the parameters from the setup function.</p>
+<ol>
+<li><strong>P</strong> computes all witness for all players <span class="arithmatex">\(w_i\)</span>, with the additional condition that <span class="arithmatex">\(w = w_1 \oplus ... \oplus w_n\)</span></li>
+<li><strong>P</strong> uses all <span class="arithmatex">\(w_i\)</span>, input <span class="arithmatex">\(x\)</span> and <span class="arithmatex">\(\Pi\)</span> to compute the views</li>
+<li><strong>P</strong> commits to the views, and sends all commitments to the verifier</li>
+<li><strong>V</strong> chooses random players <span class="arithmatex">\(i,j\)</span></li>
+<li><strong>P</strong> sends the views and decommitments of <span class="arithmatex">\(i,j\)</span> to <strong>V</strong></li>
+<li><strong>V</strong> runs the verifying function Verfy<span class="arithmatex">\((pp,c_i,d_i,View_i)=1\)</span>, makes sure the views are consistent, and that 
+   <span class="arithmatex">\(P_i = P_j = 1\)</span></li>
+</ol>
+<h2 id="fiat-shamir-heuristic">Fiat-Shamir Heuristic</h2>
+<p>The protocol gives full zero knowledge and reduces the number of messages exchanged to 1. Additionally, a hash function
+<span class="arithmatex">\(H\)</span> is required, that is modelled as a random oracle. The hash function maps onto the challenge space <span class="arithmatex">\(C\)</span>. Additionally, 
+<span class="arithmatex">\(H\)</span> remembers the outputs (uniform random hash) that it has given for previous inputs. Giving the same input again will
+result in the identical output. </p>
+<p>Unlike the sigma protocol seen until now, <strong>P</strong> is generating <span class="arithmatex">\(c = H(x,a)\)</span>. He then sends <span class="arithmatex">\(a\)</span>, <span class="arithmatex">\(c\)</span>, and <span class="arithmatex">\(z\)</span> to the 
+verifier. <strong>V</strong> does the same checks as usual, but also makes sure that <span class="arithmatex">\(c\)</span> was generated correctly using the common
+hash function.</p>
+<p>Some notes: </p>
+<ul>
+<li>Hash more than less. If a commitment scheme is involved for example, the public parameters pp should be hashed as well</li>
+<li>Unsecure for real hash functions (only certain hash-functions can be used for a secure protocol)</li>
+<li>Signature scheme can be implemented, where the prover signs, and the verifier verifies. This method was used in the
+  <em>picnic</em> signature scheme that was a candidate as a post-quantum signature scheme. </li>
+</ul>
+<h2 id="sigma-protocol-against-malicious-verifiers">Sigma protocol against malicious verifiers</h2>
+<p>If the verifier generates random challenges, there is no way to gain knowledge. However, non-uniformly-random challenges
+might leak information.</p>
+<p>To counter this, a public coin flip protocol is used. The verifier is forced to be honest by generating challenges 
+together with the prover.</p>
+<p>The prover generates his challenge <span class="arithmatex">\(c\)</span> and commits to it. The commitment <span class="arithmatex">\(C\)</span> is then sent to the verifier. V also 
+generates a secret <span class="arithmatex">\(c'\)</span> that he sends back to the prover. P then answers with <span class="arithmatex">\(c\)</span> and the decommitment <span class="arithmatex">\(d\)</span>, allowing 
+the verifier to check that <span class="arithmatex">\(c\)</span> was not changed in the meantime. This procedure can then be interleaved with a message:</p>
+<ol>
+<li><strong>P</strong> computes <span class="arithmatex">\(a\)</span>, <span class="arithmatex">\(c\)</span>, and <span class="arithmatex">\(C\)</span>, sending <span class="arithmatex">\(a\)</span> and <span class="arithmatex">\(C\)</span> to <strong>V</strong></li>
+<li><strong>V</strong> generates <span class="arithmatex">\(c'\)</span> and sends it to <strong>P</strong></li>
+<li><strong>P</strong> computes <span class="arithmatex">\(z \gets_\$ P_2(x,w,a,c'';p)\)</span> with <span class="arithmatex">\(c'' := c + c'\)</span>, then sends <span class="arithmatex">\(z,c,d\)</span> to <strong>V</strong></li>
+<li><strong>V</strong> verifies that <span class="arithmatex">\(c\)</span> has not been changed, and computes the output <span class="arithmatex">\(V(x,a,c'',z)\)</span></li>
+</ol>
 
   <hr>
 <div class="md-source-file">
