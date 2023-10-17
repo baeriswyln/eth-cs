@@ -856,16 +856,37 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#zero-knowledge" class="md-nav__link">
-    Zero-knowledge
+  <a href="#zero-knowledge-zk" class="md-nav__link">
+    Zero-knowledge (ZK)
   </a>
   
-    <nav class="md-nav" aria-label="Zero-knowledge">
+    <nav class="md-nav" aria-label="Zero-knowledge (ZK)">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#perfect-zero-knowledge" class="md-nav__link">
     Perfect Zero-knowledge
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#variations-of-zero-knowledge" class="md-nav__link">
+    Variations of Zero-knowledge
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#variations-of-soundness" class="md-nav__link">
+    Variations of Soundness
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#public-coin-protocols" class="md-nav__link">
+    Public coin protocols
   </a>
   
 </li>
@@ -894,7 +915,7 @@
         
   
   <span class="md-ellipsis">
-    Sigma protocols
+    Sigma Protocols
   </span>
   
 
@@ -914,7 +935,7 @@
         
   
   <span class="md-ellipsis">
-    Zero-knowledge arguments with short proofs
+    Arguments and proofs
   </span>
   
 
@@ -934,7 +955,7 @@
         
   
   <span class="md-ellipsis">
-    Non-interactive zero-knowledge
+    Non-interactive Zero Knowledge
   </span>
   
 
@@ -1258,16 +1279,37 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#zero-knowledge" class="md-nav__link">
-    Zero-knowledge
+  <a href="#zero-knowledge-zk" class="md-nav__link">
+    Zero-knowledge (ZK)
   </a>
   
-    <nav class="md-nav" aria-label="Zero-knowledge">
+    <nav class="md-nav" aria-label="Zero-knowledge (ZK)">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#perfect-zero-knowledge" class="md-nav__link">
     Perfect Zero-knowledge
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#variations-of-zero-knowledge" class="md-nav__link">
+    Variations of Zero-knowledge
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#variations-of-soundness" class="md-nav__link">
+    Variations of Soundness
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#public-coin-protocols" class="md-nav__link">
+    Public coin protocols
   </a>
   
 </li>
@@ -1339,10 +1381,11 @@ probability.</p>
 <p>Increased proving power (seen in the previous chapter) allows for proofs of larger complexity classes.</p>
 <h2 id="interactive-algorithms-and-interactive-proof">Interactive Algorithms and Interactive Proof</h2>
 <p>Interactive algorithms are used to perform <strong>interactive proofs</strong>. A series of <span class="arithmatex">\(k\)</span> messages are exchanged between the
-prover and verifiers. Each message <span class="arithmatex">\(a_i\)</span> contains all <span class="arithmatex">\(i-1\)</span> previous messages, as well as the input <span class="arithmatex">\(x \in \{0,1\}^*\)</span> and
-a random value <span class="arithmatex">\(r\)</span> or <span class="arithmatex">\(s\)</span>. The complete interaction is denoted as <span class="arithmatex">\(\langle P^*(r),V(s)\rangle (x) = a_{k(x)}\)</span>. All 
-messages are stored in the <strong>transcript</strong> <span class="arithmatex">\((x,a_1,...,a_{k(x)})\)</span> with <span class="arithmatex">\(a_{k(x)}\)</span> being the verifiers conclusion if he 
-accepts or rejects the proof. </p>
+prover and verifiers. Each message <span class="arithmatex">\(a_i\)</span> contains all <span class="arithmatex">\(i-1\)</span> previous messages, as well as the input <span class="arithmatex">\(x \in \{0,1\}^*\)</span>
+and
+a random value <span class="arithmatex">\(r\)</span> or <span class="arithmatex">\(s\)</span>. The complete interaction is denoted as <span class="arithmatex">\(\langle P^*(r),V(s)\rangle (x) = a_{k(x)}\)</span>. All
+messages are stored in the <strong>transcript</strong> <span class="arithmatex">\((x,a_1,...,a_{k(x)})\)</span> with <span class="arithmatex">\(a_{k(x)}\)</span> being the verifiers conclusion if he
+accepts or rejects the proof.</p>
 <div class="arithmatex">\[
 \begin{align}
 a_1 &amp;= P(x,r) \\
@@ -1353,22 +1396,115 @@ a_{k(x)} &amp;= V(x,a_1,...,a_{k(x)-1},s)
 \end{align}
 \]</div>
 <h3 id="graph-isomorphism">Graph Isomorphism</h3>
-<p>A problem that was seen in the course as an example is the graph-isomorphism problem. To our knowledge, no algorithm 
-exists that can proof if a graph is isomorphic. <strong>Isomorphic graphs</strong> are graphs that be mapped between each other using 
-some permutation <span class="arithmatex">\(\pi\)</span>. </p>
-<h2 id="zero-knowledge">Zero-knowledge</h2>
+<p>A problem that was seen in the course as an example is the graph-isomorphism problem. To our knowledge, no algorithm
+exists that can proof if a graph is isomorphic. <strong>Isomorphic graphs</strong> are graphs that be mapped between each other using
+some permutation <span class="arithmatex">\(\pi\)</span>.</p>
+<h2 id="zero-knowledge-zk">Zero-knowledge (ZK)</h2>
+<p>The following chapters can be summarised with the following points:</p>
+<ul>
+<li>Perfect soundness and perfect zero knowledge cannot be achieved at the same time.</li>
+<li>Knowledge-soundness also good for "trivial" languages</li>
+<li>Special soundness and SHVZK are those that are used the most.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Soundness</th>
+<th>Zero Knowledge</th>
+<th>Proof size</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Proofs   (short term secrecy)</td>
+<td>Perfect/statistical</td>
+<td>Computational</td>
+<td>Not compressing</td>
+</tr>
+<tr>
+<td>Arguments (short window for cheating)</td>
+<td>Computational (short window for cheating)</td>
+<td>Perfect/statistical</td>
+<td>&lt;&lt;|x|, |w|</td>
+</tr>
+</tbody>
+</table>
 <h3 id="perfect-zero-knowledge">Perfect Zero-knowledge</h3>
-<p>Perfect zero-knowledge is a special case of zero-knowledge proofs, and only a few of those exist. The proof must make 
-sure that the verifier gained no new knowledge - essentially, the verifier should be able to reproduce the proof by 
+<p>Perfect zero-knowledge is a special case of zero-knowledge proofs, and only a few of those exist. The proof must make
+sure that the verifier gained no new knowledge - essentially, the verifier should be able to reproduce the proof by
 themselves. <span class="arithmatex">\((P,V)\)</span> is a perfect zero-knowledge proof, in case an efficient simulator <span class="arithmatex">\(S\)</span> exists that is able to
 reproduce the verifier's view <span class="arithmatex">\((x,s,a_1,...,a_{k(x)})\)</span>.</p>
+<p>The following example describes a perfect ZKP for graph isomorphism. We have two graphs <span class="arithmatex">\(G_0, G_1\)</span> that are isomorphic (
+there exists a permutation mapping <span class="arithmatex">\(G_0\)</span> to <span class="arithmatex">\(G_1\)</span>).</p>
+<ol>
+<li><strong>Prover</strong> takes a random permutation <span class="arithmatex">\(\sigma\)</span>, and permutes <span class="arithmatex">\(G_0\)</span> using this permutation which produces the graph
+   <span class="arithmatex">\(H\)</span>. <span class="arithmatex">\(H\)</span> is sent to the verifier.</li>
+<li><strong>Verifier</strong> sends randomly either 0 or 1 to the prover.</li>
+<li><strong>Prover</strong>: if a 0 was received, prover sends <span class="arithmatex">\(\sigma\)</span> from step 1 to the verifier. If 1 was received,
+   <span class="arithmatex">\(\sigma \circ \pi\)</span> is sent to the verifier (with <span class="arithmatex">\(G_0 = \pi(G_1)\)</span>).</li>
+<li>
+<p><strong>Verifier</strong> now applies the permutation sent by the prover either to <span class="arithmatex">\(G_0\)</span> or <span class="arithmatex">\(G_1\)</span> (depending on the random value
+   sent in step 2.). If the graphs are isomorphic, both ways should result in the random permutation <span class="arithmatex">\(H\)</span>.</p>
+</li>
+<li>
+<p><strong>Completeness</strong> is good, as V will always accept if the graphs are isomorphic and the prover knows the permutation.</p>
+</li>
+<li><strong>Soundness</strong>: say there graphs are not isomorphic, there exists no <span class="arithmatex">\(H\)</span> that is both isomorphic to <span class="arithmatex">\(G_0\)</span> and <span class="arithmatex">\(G_1\)</span> at
+  the same time. This means that the generated <span class="arithmatex">\(H\)</span> is only isomorphic to one of the graphs, and in the conversation, V
+  will only accept the provers response with a probability of 50%.</li>
+</ol>
+<p>This perfect zero-knowledge can now be proven using a <strong>simulator</strong>. Such a simulator is capable of reproducing the
+<strong>verifier's view</strong>, which in this case is <span class="arithmatex">\(View_{V^*}^P = (G_0,G_1,\tau,H,b)\)</span>, with <span class="arithmatex">\(V^*\)</span> a malicious verifier. The
+simulator <span class="arithmatex">\(S(V^*,G_0,G_1)\)</span> then goes through the following steps:</p>
+<ol>
+<li><span class="arithmatex">\(\tau\)</span> a random distribution</li>
+<li><span class="arithmatex">\(B\)</span> a random sample of 0 or 1</li>
+<li><span class="arithmatex">\(H = \tau(G_B)\)</span></li>
+<li>Sample <span class="arithmatex">\(b\)</span> (just as malicious verifier would)</li>
+<li>If <span class="arithmatex">\(b \neq B\)</span>, start from begining</li>
+<li>Output the expected verifiers view.</li>
+</ol>
+<h3 id="variations-of-zero-knowledge">Variations of Zero-knowledge</h3>
+<p>As mentioned before, perfect zero-knowledge is only possible for some languages. Thus, some relaxations are designed.</p>
+<ul>
+<li><strong>Black-box</strong> zero-knowledge: the simulator only gets black-box access to the malicious verifier, which means that
+  he has no in-depth access to V, and is only capable of requesting a next symbol. It is noted as <span class="arithmatex">\(S^{V^*}\)</span>.</li>
+<li><strong>Semi-honest verifier (SHVZK)</strong>: uses an honest verifier that follows the protocol, but the secret is chosen very
+  carefully. For this reason, the simulator requires access to said secret.</li>
+<li><strong>Honest verifier</strong>: the simulator has access to an honest verifier, which makes the simulator's job easier. Verifier
+  is following the protocol.</li>
+<li><strong>Statistical ZK</strong>: the simulator can simulate the malicious verifier if he gets lucky.</li>
+<li><strong>Computational ZK</strong>: the simulator can simulate the malicious verifier if he gets lucky or is hardworking.</li>
+<li><strong>ZK with auxiliary inputs</strong>: additional input is given to prover and verifier (e.g. hint, witness, conversations of
+  prior protocol). The simulator requires additional input as well.</li>
+</ul>
+<h3 id="variations-of-soundness">Variations of Soundness</h3>
+<ul>
+<li><strong>Knowledge soundness</strong>: <span class="arithmatex">\(\kappa\)</span> is the error of how sure one is that the prover is sound. An extractor <span class="arithmatex">\(E\)</span> extracts
+  a witness from the prover (somewhat similar to black-box ZK, but the extractor has oracle access to the malicious
+  prover, producing a witness). The extractor can get both transformations <span class="arithmatex">\(\tau\)</span> from the prover (by inputting 0 and
+  1). The extractor can then extract <span class="arithmatex">\(\pi = \tau_1 \circ \tau_0^{-1}\)</span></li>
+<li><strong>Interactive arguments</strong>: a proof should be convincing. But in this case, arguments can be held between the two
+  parties, because the protocol only holds against <strong>efficient provers</strong>. This means that cryptographic assumptions can
+  prove the soundness.</li>
+<li><strong>Special soundness</strong>: connected to the <em>public coin protocol</em>. A <em>knowledge extractor</em> is used, taking the <em>tree of
+  transcripts</em> as an input to extract a witness. If such an extractor exists, the protocol with (2k+1) moves is
+  <span class="arithmatex">\((n_1,...,n_k)-special sound\)</span>. This soundness is typically easier to compute.</li>
+<li><strong>Perfect</strong>, <strong>statistical</strong> and <strong>computational soundness</strong> also exist.</li>
+</ul>
+<h3 id="public-coin-protocols">Public coin protocols</h3>
+<p>In general, the verifier publicly sends random "coin flips" to the prover. Those are the only messages that are sent by
+the verifier, and are often also called <strong>challenges</strong>.</p>
+<p>The public coin flips can then be arranged in a <strong>tree of transcripts</strong>. The number of challenges defines the depth of
+the tree.</p>
 
   <hr>
 <div class="md-source-file">
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">October 15, 2023</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">October 17, 2023</span>
       
         <br>
         Created:
@@ -1421,13 +1557,13 @@ reproduce the verifier's view <span class="arithmatex">\((x,s,a_1,...,a_{k(x)})\
         
         
           
-          <a href="../sigma/" class="md-footer__link md-footer__link--next" aria-label="Next: Sigma protocols">
+          <a href="../sigma/" class="md-footer__link md-footer__link--next" aria-label="Next: Sigma Protocols">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Sigma protocols
+                Sigma Protocols
               </div>
             </div>
             <div class="md-footer__button md-icon">

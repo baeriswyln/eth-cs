@@ -22,7 +22,7 @@
     
     
       
-        <title>Sigma protocols - ETH - Summaries for CS</title>
+        <title>Sigma Protocols - ETH - Summaries for CS</title>
       
     
     
@@ -111,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Sigma protocols
+              Sigma Protocols
             
           </span>
         </div>
@@ -805,15 +805,86 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Sigma Protocols
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
-    Sigma protocols
+    Sigma Protocols
   </span>
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#commitment-schemes" class="md-nav__link">
+    Commitment schemes
+  </a>
+  
+    <nav class="md-nav" aria-label="Commitment schemes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#elgamal-encryption" class="md-nav__link">
+    Elgamal encryption
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pedersen-commitment" class="md-nav__link">
+    Pedersen commitment
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-three-coloring-graph" class="md-nav__link">
+    Example - three-coloring graph
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#composition" class="md-nav__link">
+    Composition
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -830,7 +901,7 @@
         
   
   <span class="md-ellipsis">
-    Zero-knowledge arguments with short proofs
+    Arguments and proofs
   </span>
   
 
@@ -850,7 +921,7 @@
         
   
   <span class="md-ellipsis">
-    Non-interactive zero-knowledge
+    Non-interactive Zero Knowledge
   </span>
   
 
@@ -1133,6 +1204,55 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#commitment-schemes" class="md-nav__link">
+    Commitment schemes
+  </a>
+  
+    <nav class="md-nav" aria-label="Commitment schemes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#elgamal-encryption" class="md-nav__link">
+    Elgamal encryption
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pedersen-commitment" class="md-nav__link">
+    Pedersen commitment
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-three-coloring-graph" class="md-nav__link">
+    Example - three-coloring graph
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#composition" class="md-nav__link">
+    Composition
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1150,13 +1270,91 @@
 
 
 <h1 id="sigma-protocols">Sigma protocols</h1>
+<p>The sigma protocols are the shortest and nicest possible interactive proofs. It is a 3-move public-coin protocol with
+the following properties:</p>
+<ul>
+<li>V always accepts if <span class="arithmatex">\((x,w)\in R\)</span></li>
+<li>k-special sound, which means that an extractor exists that can extract the witness.</li>
+<li>SHVZK</li>
+</ul>
+<h2 id="commitment-schemes">Commitment schemes</h2>
+<p>Sigma protocols require commitment schemes. A real world example of a commitment scheme are envelopes: a message is
+put into a (cryptographic) envelope, that can then no longer be opened by some other entity. The sender committed to a
+certain message and nobody is able to change this without the others noticing it.</p>
+<p>The commitment scheme is a collection of three algorithms:</p>
+<ul>
+<li><strong><span class="arithmatex">\(Setup(1^\delta\)</span>)</strong>: public parameters <strong>pp</strong> are generated. Message space <span class="arithmatex">\(\mathfrak{M}\)</span>, randomness space
+  <span class="arithmatex">\(\mathfrak{R}\)</span>, decommitment space <span class="arithmatex">\(\mathfrak{D}\)</span> and commitment space <span class="arithmatex">\(\mathfrak{C}\)</span>.</li>
+<li><strong><span class="arithmatex">\(Commit(pp,m\in\mathfrak{M}, r \gets_\$ \mathfrak{R})\)</span></strong>: creates a commitment and a decommitment <span class="arithmatex">\((c,d)\)</span>.</li>
+<li><strong><span class="arithmatex">\(Verify(pp,c\in\mathfrak{C},d\in\mathfrak{D},m\in\mathfrak{M})\)</span></strong>: asks question if message was in commitment, and
+  consequently outputs 0 or 1.</li>
+</ul>
+<p>The commitments must be correct and secure. From this, the following points follow.</p>
+<ul>
+<li><strong>Correctness</strong>: <span class="arithmatex">\(\forall pp, Verify(pp,Commit(pp,m,r),m)=1\)</span></li>
+<li><strong>Perfect hiding</strong>: the commitment should not disclose anything about the message.</li>
+<li><strong>perfect binding</strong>: it must not be possible to change the message.</li>
+</ul>
+<p>Hiding and binding also exist as <strong>computational hiding</strong> and <strong>binding</strong>. It is not possible to have <strong>perfect binding
+** and </strong>perfect hiding** at the same time.</p>
+<h3 id="elgamal-encryption">Elgamal encryption</h3>
+<p>The elgamal is a computationally hiding and perfectly binding example of a commitment scheme. We sample a random prime
+number h (prime <span class="arithmatex">\(p\)</span> of order <span class="arithmatex">\(2^\lambda\)</span> from <span class="arithmatex">\(\mathbb{G}\)</span>) and a secret key <span class="arithmatex">\(s\)</span>, which can then be used to compute
+<span class="arithmatex">\(g = s \cdot h\)</span>. <span class="arithmatex">\(\mathbb{Z}_p\)</span> is the collection of integers from 0 to p-1, but the operations inside this set are done
+with <strong>mod p</strong>.</p>
+<ul>
+<li><strong>Setup</strong> outputs <span class="arithmatex">\(pp := (\mathbb{G}, g, h, p)\)</span></li>
+<li><span class="arithmatex">\(Commit(pp,m\in\mathbb{G},r\gets_\$\mathbb{Z}_p)\)</span>: <span class="arithmatex">\(((c_1,c_2),d):=((m+r\cdot g,r \cdot h),r)\)</span></li>
+<li><span class="arithmatex">\(Verify(pp,c,d,m)\)</span>: <span class="arithmatex">\((Commit(pp,m,d)==c)\)</span></li>
+</ul>
+<h3 id="pedersen-commitment">Pedersen commitment</h3>
+<p>The pedersen commitment can be plugged into sigma protocols to have a <em>perfect hiding</em> and <em>computationally binding</em>
+proof, and has the following steps. The protocol is perfectly hiding because <span class="arithmatex">\(r\cdot h\)</span> is uniformly random in
+<span class="arithmatex">\(\mathbb{G}\)</span>.</p>
+<ul>
+<li><strong>Setup</strong> generatesagain the same output.</li>
+<li><span class="arithmatex">\(Commit(pp,m\in\mathbb{Z}_p,r\gets_\$\mathbb{Z}_p)\)</span>: <span class="arithmatex">\(((c_1,c_2),d):=((m\cdot g,r \cdot h),r)\)</span></li>
+<li><span class="arithmatex">\(Verify(pp,c,d,m)\)</span>: <span class="arithmatex">\((Commit(pp,m,d)==c)\)</span></li>
+</ul>
+<h2 id="example-three-coloring-graph">Example - three-coloring graph</h2>
+<p>In a three-coloring graph, all adjacent nodes must be of different colours. The IP is as follows (<span class="arithmatex">\(E\)</span> is the set of
+edges):</p>
+<ul>
+<li>Prover creates a permutation of the graph (the colors change, but the three-coloring stays valid) <span class="arithmatex">\(\sigma\)</span>.
+  Additionally, the set of colors <span class="arithmatex">\(col\)</span> is extracted. A commitment is created: <span class="arithmatex">\((c_u,d_u) \gets_\$ Commit(pp,col_u)\)</span>.</li>
+<li>Prover only sends the commitment <span class="arithmatex">\(c_u\)</span> to the verifier (<span class="arithmatex">\(u\)</span> is a vertex).</li>
+<li>Verifier picks a random edge <span class="arithmatex">\((a,b)\)</span> from the graph and sends that to the prover</li>
+<li>Prover sends colors and decommitments of the requested edge to the verifier</li>
+<li>The verifier checks the commitment and decommitment.</li>
+</ul>
+<p><strong>Completeness</strong>: the three-coloring stays valid after the permutation. Additionally, the commitment scheme makes sure
+that the verifier is always capable of correctly verifying the commitments/decommitments.</p>
+<p><strong><span class="arithmatex">\(|E|\)</span>-special soundness</strong>: the tree of transcript must contain all edges, and no adjacent nodes must be the same
+color.</p>
+<p>There exists a simulator for <em>SHVZK</em> which reproduces the verifier's view that is the following (for a single edge in
+this example):<span class="arithmatex">\(((c_u)_{u\in V}(a,b),col_a,d_a,col_b,d_b)\)</span>, and <span class="arithmatex">\(Verify()==1\)</span> for both nodes a and b, and <span class="arithmatex">\(col_a \neq
+col_b\)</span>. The simulator <span class="arithmatex">\(S(pp,G,(a,b))\)</span> does the following steps (note that the simulator does not know the graph). Note
+that the simulator is kind of going backwards in the protocol.</p>
+<ol>
+<li>Sample two random colors <span class="arithmatex">\(col_a, col_b\)</span> with <span class="arithmatex">\(col_a \neq col_b\)</span></li>
+<li><span class="arithmatex">\((c_a,d_a) \gets_\$ Commit(pp,col_a)\)</span></li>
+<li><span class="arithmatex">\((c_b,d_b) \gets_\$ Commit(pp,col_b)\)</span></li>
+<li>All other nodes can be committed to some color (does not matter what, as they stay hidden)</li>
+<li>Results in the verifier's view</li>
+</ol>
+<h2 id="composition">Composition</h2>
+<p>Often, protocols are repeated to improve the completeness/soundness errors. This might happen in <strong>sequence repetition</strong>
+or <strong>parallel repetition</strong>. The <span class="arithmatex">\(\Sigma\)</span>-protocols are often used with parallel repetition. The protocol stays largely
+unchanged, but instead of sending a single message, multiple messages are sent at once from the prover to the verifier. </p>
+<p>A 2-sound <span class="arithmatex">\(\Sigma\)</span>-protocol for example sends two messages in parallel, which will reduce the soundness error from
+<span class="arithmatex">\(\frac{1}{|C|}\)</span> to <span class="arithmatex">\(\frac{1}{|C|}\)</span>.</p>
 
   <hr>
 <div class="md-source-file">
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">October 12, 2023</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">October 17, 2023</span>
       
         <br>
         Created:
@@ -1209,13 +1407,13 @@
         
         
           
-          <a href="../zk-arguments-and-proofs/" class="md-footer__link md-footer__link--next" aria-label="Next: Zero-knowledge arguments with short proofs">
+          <a href="../zk-arguments-and-proofs/" class="md-footer__link md-footer__link--next" aria-label="Next: Arguments and proofs">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Zero-knowledge arguments with short proofs
+                Arguments and proofs
               </div>
             </div>
             <div class="md-footer__button md-icon">
