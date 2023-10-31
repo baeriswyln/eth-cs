@@ -5,13 +5,15 @@ theme:
     palette:
       - media: "(prefers-color-scheme: dark)"
         scheme: slate
-        primary: red
-        accent: red
+        primary: custom
+        accent: custom
         toggle:
           icon: material/weather-sunny
           name: Switch to light mode
       - media: "(prefers-color-scheme: light)"
         scheme: default
+        primary: custom
+        accent: custom
         toggle:
           icon: material/weather-night
           name: Switch to dark mode
@@ -34,11 +36,14 @@ nav:
       - bachelors/ads/index.md
     - Theoretical Computer Science:
       - bachelors/tcs/index.md
+      - Languages: bachelors/tcs/languages.md
+      - Finite-State Machine: bachelors/tcs/fsm.md
+      - Computability: bachelors/tcs/computability.md
   - Security:
     - security/index.md
     - Zero-Knowledge Proof:
       - security/zkp/index.md
-      - security/zkp/intro-definitions.md
+      - Intro and definitions: security/zkp/intro-definitions.md
       - Sigma Protocols: security/zkp/sigma.md
       - Arguments and proofs: security/zkp/zk-arguments-and-proofs.md
       - Non-interactive Zero Knowledge: security/zkp/non-interactive-zk.md
@@ -46,6 +51,9 @@ nav:
     - data/index.md
     - Reliable and Trustworthy AI:
       - data/rtai/index.md
+      - Robustness: data/rtai/robustness.md
+      - Privacy: data/rtai/privacy.md
+      - Fairness/Bias: data/rtai/fairness-bias.md
   - General:
     - general/index.md
     - Placeholder:
@@ -87,3 +95,5 @@ extra_javascript:
   - javascripts/mathjax.js
   - https://polyfill.io/v3/polyfill.min.js?features=es6
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+extra_css:
+  - stylesheets/extra.css
