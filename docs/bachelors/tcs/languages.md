@@ -54,13 +54,63 @@ L_1L_2\cup L_1L_3 = L_1(L_2\cdot L_3)
 $$
 
 An additional definition defines the **homomorphism** between two languages $\Sigma_1^*,\Sigma_2^*$ as every function
-$h: \Sigma_1^* \to \Sigma_2^*$ with the following properties: 
+$h: \Sigma_1^* \to \Sigma_2^*$ with the following properties:
 
 1. $h(\lambda)=\lambda$
 2. $h(uv) = h(u) \cdot h(v)$ for all $u,v\in \Sigma_2^*$.
 
 ## Kolmogorov-Complexity
 
-## Random objects
+The Kolmogorov-Complexity $K$ is defined as the **length of the shortest (Pascal)-program which is able to generate a
+binary word $x$**.
 
-## Primefactor
+The $K$ of the language $L_1 = \{0^n\}^\infty_{n=1}$ for example is defined as $K(0^n) \leq \lceil log_2(n+1) \rceil +
+1$ where $c$
+is the constant part of the program that is not linked to $n$, and $\lceil log_2(n+1) \rceil$ the size of the binary
+representation of $n$.
+
+Let's compare two possible programs for the language $L_2 = \{0^{n^3}\}^\infty_{n=1}$ and their resulting complexity.
+
+=== "A"
+
+    First we define the program **A** in pseudocode. 
+    
+    ```
+    begin
+      for I = 1 to n^3: write(0)
+     end
+    ```
+
+    In above code, the value of $n^3$ is directly used as an input to the program. Consequently, the Kolmogorov-Complexity
+    is computed as $K(A) = \lceil log(n^3+1) \rceil + c$. 
+
+=== "B"
+
+    Our second program **B** takes advantage of the fact that we do not care about the memory usage of our program. 
+  
+    ```
+    begin
+      J := n
+      J := J * J * J
+      for I = 1 to J: write(0)
+    end
+    ```
+
+    The program above has as an input the value $n$. This is better than seen in program **A**. This fact is also being
+    reflected in the Kolmogorov-Complexity $K(B) = \lceil log(n+1) \rceil + d$.
+
+### Non-compressible words
+
+Not all words can be compressed regarding the Kolmogorov-Complexity - this means that for all $n \in \mathbb{N}-\{0\}$
+there exists a word $w_n \in (\Sigma_{bool})^n$ such that $K(w_n) \geq |w_n| = n$. In other words, a word of length $n$
+exists for every $n$ that is non-compressible.
+
+The language $\{0,1\}^n$ containing only words of length $n$ for example has at least two words that are not
+compressible. The language contains $2^n$ words, but there exist not enough distinct non-empty programs with length
+strictly smaller than $n$. To be precise, only $2^n-2$ such programs exist.
+
+For the language $\{0,1\}^{\leq n}$ this gets even worse as now $n^2+1$ distinct words exist but there are still only
+$2^n-2$ distinct programs. Thus, at least half of the words have $K(x) \geq |x|$.
+
+Such words are called **random**. The same can be said for numbers. A number $n$ is called random if
+$K(n) = K(Bin(n)) \geq \lceil log_2(n) \rceil -1$.
