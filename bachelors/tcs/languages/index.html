@@ -741,19 +741,18 @@
     Kolmogorov-Complexity
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#random-objects" class="md-nav__link">
-    Random objects
+    <nav class="md-nav" aria-label="Kolmogorov-Complexity">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#non-compressible-words" class="md-nav__link">
+    Non-compressible words
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#primefactor" class="md-nav__link">
-    Primefactor
-  </a>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1407,19 +1406,18 @@
     Kolmogorov-Complexity
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#random-objects" class="md-nav__link">
-    Random objects
+    <nav class="md-nav" aria-label="Kolmogorov-Complexity">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#non-compressible-words" class="md-nav__link">
+    Non-compressible words
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#primefactor" class="md-nav__link">
-    Primefactor
-  </a>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1490,21 +1488,67 @@ to sets, eg.</p>
 L_1L_2\cup L_1L_3 = L_1(L_2\cdot L_3)
 \]</div>
 <p>An additional definition defines the <strong>homomorphism</strong> between two languages <span class="arithmatex">\(\Sigma_1^*,\Sigma_2^*\)</span> as every function
-<span class="arithmatex">\(h: \Sigma_1^* \to \Sigma_2^*\)</span> with the following properties: </p>
+<span class="arithmatex">\(h: \Sigma_1^* \to \Sigma_2^*\)</span> with the following properties:</p>
 <ol>
 <li><span class="arithmatex">\(h(\lambda)=\lambda\)</span></li>
 <li><span class="arithmatex">\(h(uv) = h(u) \cdot h(v)\)</span> for all <span class="arithmatex">\(u,v\in \Sigma_2^*\)</span>.</li>
 </ol>
 <h2 id="kolmogorov-complexity">Kolmogorov-Complexity</h2>
-<h2 id="random-objects">Random objects</h2>
-<h2 id="primefactor">Primefactor</h2>
+<p>The Kolmogorov-Complexity <span class="arithmatex">\(K\)</span> is defined as the <strong>length of the shortest (Pascal)-program which is able to generate a
+binary word <span class="arithmatex">\(x\)</span></strong>.</p>
+<p>The <span class="arithmatex">\(K\)</span> of the language <span class="arithmatex">\(L_1 = \{0^n\}^\infty_{n=1}\)</span> for example is defined as <span class="arithmatex">\(K(0^n) \leq \lceil log_2(n+1) \rceil +
+1\)</span> where <span class="arithmatex">\(c\)</span>
+is the constant part of the program that is not linked to <span class="arithmatex">\(n\)</span>, and <span class="arithmatex">\(\lceil log_2(n+1) \rceil\)</span> the size of the binary
+representation of <span class="arithmatex">\(n\)</span>.</p>
+<p>Let's compare two possible programs for the language <span class="arithmatex">\(L_2 = \{0^{n^3}\}^\infty_{n=1}\)</span> and their resulting complexity.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">A</label><label for="__tabbed_1_2">B</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p>First we define the program <strong>A</strong> in pseudocode. </p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span></pre></div></td><td class="code"><div><pre><span></span><code>begin
+  for I = 1 to n^3: write(0)
+ end
+</code></pre></div></td></tr></table></div>
+<p>In above code, the value of <span class="arithmatex">\(n^3\)</span> is directly used as an input to the program. Consequently, the Kolmogorov-Complexity
+is computed as <span class="arithmatex">\(K(A) = \lceil log(n^3+1) \rceil + c\)</span>. </p>
+</div>
+<div class="tabbed-block">
+<p>Our second program <strong>B</strong> takes advantage of the fact that we do not care about the memory usage of our program. </p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div><pre><span></span><code>begin
+  J := n
+  J := J * J * J
+  for I = 1 to J: write(0)
+end
+</code></pre></div></td></tr></table></div>
+<p>The program above has as an input the value <span class="arithmatex">\(n\)</span>. This is better than seen in program <strong>A</strong>. This fact is also being
+reflected in the Kolmogorov-Complexity <span class="arithmatex">\(K(B) = \lceil log(n+1) \rceil + d\)</span>.</p>
+</div>
+</div>
+</div>
+<h3 id="non-compressible-words">Non-compressible words</h3>
+<p>Not all words can be compressed regarding the Kolmogorov-Complexity - this means that for all <span class="arithmatex">\(n \in \mathbb{N}-\{0\}\)</span>
+there exists a word <span class="arithmatex">\(w_n \in (\Sigma_{bool})^n\)</span> such that <span class="arithmatex">\(K(w_n) \geq |w_n| = n\)</span>. In other words, a word of length <span class="arithmatex">\(n\)</span>
+exists for every <span class="arithmatex">\(n\)</span> that is non-compressible.</p>
+<p>The language <span class="arithmatex">\(\{0,1\}^n\)</span> containing only words of length <span class="arithmatex">\(n\)</span> for example has at least two words that are not
+compressible. The language contains <span class="arithmatex">\(2^n\)</span> words, but there exist not enough distinct non-empty programs with length
+strictly smaller than <span class="arithmatex">\(n\)</span>. To be precise, only <span class="arithmatex">\(2^n-2\)</span> such programs exist.</p>
+<p>For the language <span class="arithmatex">\(\{0,1\}^{\leq n}\)</span> this gets even worse as now <span class="arithmatex">\(n^2+1\)</span> distinct words exist but there are still only
+<span class="arithmatex">\(2^n-2\)</span> distinct programs. Thus, at least half of the words have <span class="arithmatex">\(K(x) \geq |x|\)</span>.</p>
+<p>Such words are called <strong>random</strong>. The same can be said for numbers. A number <span class="arithmatex">\(n\)</span> is called random if
+<span class="arithmatex">\(K(n) = K(Bin(n)) \geq \lceil log_2(n) \rceil -1\)</span>.</p>
 
   <hr>
 <div class="md-source-file">
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">October 31, 2023</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">November 4, 2023</span>
       
         <br>
         Created:

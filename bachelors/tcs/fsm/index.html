@@ -78,6 +78,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#finite-state-machines" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -678,6 +683,19 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Finite-State Machine
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
         
@@ -688,6 +706,80 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#modularity" class="md-nav__link">
+    Modularity
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#proof-of-non-existence-of-a-shorter-machine" class="md-nav__link">
+    Proof of non-existence of a shorter machine
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#proof-of-non-regularity" class="md-nav__link">
+    Proof of non-regularity
+  </a>
+  
+    <nav class="md-nav" aria-label="Proof of non-regularity">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lemma-33" class="md-nav__link">
+    Lemma 3.3
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pumping-lemma" class="md-nav__link">
+    Pumping Lemma
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kolmogorov-complexity" class="md-nav__link">
+    Kolmogorov-Complexity
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#non-deterministic-finite-state-machine" class="md-nav__link">
+    Non-deterministic finite-state machine
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1267,6 +1359,71 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#modularity" class="md-nav__link">
+    Modularity
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#proof-of-non-existence-of-a-shorter-machine" class="md-nav__link">
+    Proof of non-existence of a shorter machine
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#proof-of-non-regularity" class="md-nav__link">
+    Proof of non-regularity
+  </a>
+  
+    <nav class="md-nav" aria-label="Proof of non-regularity">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lemma-33" class="md-nav__link">
+    Lemma 3.3
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pumping-lemma" class="md-nav__link">
+    Pumping Lemma
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kolmogorov-complexity" class="md-nav__link">
+    Kolmogorov-Complexity
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#non-deterministic-finite-state-machine" class="md-nav__link">
+    Non-deterministic finite-state machine
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -1284,16 +1441,103 @@
   
 
 
-  <h1>Finite-State Machine</h1>
-
-
+<h1 id="finite-state-machines">Finite-State machines</h1>
+<p>A finite-state machine (Endlicher Automat EA) is a state-machine capable of identifying words of a specific regular
+language. Before getting started, we again need some notions.</p>
+<p>An EA is defined as a five-tuple <span class="arithmatex">\(M=(Q,\Sigma,q_0,F,\Delta)\)</span>.</p>
+<ul>
+<li><span class="arithmatex">\(Q\)</span>: finite set of states</li>
+<li><span class="arithmatex">\(\Sigma\)</span>: input alphabet (symbols that are processed by the EA)</li>
+<li><span class="arithmatex">\(q_0 \in Q\)</span>: starting state</li>
+<li><span class="arithmatex">\(F \subseteq Q\)</span>: set of accepting states</li>
+<li><span class="arithmatex">\(\delta: Q \times \Sigma \to Q\)</span>: the set of all possible state-transitions. The set essentially describes what state
+  the machine will land in for every possible state combined with every possible symbol of the alphabet.
+  <span class="arithmatex">\(\delta(q_i,aw)\)</span> outputs the state after the machine, which is currently in <span class="arithmatex">\(q_i\)</span>, read the symbol <span class="arithmatex">\(a\)</span>. The function
+  <span class="arithmatex">\(\hat{\delta}\)</span> is quite similar but outputs the state after reading the entire word</li>
+<li><span class="arithmatex">\(Kl[q_i]\)</span>: class of the state <span class="arithmatex">\(q_i\)</span>, describing the form of the words landing in said state</li>
+</ul>
+<p>The following additional terms are important.</p>
+<ul>
+<li><strong>Configuration</strong>: everything that is important for the future - <span class="arithmatex">\((q, aw) \in Q \times \Sigma^*\)</span> denoting the current
+  state and the remaining input.</li>
+<li><strong>Start-configuration</strong>: <span class="arithmatex">\((q_0, w) \in \{q_0\} \times \Sigma^*\)</span> denoting the starting state and the full input.</li>
+<li><strong>End-configuration</strong>: every configuration $\in Q \times {\lambda}, the configuration after having read the full
+  input.</li>
+<li><strong>Step</strong>: expresses the relation <span class="arithmatex">\(|_{\!\overline{\;M\;}}\)</span> between two configuration such as
+  <span class="arithmatex">\((q,w) |_{\!\overline{\;M\;}} (p,x)\)</span> with <span class="arithmatex">\(w \in \Sigma^*\)</span>, <span class="arithmatex">\(w = ax\)</span>, <span class="arithmatex">\(\delta(q,a)=p\)</span>.</li>
+<li><strong>Computation C</strong>: describes a sequence <span class="arithmatex">\(C = C_0,C_1,...,C_n\)</span> of configurations such that <span class="arithmatex">\(C_i |_{\!\overline{\;M\;}}
+  C_{i+1}\)</span>. If <span class="arithmatex">\(C_0\)</span> is the start configuration and <span class="arithmatex">\(C_n\)</span> the end configuration, C is the computation of M on input x.
+  <span class="arithmatex">\(C\)</span> can be accepting or rejecting, depending on the final state <span class="arithmatex">\(q_n\)</span>. If <span class="arithmatex">\(q_n \in F\)</span>, <span class="arithmatex">\(C\)</span> is accepting.</li>
+</ul>
+<p>Now, let's see a couple of above definition using an example state machine. The following EA accepts the language
+<span class="arithmatex">\(L=\{w\in\Sigma_{bool}^* \big|\, |w|_0 \: mod\: 3 = 0\}\)</span>.</p>
+<figure>
+<p><img alt="" src="../../../diagrams/b/tcs/ea_1.svg" /></p>
+</figure>
+<div class="arithmatex">\[
+\begin{align*}
+M &amp;= \big(Q,\Sigma,q_0,F,\delta\big)\\
+Q &amp;= \{q_0,q_1,q_2\}\\
+\Sigma &amp;= \{0,1\}\\
+q_0 &amp;= q_0\\
+F &amp;= \{q_0\}
+\end{align*}
+\]</div>
+<p>The following table describes the <span class="arithmatex">\(\delta\)</span> function.</p>
+<table>
+<thead>
+<tr>
+<th><span class="arithmatex">\(\delta\)</span></th>
+<th>0</th>
+<th>1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(q_0\)</span></td>
+<td><span class="arithmatex">\(q_1\)</span></td>
+<td><span class="arithmatex">\(q_0\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(q_1\)</span></td>
+<td><span class="arithmatex">\(q_2\)</span></td>
+<td><span class="arithmatex">\(q_1\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(q_2\)</span></td>
+<td><span class="arithmatex">\(q_0\)</span></td>
+<td><span class="arithmatex">\(q_2\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Now, assume we have input <span class="arithmatex">\(x=01101\)</span>, the following computation is made.</p>
+<div class="arithmatex">\[
+(q_0,01101) \; |_{\!\overline{\;M\;}} \; (q_1,1101) \; |_{\!\overline{\;M\;}} \; (q_1,101) \;
+|_{\!\overline{\;M\;}} \; (q_1,01) \; |_{\!\overline{\;M\;}} \; (q_2,1) \; |_{\!\overline{\;M\;}} \; (q_2,\lambda)
+\]</div>
+<p>This is equivalent to <span class="arithmatex">\(\hat{\delta}(q_0,x)=q_2\)</span></p>
+<p>The classes of above EA can be written as one generalized description with <span class="arithmatex">\(i\in\{0,1,2\}\)</span>:</p>
+<div class="arithmatex">\[
+Kl[q_i] = \big\{w \in \Sigma^* \big| \, |w|_0 \; mod \; 3 = i \big\}
+\]</div>
+<h2 id="modularity">Modularity</h2>
+<p>Big state machines for more complicated languages can be expressed as a cartesian product of multiple smaller
+state-machines.</p>
+<h2 id="proof-of-non-existence-of-a-shorter-machine">Proof of non-existence of a shorter machine</h2>
+<p>To prove the non-existence of a smaller machine, we first start by constructing a possible suspected shortest
+machine. For each state, we then provide a word with which the machine will land</p>
+<h2 id="proof-of-non-regularity">Proof of non-regularity</h2>
+<h3 id="lemma-33">Lemma 3.3</h3>
+<h3 id="pumping-lemma">Pumping Lemma</h3>
+<h3 id="kolmogorov-complexity">Kolmogorov-Complexity</h3>
+<h2 id="non-deterministic-finite-state-machine">Non-deterministic finite-state machine</h2>
 
   <hr>
 <div class="md-source-file">
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">October 31, 2023</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">November 4, 2023</span>
       
         <br>
         Created:
