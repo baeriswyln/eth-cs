@@ -1315,7 +1315,37 @@
   
 
 
-<h1 id="turing-machine">Turing-Machine</h1>
+<h1 id="turing-machine">Turing-machine</h1>
+<p>The turing-machine (TM) is a concept of a machine that can detect (almost) all languages. It is based on an infinite
+work tape (which can be seen as an infinite amount of storage) and a finite control (or unformally a "program"). The
+following diagram describes a turing-machine with all its basic components.</p>
+<figure>
+<p><img alt="" src="../../../diagrams/b/tcs/tm_1.svg" /></p>
+</figure>
+<p>The formal definition of a TM is a seven-tuple $M=(Q, \Sigma, \Gamma, \delta, q_0, q_{accept}, q_{reject}) with the
+following symbol definitions.</p>
+<ul>
+<li><span class="arithmatex">\(Q\)</span>: finite state set</li>
+<li><span class="arithmatex">\(\Sigma\)</span>: input alphabet</li>
+<li><span class="arithmatex">\(\Gamma\)</span>: working alphabet, <span class="arithmatex">\(\Sigma \in \Gamma, (¢, \_\_) \in \Gamma - \Sigma, \Gamma \cap Q = \emptyset\)</span></li>
+<li><span class="arithmatex">\(\delta\)</span>: <span class="arithmatex">\(Q- \{q_{acc}, q_{rej}\} \times \Gamma \to Q \times \Gamma \times \{L,R,N\}\)</span> where <span class="arithmatex">\(L,R,N\)</span> are the movements
+  that the R/W-head is able to do (move left 1, move right 1, neutral)</li>
+<li><span class="arithmatex">\(q_0\)</span>: start state</li>
+<li><span class="arithmatex">\(q_{accept}\)</span>: accepting state, also <span class="arithmatex">\(q_{acc}\)</span></li>
+<li><span class="arithmatex">\(q_{reject}\)</span>: rejecting state, also <span class="arithmatex">\(q_{rej}\)</span></li>
+</ul>
+<p>A <strong>configuration</strong> is an element from <span class="arithmatex">\(Konf(M)=\{¢\}\cdot \Gamma^* \cdot Q \cdot \Gamma^+ \cup Q\{¢\}\Gamma^+\)</span>. 
+<span class="arithmatex">\(\Gamma^*\)</span> describes the tape content to the left of the R/W-head, <span class="arithmatex">\(Q\)</span> the current head position, and <span class="arithmatex">\(\Gamma^+\)</span> 
+everything to the right of the head. The second element of the union describes the special case when the head is on 
+the end mark (where the head should not be able to go further to the left).</p>
+<p>The <strong>start configuration</strong> for some input <span class="arithmatex">\(x\)</span> is <span class="arithmatex">\(q_0¢x = Q_0\)</span>. Further configurations can then be denoted as 
+<span class="arithmatex">\(¢q_1qaw_2\)</span>, where <span class="arithmatex">\(q\)</span> is the head position, and <span class="arithmatex">\(a\)</span> is the symbol at said position.</p>
+<p>The following <strong>step</strong> </p>
+<ul>
+<li>No movement: <span class="arithmatex">\(\delta(q,x_i)=(p,y,N)\)</span></li>
+<li>Movement left: <span class="arithmatex">\(\delta(q,x_i)=(p,y,L)\)</span></li>
+<li>Movement right: <span class="arithmatex">\(\delta(q,x_i)=(p,y,R)\)</span></li>
+</ul>
 
   <hr>
 <div class="md-source-file">
