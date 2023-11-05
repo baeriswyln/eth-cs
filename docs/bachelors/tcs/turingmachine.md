@@ -20,16 +20,24 @@ following symbol definitions.
 - $q_{accept}$: accepting state, also $q_{acc}$
 - $q_{reject}$: rejecting state, also $q_{rej}$
 
-A **configuration** is an element from $Konf(M)=\{¢\}\cdot \Gamma^* \cdot Q \cdot \Gamma^+ \cup Q\{¢\}\Gamma^+$. 
-$\Gamma^*$ describes the tape content to the left of the R/W-head, $Q$ the current head position, and $\Gamma^+$ 
-everything to the right of the head. The second element of the union describes the special case when the head is on 
+A **configuration** is an element from $Konf(M)=\{¢\}\cdot \Gamma^* \cdot Q \cdot \Gamma^+ \cup Q\{¢\}\Gamma^+$.
+$\Gamma^*$ describes the tape content to the left of the R/W-head, $Q$ the current head position, and $\Gamma^+$
+everything to the right of the head. The second element of the union describes the special case when the head is on
 the end mark (where the head should not be able to go further to the left).
 
-The **start configuration** for some input $x$ is $q_0¢x = Q_0$. Further configurations can then be denoted as 
+The **start configuration** for some input $x$ is $q_0¢x = Q_0$. Further configurations can then be denoted as
 $¢q_1qaw_2$, where $q$ is the head position, and $a$ is the symbol at said position.
 
-The following **step** 
+Let's consider a **step** where the head is currently on $x_i$and will replace said symbol with $y$. There are three
+possible steps to be taken. Here, we transition from one config $Q_j$ to the next configuration $Q_{j+1}$:
 
-- No movement: $\delta(q,x_i)=(p,y,N)$
-- Movement left: $\delta(q,x_i)=(p,y,L)$
-- Movement right: $\delta(q,x_i)=(p,y,R)$
+- No movement: $₵x_1x_2...x_{i-i}qx_ix_{i+1} \; |_{\!\overline{\;M\;}} \; ₵x_1x_2...x_{i-i}qyx_{i+1}$ which is identical
+  to $\delta(q,x_i)=(p,y,N)$
+- Movement left: $₵x_1x_2...x_{i-i}qx_ix_{i+1} \; |_{\!\overline{\;M\;}} \; ₵x_1x_2...x_{i-i}qyx_{i+1}$ which is
+  identical to $\delta(q,x_i)=(p,y,L)$
+- Movement right:$₵x_1x_2...x_{i-i}qx_ix_{i+1} \; |_{\!\overline{\;M\;}} \; ₵x_1x_2...x_{i-i}qyx_{i+1}$ which is
+  identical to $\delta(q,x_i)=(p,y,R)$
+
+A **computation** is a sequence of configurations $Q_1,Q_2,...$ with $Q_i \; |_{\!\overline{\;M\;}} \; Q_{i+1}$. A TM
+can **run indefinitely**, or **stop** on $w_1qw_2$ with $q in \{q_{acc},q_{rej}\}. The TM can then be **accepting** if 
+it stops on the accepted state, or **rejecting** if it stops on a rejecting state or if it is running indefinitely.
