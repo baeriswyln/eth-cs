@@ -38,6 +38,7 @@ nav:
       - bachelors/tcs/index.md
       - Languages: bachelors/tcs/languages.md
       - Finite-State Machine: bachelors/tcs/fsm.md
+      - Turing-Machine: bachelors/tcs/turingmachine.md
       - Computability: bachelors/tcs/computability.md
   - Security:
     - security/index.md
