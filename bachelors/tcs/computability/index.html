@@ -78,6 +78,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#computability" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -720,6 +725,19 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Computability
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
         
@@ -730,6 +748,80 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#infinities" class="md-nav__link">
+    Infinities
+  </a>
+  
+    <nav class="md-nav" aria-label="Infinities">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hilbert-hotel" class="md-nav__link">
+    Hilbert Hotel
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#examples-of-infinities" class="md-nav__link">
+    Examples of infinities
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diagonalisation" class="md-nav__link">
+    Diagonalisation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reduction" class="md-nav__link">
+    Reduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#universal-language" class="md-nav__link">
+    Universal language
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-postsche-korrespondenzproblem-pkp" class="md-nav__link">
+    The "Post'sche Korrespondenzproblem" (PKP)
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1289,6 +1381,71 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#infinities" class="md-nav__link">
+    Infinities
+  </a>
+  
+    <nav class="md-nav" aria-label="Infinities">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hilbert-hotel" class="md-nav__link">
+    Hilbert Hotel
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#examples-of-infinities" class="md-nav__link">
+    Examples of infinities
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diagonalisation" class="md-nav__link">
+    Diagonalisation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reduction" class="md-nav__link">
+    Reduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#universal-language" class="md-nav__link">
+    Universal language
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-postsche-korrespondenzproblem-pkp" class="md-nav__link">
+    The "Post'sche Korrespondenzproblem" (PKP)
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -1306,16 +1463,68 @@
   
 
 
-  <h1>Computability</h1>
-
-
+<h1 id="computability">Computability</h1>
+<p>Computability is one of the first theories described in computer science. It is used to classify problems into 
+algorithmically solvable and non-solvable problems. </p>
+<h2 id="infinities">Infinities</h2>
+<p>At first, we must realize that there are different types of infinity. For example, there are more languages than 
+there are turing-machines: $|KodTM| &lt; |Pot(\Sigma^*)|. We know however, that an infinite amount of TMs and an infinite
+amount of words in the power product exist. Let's start with the following definition. We have the sets <span class="arithmatex">\(A\)</span> and <span class="arithmatex">\(B\)</span>.</p>
+<ul>
+<li><span class="arithmatex">\(|A| \leq |B|\)</span>, if an injective function <span class="arithmatex">\(f: A \to B\)</span> exists.</li>
+<li><span class="arithmatex">\(|A| = |B|\)</span>, if <span class="arithmatex">\(|A| \leq |B|\)</span> and <span class="arithmatex">\(|B| \leq |A|\)</span> (thus a bijective function exists).</li>
+<li><span class="arithmatex">\(|A| &lt; |B|\)</span>, if <span class="arithmatex">\(|A| \leq |B|\)</span> and no injective function <span class="arithmatex">\(f: B \to A\)</span> exists.</li>
+</ul>
+<p>We can make a first observation with the two sets <span class="arithmatex">\(|\mathbb{N}| = |\mathbb{N}_{even}|\)</span>. One would think that the first
+set would be bigger, as the second only contains every second number. However, by the above definitions, we find that
+they are equivalent as the bijective function <span class="arithmatex">\(f(i)=2i\)</span> exists. </p>
+<p>A set is defined as <strong>countable</strong> if <span class="arithmatex">\(|A|\)</span> is finite, or if <span class="arithmatex">\(|A| = |\mathbb{N}|\)</span>.</p>
+<h3 id="hilbert-hotel">Hilbert Hotel</h3>
+<p>The hilbert hotel is an intuition to compare finite sets. We assume an infinite hotel where the rooms are enumerated 
+as <span class="arithmatex">\(1,2,...\)</span>. Now, a new guest arrives and we want to find a room for this guest. We tell all the current guests that 
+they should move into the room next to theirs (<span class="arithmatex">\(i \to i+1\)</span>). Room 1 gets empty, and the new guest can move into this 
+room. </p>
+<p>Now, if a bus with an infinite amount of guests arrives, we can now tell all the guests in to the room with double 
+the room number of their current room (<span class="arithmatex">\(i \to 2i\)</span>). </p>
+<h3 id="examples-of-infinities">Examples of infinities</h3>
+<p>We have seen  that <span class="arithmatex">\(\mathbb{N}\)</span> is countable. We can also show that <span class="arithmatex">\((\mathbb{N} - \{0\}) \times (\mathbb{N} - \{0\})\)</span>
+is countable as well. We do this by setting up a matrix where the rows and the columns contain the two sets that are
+multiplied. We then define a canonical order according to the red arrows. With this order, we can enumerate all values
+present in said set. </p>
+<figure>
+<p><img alt="" src="../../../diagrams/b/tcs/countability_1.svg" /></p>
+</figure>
+<p>The same way we can also show that <span class="arithmatex">\(\mathbb{Q}\)</span> is countable. The rows contain the enumerators, and the columns the
+dividers. </p>
+<h3 id="diagonalisation">Diagonalisation</h3>
+<p>A set that is not countable is the real numbers in the interval <span class="arithmatex">\([0,1] = \{x \in \mathbb{R} \mid 0 \leq x \leq x\}\)</span>. To
+prove this, we first define the following table where we enumerate real numbers in said interval. </p>
+<figure>
+<p><img alt="" src="../../../diagrams/b/tcs/countability_2.svg" /></p>
+</figure>
+<p>We define a new entry to the set <span class="arithmatex">\(C\)</span> as <span class="arithmatex">\(C=0.C_1C_2C_3...\)</span> with <span class="arithmatex">\(C_i \neq a_{ii}, c_i \notin \{0,9\}\)</span> for all <span class="arithmatex">\(i\)</span>. 
+The new entry, however, is not part of the table as it differs on the diagonal <span class="arithmatex">\(a_{ii}\)</span> from all other entries (as 
+we defined that <span class="arithmatex">\(C_i \neq a_{ii}\)</span>).</p>
+<p>Similarly, we define a new table that combines <span class="arithmatex">\(w_i \in \Sigma^*_{bool}\)</span> and <span class="arithmatex">\(M \in KodTM\)</span>. <span class="arithmatex">\(d_ij = 1\)</span> if <span class="arithmatex">\(M_i\)</span> 
+accepts the word <span class="arithmatex">\(w_j\)</span>.   </p>
+<figure>
+<p><img alt="" src="../../../diagrams/b/tcs/countability_3.svg" /></p>
+</figure>
+<p>We now construct the diagonal language denoted as <span class="arithmatex">\(L_{diag}\)</span> is not in <span class="arithmatex">\(\mathcal{L}_{RE}\)</span> (the set of recursive 
+languages). The constructed language does not yet exist in the set <span class="arithmatex">\(L(M_i)\)</span>.</p>
+<div class="arithmatex">\[
+L_{diag} = \{w \in (\Sigma_{bool})^* \mid w = w_i \; for \; some \; i \in \mathbb{N} - \{0\} \; and \; d_{ii} = 0\}
+\]</div>
+<h2 id="reduction">Reduction</h2>
+<h2 id="universal-language">Universal language</h2>
+<h2 id="the-postsche-korrespondenzproblem-pkp">The "Post'sche Korrespondenzproblem" (PKP)</h2>
 
   <hr>
 <div class="md-source-file">
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">October 31, 2023</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">November 5, 2023</span>
       
         <br>
         Created:

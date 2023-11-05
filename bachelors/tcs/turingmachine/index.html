@@ -708,6 +708,17 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Turing-Machine
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -717,6 +728,86 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#definitions" class="md-nav__link">
+    Definitions
+  </a>
+  
+    <nav class="md-nav" aria-label="Definitions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#processing-definitions" class="md-nav__link">
+    Processing definitions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tm-example" class="md-nav__link">
+    TM example
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#multi-tape-turing-machine" class="md-nav__link">
+    Multi-tape turing-machine
+  </a>
+  
+    <nav class="md-nav" aria-label="Multi-tape turing-machine">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mtm-vs-tm" class="md-nav__link">
+    MTM vs TM
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#non-deterministic-turing-machine" class="md-nav__link">
+    Non-deterministic turing-machine
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#turing-machine-encoding" class="md-nav__link">
+    Turing-machine encoding
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1299,6 +1390,75 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#definitions" class="md-nav__link">
+    Definitions
+  </a>
+  
+    <nav class="md-nav" aria-label="Definitions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#processing-definitions" class="md-nav__link">
+    Processing definitions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tm-example" class="md-nav__link">
+    TM example
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#multi-tape-turing-machine" class="md-nav__link">
+    Multi-tape turing-machine
+  </a>
+  
+    <nav class="md-nav" aria-label="Multi-tape turing-machine">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mtm-vs-tm" class="md-nav__link">
+    MTM vs TM
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#non-deterministic-turing-machine" class="md-nav__link">
+    Non-deterministic turing-machine
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#turing-machine-encoding" class="md-nav__link">
+    Turing-machine encoding
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1316,13 +1476,15 @@
 
 
 <h1 id="turing-machine">Turing-machine</h1>
-<p>The turing-machine (TM) is a concept of a machine that can detect (almost) all languages. It is based on an infinite
-work tape (which can be seen as an infinite amount of storage) and a finite control (or unformally a "program"). The
-following diagram describes a turing-machine with all its basic components.</p>
+<p>The turing-machine (TM) is a concept of a machine that can detect (almost) all languages. The 
+<strong>Church-Turing-Thesis</strong> states that <strong>TM</strong>s are suitable formalisations of the term <em>"Algorithm"</em>.</p>
+<p>It is based on an infinite work tape (which can be seen as an infinite amount of storage) and a finite control (or
+unformally a "program"). The following diagram describes a turing-machine with all its basic components.</p>
 <figure>
 <p><img alt="" src="../../../diagrams/b/tcs/tm_1.svg" /></p>
 </figure>
-<p>The formal definition of a TM is a seven-tuple $M=(Q, \Sigma, \Gamma, \delta, q_0, q_{accept}, q_{reject}) with the
+<h2 id="definitions">Definitions</h2>
+<p>The formal definition of a TM is a seven-tuple <span class="arithmatex">\(M=(Q, \Sigma, \Gamma, \delta, q_0, q_{accept}, q_{reject})\)</span> with the
 following symbol definitions.</p>
 <ul>
 <li><span class="arithmatex">\(Q\)</span>: finite state set</li>
@@ -1334,6 +1496,7 @@ following symbol definitions.</p>
 <li><span class="arithmatex">\(q_{accept}\)</span>: accepting state, also <span class="arithmatex">\(q_{acc}\)</span></li>
 <li><span class="arithmatex">\(q_{reject}\)</span>: rejecting state, also <span class="arithmatex">\(q_{rej}\)</span></li>
 </ul>
+<h3 id="processing-definitions">Processing definitions</h3>
 <p>A <strong>configuration</strong> is an element from <span class="arithmatex">\(Konf(M)=\{¢\}\cdot \Gamma^* \cdot Q \cdot \Gamma^+ \cup Q\{¢\}\Gamma^+\)</span>.
 <span class="arithmatex">\(\Gamma^*\)</span> describes the tape content to the left of the R/W-head, <span class="arithmatex">\(Q\)</span> the current head position, and <span class="arithmatex">\(\Gamma^+\)</span>
 everything to the right of the head. The second element of the union describes the special case when the head is on
@@ -1343,16 +1506,103 @@ the end mark (where the head should not be able to go further to the left).</p>
 <p>Let's consider a <strong>step</strong> where the head is currently on <span class="arithmatex">\(x_i\)</span>and will replace said symbol with <span class="arithmatex">\(y\)</span>. There are three
 possible steps to be taken. Here, we transition from one config <span class="arithmatex">\(Q_j\)</span> to the next configuration <span class="arithmatex">\(Q_{j+1}\)</span>:</p>
 <ul>
-<li>No movement: <span class="arithmatex">\(₵x_1x_2...x_{i-i}qx_ix_{i+1} \; |_{\!\overline{\;M\;}} \; ₵x_1x_2...x_{i-i}qyx_{i+1}\)</span> which is identical
+<li>No movement: <span class="arithmatex">\(¢x_1x_2...x_{i-1}qx_ix_{i+1} \; |_{\!\overline{\;M\;}} \; ¢x_1x_2...x_{i-1}pyx_{i+1}\)</span> which is identical
   to <span class="arithmatex">\(\delta(q,x_i)=(p,y,N)\)</span></li>
-<li>Movement left: <span class="arithmatex">\(₵x_1x_2...x_{i-i}qx_ix_{i+1} \; |_{\!\overline{\;M\;}} \; ₵x_1x_2...x_{i-i}qyx_{i+1}\)</span> which is
+<li>Movement left: <span class="arithmatex">\(¢x_1x_2...x_{i-1}qx_ix_{i+1} \; |_{\!\overline{\;M\;}} \; ¢x_1x_2...x_{i-2}px_{i-1}yx_{i+1}\)</span> which is
   identical to <span class="arithmatex">\(\delta(q,x_i)=(p,y,L)\)</span></li>
-<li>Movement right:<span class="arithmatex">\(₵x_1x_2...x_{i-i}qx_ix_{i+1} \; |_{\!\overline{\;M\;}} \; ₵x_1x_2...x_{i-i}qyx_{i+1}\)</span> which is
+<li>Movement right:<span class="arithmatex">\(¢x_1x_2...x_{i-1}qx_ix_{i+1} \; |_{\!\overline{\;M\;}} \; ¢x_1x_2...x_{i-1}ypx_{i+1}\)</span> which is
   identical to <span class="arithmatex">\(\delta(q,x_i)=(p,y,R)\)</span></li>
 </ul>
 <p>A <strong>computation</strong> is a sequence of configurations <span class="arithmatex">\(Q_1,Q_2,...\)</span> with <span class="arithmatex">\(Q_i \; |_{\!\overline{\;M\;}} \; Q_{i+1}\)</span>. A TM
-can <strong>run indefinitely</strong>, or <strong>stop</strong> on <span class="arithmatex">\(w_1qw_2\)</span> with $q in {q_{acc},q_{rej}}. The TM can then be <strong>accepting</strong> if 
-it stops on the accepted state, or <strong>rejecting</strong> if it stops on a rejecting state or if it is running indefinitely.</p>
+can <strong>run indefinitely</strong>, or <strong>stop</strong> on <span class="arithmatex">\(w_1qw_2\)</span> with <span class="arithmatex">\(q \in \{q_{acc},q_{rej}\}\)</span>. The TM can then be
+<strong>accepting</strong> if it stops on the accepted state, or <strong>rejecting</strong> if it stops on a rejecting state or if it is running
+indefinitely.</p>
+<p>The <strong>accepted language</strong> is denoted as <span class="arithmatex">\(L(M) = \{w \in \Sigma^* \mid q_0 \notin w\; |_{\!\overline{\;M\;}}^* \; w_1
+q_{acc}w_2, \: w1,w2 \in \Gamma^*\}\)</span>. A language is <strong>recursively enumerable</strong> (rekursiv aufzählbar) if M is able to
+tell if a word <span class="arithmatex">\(x\)</span> is in the language, but might run indefinitely if <span class="arithmatex">\(l \notin L\)</span>. If M can also always tell if
+<span class="arithmatex">\(x \notin L\)</span>, the language is said to be <strong>recursively (decidable)</strong>.</p>
+<h3 id="tm-example">TM example</h3>
+<p>Let's look at the following example. We have seen previously that the language <span class="arithmatex">\(L = \{0^{2^n} \mid n \geq 1\}\)</span> is not
+regular. With a turing-machine, we are able to detect the language. The following process is a possible solution.</p>
+<ul>
+<li>Mark every second <span class="arithmatex">\(0\)</span></li>
+<li>Repeat the above step until only a single <span class="arithmatex">\(0\)</span> remains.</li>
+<li>The word is part of <span class="arithmatex">\(L\)</span> in case above condition applies.</li>
+</ul>
+<h2 id="multi-tape-turing-machine">Multi-tape turing-machine</h2>
+<p>The multi-tape turing-machine (MTM) is similar to the TM, but possesses a constant (but arbitrary) number of tapes. One
+of those tapes is a read-only input tape, while the others are working tapes that are empty at the beginning. See the
+following visualisation of an MTM.</p>
+<figure>
+<p><img alt="" src="../../../diagrams/b/tcs/tm_2.svg" /></p>
+</figure>
+<p>The <strong>start configuration</strong> consists of three parts:</p>
+<ul>
+<li><span class="arithmatex">\(¢w\$\)</span> on input tape for an input <span class="arithmatex">\(w\)</span>. The read-head is on <span class="arithmatex">\(¢\)</span>.</li>
+<li>Empty working tapes, where the R/W-heads are on <span class="arithmatex">\(¢\)</span></li>
+<li>Starting state <span class="arithmatex">\(q_0\)</span></li>
+</ul>
+<p>The configuration itself is denoted as <span class="arithmatex">\((q,w,i,u_1,i_1,...,u_k,i_k)\)</span> with the following definitions:</p>
+<ul>
+<li><span class="arithmatex">\(q\)</span>: current state</li>
+<li><span class="arithmatex">\(w\)</span>: input</li>
+<li><span class="arithmatex">\(i\)</span>: head-position on input</li>
+<li><span class="arithmatex">\(u_k\)</span>: content of working band <span class="arithmatex">\(k\)</span></li>
+<li><span class="arithmatex">\(i_k\)</span>: R/W-head-position on working band <span class="arithmatex">\(k\)</span></li>
+</ul>
+<p>The <strong>transition-function</strong> is now defined as:</p>
+<div class="arithmatex">\[
+\delta: Q \times (\Sigma \cup \{¢,\$\}) \times \Gamma^k \to Q \times \{L,R,N\} \times (\Gamma \times \{L,R,N\})^k
+\]</div>
+<h3 id="mtm-vs-tm">MTM vs TM</h3>
+<p>Actually, an MTM is not more powerful than a TM, because we can show that for all MTM, an equivalent TM exists. The TM
+will be way more complicated, and for one step in an MTM, a series of steps are usually required in a TM. The sole tape
+of the TM must additionally contain the stored words as well as the position of the heads.</p>
+<p>A machine <span class="arithmatex">\(A\)</span> (MTM) is equivalent to a machine <span class="arithmatex">\(B\)</span> (TM), if for all <span class="arithmatex">\(x \in \Sigma^*\)</span> all the following conditions
+apply.</p>
+<ul>
+<li><span class="arithmatex">\(A\)</span> accepts <span class="arithmatex">\(x \Leftrightarrow B\)</span> accepts <span class="arithmatex">\(x\)</span></li>
+<li><span class="arithmatex">\(A\)</span> rejects <span class="arithmatex">\(x \Leftrightarrow B\)</span> rejects <span class="arithmatex">\(x\)</span></li>
+<li><span class="arithmatex">\(A\)</span> runs indefinitely on <span class="arithmatex">\(x \Leftrightarrow B\)</span> runs indefinitely on <span class="arithmatex">\(x\)</span></li>
+</ul>
+<p>If above apply, we can say that <strong><span class="arithmatex">\(A\)</span> and <span class="arithmatex">\(B\)</span> are equivalent <span class="arithmatex">\(\Rightarrow L(A) = L(B)\)</span></strong>. However, the other way around
+<strong><span class="arithmatex">\(A\)</span> and <span class="arithmatex">\(B\)</span> are equivalent <span class="arithmatex">\(\Leftarrow L(A) = L(B)\)</span></strong> does not apply!</p>
+<h2 id="non-deterministic-turing-machine">Non-deterministic turing-machine</h2>
+<p>The non-deterministic turing-machine (NTM) is an extension to the TM. It's formally defined as the seven-tuple
+<span class="arithmatex">\(M = (Q,\Sigma,\Gamma,\delta,q_0,q_{acc},q_{rej})\)</span> where <span class="arithmatex">\(\delta\)</span> has been redefined as 
+<span class="arithmatex">\(\delta: (Q-\{q_acc,q_rej\}) \times \Gamma \to Pot(Q \times \Gamma \times \{L,R,N\})\)</span>. Additionally, delta must make 
+sure that the tapes are not left. </p>
+<p>The non-determinism is similar to the one described for the finite-state machines; it is possible for the NTM to 
+transition into multiple states on the same input, head position and current state. </p>
+<p>Let M be a NTM, and <span class="arithmatex">\(x \in \Sigma^*\)</span>. The NTM can be described as a computational tree <span class="arithmatex">\(T_{M,x}\)</span> with a root such that: </p>
+<ul>
+<li>(i): Nodes are labeled with configurations</li>
+<li>(ii): root as the input degree 0, labeled with the starting configuration <span class="arithmatex">\(q_0¢x\)</span></li>
+<li>(iii): nodes with label C has children which are all possible following configurations of C.</li>
+</ul>
+<p>Analog to the EA, it is also possible to express every NTM as a TM. </p>
+<h2 id="turing-machine-encoding">Turing-machine encoding</h2>
+<p>All turing-machines can be encoded as binary strings. The following is an arbitrary definition that was seen in the 
+lectures. Other encodings are possible. </p>
+<div class="arithmatex">\[
+\begin{align*}
+M&amp;=(Q,\Sigma,\Gamma,\delta,q_o,q_{acc},q_{rej})\\
+Q&amp;=\{q_0,q_1,...,q_{acc},q_{rej}\} \;\; \Gamma = \{A_1,...,A_m\}\\
+Code(q_1) &amp;= 10^{i+1}1, \; Code(q_{acc})=10^{m+2}1, \; Code(q_{rej})=10^{m+3}1\\
+Code(A_j) &amp;= 110^j11\\
+Code(N)&amp;=1110111, \; Code(R)=11100111, \; Code(L) = 111000111\\
+Code(\delta(p,A)=(q,A_n,d))&amp;=\#Code(p)Code(A)Code(q)Code(A_n)Code(d)\#\\
+Code(M) &amp;= \#0^{m+3}\#0^\Gamma\#\#Code(Transition1)\#Code(Transition2)\#...
+\end{align*}
+\]</div>
+<p>We observe that the above encoding is not a binary encoding as the alphabet used is <span class="arithmatex">\(\{0,1,\#\}\)</span>. We therefore 
+define the function <strong>h</strong> converting the ternary encoding into a binary encoding and is defined as follows.</p>
+<div class="arithmatex">\[
+\begin{align*}
+h&amp;: \; \{0,1,\#\}^* \to \{0,1\}^*\\
+Kod(M) &amp;= h(Code(M))
+\end{align*}
+\]</div>
 
   <hr>
 <div class="md-source-file">
