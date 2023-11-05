@@ -14,7 +14,7 @@
         <link rel="prev" href="../languages/">
       
       
-        <link rel="next" href="../computability/">
+        <link rel="next" href="../turingmachine/">
       
       
       <link rel="icon" href="../../../assets/images/favicon.png">
@@ -611,6 +611,8 @@
       
         
       
+        
+      
     
     
     
@@ -781,6 +783,26 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../turingmachine/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Turing-Machine
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -1522,22 +1544,189 @@ Kl[q_i] = \big\{w \in \Sigma^* \big| \, |w|_0 \; mod \; 3 = i \big\}
 \]</div>
 <h2 id="modularity">Modularity</h2>
 <p>Big state machines for more complicated languages can be expressed as a cartesian product of multiple smaller
-state-machines.</p>
+state-machines. In below picture, we see three machines with the following definitions:</p>
+<div class="arithmatex">\[
+\begin{align*}
+L_{top} &amp;= \{|w|_a \; mod \; 3 = 1\}\\
+L_{left} &amp;= \{ubbv \; \mid \; u,v \in \{a,b\}\}\\
+L_{comb} &amp;= \{|w|_a \; mod \; 3 = 1\ \land ubbv \; \mid \; u,v \in \{a,b\} \}
+\end{align*}
+\]</div>
+<figure>
+<p><img alt="" src="../../../diagrams/b/tcs/ea_2.svg" /></p>
+</figure>
+<p>The formal definition of the above machine:</p>
+<div class="arithmatex">\[
+\begin{align*}
+M &amp;= \{Q, \Sigma, \delta, q_0, F\}\\
+Q &amp;= Q_{top} \times Q_{left}\\
+q_0 &amp;= (p_0, q_0)\\
+\delta &amp;= (\delta_{top}(q,a),\delta_{left}(p,a))\\
+F &amp;= L(M_{top}) \cap L(M_{left})
+\end{align*}
+\]</div>
 <h2 id="proof-of-non-existence-of-a-shorter-machine">Proof of non-existence of a shorter machine</h2>
 <p>To prove the non-existence of a smaller machine, we first start by constructing a possible suspected shortest
-machine. For each state, we then provide a word with which the machine will land</p>
+machine. For each state, we then provide a word with which the machine will land in that state after having processed
+the word.</p>
+<p>Then, all the provided words must be compared pairwise, and for all pairs, a suffix must be found with which one of
+the words will be part of the langauge while the other won't.</p>
+<p>Let's look at an example. Below machine is suspected to be the shortest possible machine detecting the language
+$L = {w \in {0,1}^<em> \; \mid \; a11b, \; with \; a,b \in {a,b}^</em> \in }</p>
+<figure>
+<p><img alt="" src="../../../diagrams/b/tcs/ea_3.svg" /></p>
+</figure>
+<p>We start by constructing three words that land in a different state. See the words <span class="arithmatex">\(\lambda,1,11\)</span>. Now, the following
+table compares the words pairwise and provides a suffix <span class="arithmatex">\(z\)</span> that brings only one of the words into the language.</p>
+<table>
+<thead>
+<tr>
+<th><span class="arithmatex">\(z\)</span></th>
+<th><span class="arithmatex">\(\lambda\)</span></th>
+<th>1</th>
+<th>11</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(\lambda\)</span></td>
+<td>-</td>
+<td>1</td>
+<td><span class="arithmatex">\(\lambda\)</span></td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>-</td>
+<td><span class="arithmatex">\(\lambda\)</span></td>
+</tr>
+<tr>
+<td>11</td>
+<td><span class="arithmatex">\(\lambda\)</span></td>
+<td><span class="arithmatex">\(\lambda\)</span></td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
 <h2 id="proof-of-non-regularity">Proof of non-regularity</h2>
+<p>Some languages are non-regular. This means that no finite-state machine exists that detects said language. We now
+discuss three approaches to prove a non-regularity.</p>
 <h3 id="lemma-33">Lemma 3.3</h3>
+<p>In case that two words <span class="arithmatex">\(x,y\)</span> with <span class="arithmatex">\(x \neq y\)</span> land in the same state when being processed by an FSM <span class="arithmatex">\(A\)</span>
+(<span class="arithmatex">\(\hat{\delta}(q_o,x) = \hat{\delta}(q_o,y))\)</span>, the following statement is true: <span class="arithmatex">\(xz \in L(A) \Leftrightarrow yz \in L
+(A)\)</span>. We observe that the machine does not store the past of the word - it always only looks at the current and the
+future state.</p>
+<p>We then construct an infinite set of words <span class="arithmatex">\(x_1,x_2,...\)</span> such that <span class="arithmatex">\(x_iz \in L\)</span> but
+<span class="arithmatex">\(x_jz \notin L\)</span>.</p>
+<p>We first constructed an infinite set of words. By definition, there cannot exist a machine that can distinguish all
+of those words, and there must therefore exist two words (here <span class="arithmatex">\(x_i\)</span> and <span class="arithmatex">\(x_j\)</span>) which will arrive in the same state.
+This, however, was disproven by above statement.</p>
+<p>Let's look for example at the language $L = {0<sup>{n</sup>2} \; \mid \; n \in \mathbb{N}}. We construct the following infinite
+set of words:</p>
+<ul>
+<li><span class="arithmatex">\(0\)</span></li>
+<li><span class="arithmatex">\(0^4\)</span></li>
+<li>$...</li>
+<li><span class="arithmatex">\(0^{n_i^2} \cdot 0^{2i+1} = 0^{(n_i+1)^2} \in L\)</span></li>
+<li><span class="arithmatex">\(0^{n_j^2} \cdot 0^{2i+1} = 0^{(n_i+1)^2} \notin L\)</span></li>
+</ul>
 <h3 id="pumping-lemma">Pumping Lemma</h3>
+<p>To prove the non-regularity through the pumping lemma, we search for <strong>one specific split</strong> of a <span class="arithmatex">\(w \in L\)</span> with
+$|w| \geq n_0: <span class="arithmatex">\(w =yxz\)</span>. We are free to choose any arbitrary word <span class="arithmatex">\(w\)</span>, but the split must be generalised through below
+properties.</p>
+<p>For a regular language, this split must have the following properties:</p>
+<ul>
+<li><span class="arithmatex">\(|yx| \leq n_0\)</span></li>
+<li><span class="arithmatex">\(|x| \geq 1\)</span></li>
+<li>Either all <span class="arithmatex">\(yx^kz (k\in \mathbb{N})\)</span> are in <span class="arithmatex">\(L\)</span> or none.</li>
+</ul>
+<p>Let's look for example at the language <span class="arithmatex">\(L = \{w \in \{a,b,c\}^* \; \mid \; |w|_{ab} = |w|_{ba}\}\)</span>. We define our word
+<span class="arithmatex">\(w = (abc)^{n_0}(bac)^{n_0} \in L\)</span>. Due to above properties, we know that <span class="arithmatex">\(x\)</span> must be in the first part of the word,
+and we
+can prove the non-regularity by looking at the following two cases:</p>
+<ul>
+<li>Case <span class="arithmatex">\(x=c\)</span>: <span class="arithmatex">\(yx^0z = ...abcababc...\)</span>, we now have an additional <span class="arithmatex">\(ba\)</span> in the word, and thus <span class="arithmatex">\(yx^0z \notin L\)</span>.</li>
+<li>Case <span class="arithmatex">\(x\neq c\)</span>: <span class="arithmatex">\(x\)</span> contains at least one <span class="arithmatex">\(a\)</span> or <span class="arithmatex">\(b\)</span>. <span class="arithmatex">\(yx^0z\)</span> is thus missing at least one <span class="arithmatex">\(ab\)</span>.</li>
+</ul>
+<p>Now, because the original word <span class="arithmatex">\(w\)</span> is in the language <span class="arithmatex">\(L\)</span> and for any possible split the word will not be in <span class="arithmatex">\(L\)</span>, we
+have contradiction to the three properties defined above.</p>
 <h3 id="kolmogorov-complexity">Kolmogorov-Complexity</h3>
+<p>The non-regularity proof through Kolmogorov-Complexity uses a contradiction. With the information received from the
+course, we only consider languages over the binary alphabet. It would be possible to extend the proof on other
+alphabets, but we have not proven this possibility in the course.</p>
+<p>We therefore first assume that a given language <span class="arithmatex">\(L\)</span> is regular. We construct a second language <span class="arithmatex">\(L' = \{y \in \{0,1\}
+^* \mid xy \in L\}\)</span>. Then, we look at a word <span class="arithmatex">\(z\)</span> (not necessarily in <span class="arithmatex">\(L\)</span>), which is defined with some <span class="arithmatex">\(n \in \mathbb
+{N}\)</span>. <span class="arithmatex">\(z\)</span> is considered to be the <span class="arithmatex">\(m\)</span>-th word in <span class="arithmatex">\(L'\)</span> (is constant for one proof, but can change for different proofs).</p>
+<p>If we can show that <span class="arithmatex">\(z\)</span> is always the <span class="arithmatex">\(m\)</span>-th word in <span class="arithmatex">\(L'\)</span>, we can conclude that <span class="arithmatex">\(z\)</span> is not depending on <span class="arithmatex">\(n\)</span> but on the
+language <span class="arithmatex">\(L\)</span>. The Kolmogorov-Complexity can, in this case, be written as a constant: <span class="arithmatex">\(K(z) \leq \lceil log_2(m+1)+c=c'\)</span>.</p>
+<p>As there are only infinitely many programs of said constant length, but there are infinitely many words in <span class="arithmatex">\(L\)</span>, we
+have a contradiction and thus <span class="arithmatex">\(L\)</span> cannot be regular.</p>
+<p>Let's have an example. We want to prove that the language <span class="arithmatex">\(L_1 = \{0^{F_n} \mid n \in \mathbb{N}\}\)</span> where <span class="arithmatex">\(F_n\)</span> is the
+<span class="arithmatex">\(n\)</span>-th fibonacci number is not regular. <span class="arithmatex">\(F_0 = 0, F_1 = 1, F_{n+1} = F_n + F_{n-1}\)</span> for <span class="arithmatex">\(n\geq 1\)</span>.</p>
+<p>We first assume that <span class="arithmatex">\(L_1\)</span> is regular (as we will prove the non-regularity by contradiction). We consider the word
+<span class="arithmatex">\(z = 0^{F_{n+1}-F_n-1}\)</span>, which can be simplified to <span class="arithmatex">\(z = 0^{F_{n-1}-1}, n \geq 2, n \in \mathbb{N}\)</span>. Now, we claim that
+z is the first word in canonical order in the following language:</p>
+<div class="arithmatex">\[
+L' = \{y \in \{0,1\}^* \mid 0^{F_n+1}y \in L_1\}
+\]</div>
 <h2 id="non-deterministic-finite-state-machine">Non-deterministic finite-state machine</h2>
+<p>The Non-deterministic finite-state machines (NEA) are quite similar to the EAs, but with the difference that it can be
+in multiple states at once; a state can have multiple outgoing transitions for the same symbol. Its formal definition
+is almost identical: <span class="arithmatex">\(M = (Q, \Sigma, \delta, q_0, F)\)</span> where <span class="arithmatex">\(\delta\)</span> has the new definition <span class="arithmatex">\(\delta: Q \times
+\Sigma \to Pot(Q)\)</span>.</p>
+<p>If, after having processed the entire word, at least one final state is an accepting state, the word is in the
+language. Actually, the sole difference between the NEA and the EA is that some languages have simpler representations
+as NEAs. Everything else is identical as all NEAs can be converted to an EA.</p>
+<p>Let's convert the following NEA into an EA.</p>
+<figure>
+<p><img alt="" src="../../../diagrams/b/tcs/ea_4.svg" /></p>
+</figure>
+<p>We first start constructing a transition table. In the first row we see that there are two possible states after having
+read the symbol <strong>1</strong>. We construct thus a new state that consists of the two possible states, and, in a next step, look
+at the possible transitions from those states.</p>
+<table>
+<thead>
+<tr>
+<th><strong>Q</strong></th>
+<th><strong>0</strong></th>
+<th><strong>1</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(q_0\)</span></td>
+<td><span class="arithmatex">\(q_0\)</span></td>
+<td><span class="arithmatex">\(\{q_0,q_1\}\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(\{q_0,q_1\}\)</span></td>
+<td><span class="arithmatex">\(q_0\)</span></td>
+<td><span class="arithmatex">\(\{q_0,q_1,q_2\}\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(\{q_0,q_1,q_2\}\)</span></td>
+<td><span class="arithmatex">\(\{q_0,q_2\}\)</span></td>
+<td><span class="arithmatex">\(\{q_0,q_1,q_2\}\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(\{q_0,q_2\}\)</span></td>
+<td><span class="arithmatex">\(\{q_0,q_2\}\)</span></td>
+<td><span class="arithmatex">\(\{q_0,q_1,q_2\}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Once all states in the second and third column have been added to the column <strong>Q</strong>, we can start constructing the EA,
+which looks as follows. Notice that all states containing the accepting state <span class="arithmatex">\(q_2\)</span> are accepting states in the EA.</p>
+<figure>
+<p><img alt="" src="../../../diagrams/b/tcs/ea_5.svg" /></p>
+</figure>
 
   <hr>
 <div class="md-source-file">
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">November 4, 2023</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">November 5, 2023</span>
       
         <br>
         Created:
@@ -1590,13 +1779,13 @@ machine. For each state, we then provide a word with which the machine will land
         
         
           
-          <a href="../computability/" class="md-footer__link md-footer__link--next" aria-label="Next: Computability">
+          <a href="../turingmachine/" class="md-footer__link md-footer__link--next" aria-label="Next: Turing-Machine">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Computability
+                Turing-Machine
               </div>
             </div>
             <div class="md-footer__button md-icon">
