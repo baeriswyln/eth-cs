@@ -1466,7 +1466,7 @@
 <h1 id="finite-state-machines">Finite-State machines</h1>
 <p>A finite-state machine (Endlicher Automat EA) is a state-machine capable of identifying words of a specific regular
 language. Before getting started, we again need some notions.</p>
-<p>An EA is defined as a five-tuple <span class="arithmatex">\(M=(Q,\Sigma,q_0,F,\Delta)\)</span>.</p>
+<p>An EA is defined as a five-tuple <span class="arithmatex">\(M=(Q,\Sigma,q_0,F,\delta)\)</span>.</p>
 <ul>
 <li><span class="arithmatex">\(Q\)</span>: finite set of states</li>
 <li><span class="arithmatex">\(\Sigma\)</span>: input alphabet (symbols that are processed by the EA)</li>
@@ -1483,12 +1483,13 @@ language. Before getting started, we again need some notions.</p>
 <li><strong>Configuration</strong>: everything that is important for the future - <span class="arithmatex">\((q, aw) \in Q \times \Sigma^*\)</span> denoting the current
   state and the remaining input.</li>
 <li><strong>Start-configuration</strong>: <span class="arithmatex">\((q_0, w) \in \{q_0\} \times \Sigma^*\)</span> denoting the starting state and the full input.</li>
-<li><strong>End-configuration</strong>: every configuration $\in Q \times {\lambda}, the configuration after having read the full
+<li><strong>End-configuration</strong>: every configuration <span class="arithmatex">\(\in Q \times \{\lambda\}\)</span>, the configuration after having read the full
   input.</li>
 <li><strong>Step</strong>: expresses the relation <span class="arithmatex">\(|_{\!\overline{\;M\;}}\)</span> between two configuration such as
   <span class="arithmatex">\((q,w) |_{\!\overline{\;M\;}} (p,x)\)</span> with <span class="arithmatex">\(w \in \Sigma^*\)</span>, <span class="arithmatex">\(w = ax\)</span>, <span class="arithmatex">\(\delta(q,a)=p\)</span>.</li>
 <li><strong>Computation C</strong>: describes a sequence <span class="arithmatex">\(C = C_0,C_1,...,C_n\)</span> of configurations such that <span class="arithmatex">\(C_i |_{\!\overline{\;M\;}}
-  C_{i+1}\)</span>. If <span class="arithmatex">\(C_0\)</span> is the start configuration and <span class="arithmatex">\(C_n\)</span> the end configuration, C is the computation of M on input x.
+  C_{i+1}\)</span>. If <span class="arithmatex">\(C_0\)</span> is the start configuration and <span class="arithmatex">\(C_n\)</span> the end configuration, <span class="arithmatex">\(C\)</span> is the computation of <span class="arithmatex">\(M\)</span> on input
+  <span class="arithmatex">\(x\)</span>.
   <span class="arithmatex">\(C\)</span> can be accepting or rejecting, depending on the final state <span class="arithmatex">\(q_n\)</span>. If <span class="arithmatex">\(q_n \in F\)</span>, <span class="arithmatex">\(C\)</span> is accepting.</li>
 </ul>
 <p>Now, let's see a couple of above definition using an example state machine. The following EA accepts the language
@@ -1572,7 +1573,7 @@ the word.</p>
 <p>Then, all the provided words must be compared pairwise, and for all pairs, a suffix must be found with which one of
 the words will be part of the langauge while the other won't.</p>
 <p>Let's look at an example. Below machine is suspected to be the shortest possible machine detecting the language
-$L = {w \in {0,1}^<em> \; \mid \; a11b, \; with \; a,b \in {a,b}^</em> \in }</p>
+<span class="arithmatex">\(L = \{w \in \{0,1\}^* \; \mid \; a11b, \; with \; a,b \in \{a,b\}^* \in \}\)</span></p>
 <figure>
 <p><img alt="" src="../../../diagrams/b/tcs/ea_3.svg" /></p>
 </figure>
@@ -1621,18 +1622,19 @@ future state.</p>
 <p>We first constructed an infinite set of words. By definition, there cannot exist a machine that can distinguish all
 of those words, and there must therefore exist two words (here <span class="arithmatex">\(x_i\)</span> and <span class="arithmatex">\(x_j\)</span>) which will arrive in the same state.
 This, however, was disproven by above statement.</p>
-<p>Let's look for example at the language $L = {0<sup>{n</sup>2} \; \mid \; n \in \mathbb{N}}. We construct the following infinite
+<p>Let's look for example at the language <span class="arithmatex">\(L = \{0^{n^2} \; \mid \; n \in \mathbb{N}\}\)</span>. We construct the following
+infinite
 set of words:</p>
 <ul>
 <li><span class="arithmatex">\(0\)</span></li>
 <li><span class="arithmatex">\(0^4\)</span></li>
-<li>$...</li>
+<li><span class="arithmatex">\(...\)</span></li>
 <li><span class="arithmatex">\(0^{n_i^2} \cdot 0^{2i+1} = 0^{(n_i+1)^2} \in L\)</span></li>
 <li><span class="arithmatex">\(0^{n_j^2} \cdot 0^{2i+1} = 0^{(n_i+1)^2} \notin L\)</span></li>
 </ul>
 <h3 id="pumping-lemma">Pumping Lemma</h3>
 <p>To prove the non-regularity through the pumping lemma, we search for <strong>one specific split</strong> of a <span class="arithmatex">\(w \in L\)</span> with
-$|w| \geq n_0: <span class="arithmatex">\(w =yxz\)</span>. We are free to choose any arbitrary word <span class="arithmatex">\(w\)</span>, but the split must be generalised through below
+<span class="arithmatex">\(|w| \geq n_0\)</span>: <span class="arithmatex">\(w =yxz\)</span>. We are free to choose any arbitrary word <span class="arithmatex">\(w\)</span>, but the split must be generalised through below
 properties.</p>
 <p>For a regular language, this split must have the following properties:</p>
 <ul>
@@ -1654,11 +1656,12 @@ have contradiction to the three properties defined above.</p>
 <p>The non-regularity proof through Kolmogorov-Complexity uses a contradiction. With the information received from the
 course, we only consider languages over the binary alphabet. It would be possible to extend the proof on other
 alphabets, but we have not proven this possibility in the course.</p>
-<p>We therefore first assume that a given language <span class="arithmatex">\(L\)</span> is regular. We construct a second language <span class="arithmatex">\(L' = \{y \in \{0,1\}
+<p>We first assume that a given language <span class="arithmatex">\(L\)</span> is regular. We construct a second language <span class="arithmatex">\(L' = \{y \in \{0,1\}
 ^* \mid xy \in L\}\)</span>. Then, we look at a word <span class="arithmatex">\(z\)</span> (not necessarily in <span class="arithmatex">\(L\)</span>), which is defined with some <span class="arithmatex">\(n \in \mathbb
 {N}\)</span>. <span class="arithmatex">\(z\)</span> is considered to be the <span class="arithmatex">\(m\)</span>-th word in <span class="arithmatex">\(L'\)</span> (is constant for one proof, but can change for different proofs).</p>
 <p>If we can show that <span class="arithmatex">\(z\)</span> is always the <span class="arithmatex">\(m\)</span>-th word in <span class="arithmatex">\(L'\)</span>, we can conclude that <span class="arithmatex">\(z\)</span> is not depending on <span class="arithmatex">\(n\)</span> but on the
-language <span class="arithmatex">\(L\)</span>. The Kolmogorov-Complexity can, in this case, be written as a constant: <span class="arithmatex">\(K(z) \leq \lceil log_2(m+1)+c=c'\)</span>.</p>
+language <span class="arithmatex">\(L\)</span>. The Kolmogorov-Complexity can, in this case, be written as a constant: <span class="arithmatex">\(K(z) \leq \lceil log_2(m+1) \rceil
++c=c'\)</span>.</p>
 <p>As there are only infinitely many programs of said constant length, but there are infinitely many words in <span class="arithmatex">\(L\)</span>, we
 have a contradiction and thus <span class="arithmatex">\(L\)</span> cannot be regular.</p>
 <p>Let's have an example. We want to prove that the language <span class="arithmatex">\(L_1 = \{0^{F_n} \mid n \in \mathbb{N}\}\)</span> where <span class="arithmatex">\(F_n\)</span> is the
@@ -1669,6 +1672,14 @@ z is the first word in canonical order in the following language:</p>
 <div class="arithmatex">\[
 L' = \{y \in \{0,1\}^* \mid 0^{F_n+1}y \in L_1\}
 \]</div>
+<p>We find this first word as <span class="arithmatex">\(0^{F_n+1}z = 0^{F_n+1}0^{F_{n+1}-F_n-1}=F^F_{n+1} \in L_1\)</span>. There is no shorter word
+possible, as we know that the fibonacci sequence is growing monotonically. This shows us that <span class="arithmatex">\(c\)</span> depends on <span class="arithmatex">\(L_1\)</span>, but
+not on <span class="arithmatex">\(n\)</span> and we arrive at the following formula.</p>
+<div class="arithmatex">\[
+K(z)=K(0^F_{n-1}-1) \leq \lceil log_2(1+1) \rceil c = 1 + c
+\]</div>
+<p>We arrive at the conclusion that the Kolmogorov constant is <span class="arithmatex">\(1 + c\)</span>. This is telling us that only a finite amount of
+programs egxists. However, as there are infinitely many words <span class="arithmatex">\(z\)</span>, we have a contradiction.</p>
 <h2 id="non-deterministic-finite-state-machine">Non-deterministic finite-state machine</h2>
 <p>The Non-deterministic finite-state machines (NEA) are quite similar to the EAs, but with the difference that it can be
 in multiple states at once; a state can have multiple outgoing transitions for the same symbol. Its formal definition
@@ -1726,7 +1737,7 @@ which looks as follows. Notice that all states containing the accepting state <s
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">November 5, 2023</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">November 6, 2023</span>
       
         <br>
         Created:
