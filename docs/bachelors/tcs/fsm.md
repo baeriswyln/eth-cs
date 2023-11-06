@@ -3,7 +3,7 @@
 A finite-state machine (Endlicher Automat EA) is a state-machine capable of identifying words of a specific regular
 language. Before getting started, we again need some notions.
 
-An EA is defined as a five-tuple $M=(Q,\Sigma,q_0,F,\Delta)$.
+An EA is defined as a five-tuple $M=(Q,\Sigma,q_0,F,\delta)$.
 
 - $Q$: finite set of states
 - $\Sigma$: input alphabet (symbols that are processed by the EA)
@@ -20,12 +20,13 @@ The following additional terms are important.
 - **Configuration**: everything that is important for the future - $(q, aw) \in Q \times \Sigma^*$ denoting the current
   state and the remaining input.
 - **Start-configuration**: $(q_0, w) \in \{q_0\} \times \Sigma^*$ denoting the starting state and the full input.
-- **End-configuration**: every configuration $\in Q \times \{\lambda\}, the configuration after having read the full
+- **End-configuration**: every configuration $\in Q \times \{\lambda\}$, the configuration after having read the full
   input.
 - **Step**: expresses the relation $|_{\!\overline{\;M\;}}$ between two configuration such as
   $(q,w) |_{\!\overline{\;M\;}} (p,x)$ with $w \in \Sigma^*$, $w = ax$, $\delta(q,a)=p$.
 - **Computation C**: describes a sequence $C = C_0,C_1,...,C_n$ of configurations such that $C_i |_{\!\overline{\;M\;}}
-  C_{i+1}$. If $C_0$ is the start configuration and $C_n$ the end configuration, C is the computation of M on input x.
+  C_{i+1}$. If $C_0$ is the start configuration and $C_n$ the end configuration, $C$ is the computation of $M$ on input
+  $x$.
   $C$ can be accepting or rejecting, depending on the final state $q_n$. If $q_n \in F$, $C$ is accepting.
 
 Now, let's see a couple of above definition using an example state machine. The following EA accepts the language
@@ -107,7 +108,7 @@ Then, all the provided words must be compared pairwise, and for all pairs, a suf
 the words will be part of the langauge while the other won't.
 
 Let's look at an example. Below machine is suspected to be the shortest possible machine detecting the language
-$L = \{w \in \{0,1\}^* \; \mid \; a11b, \; with \; a,b \in \{a,b\}^* \in \}
+$L = \{w \in \{0,1\}^* \; \mid \; a11b, \; with \; a,b \in \{a,b\}^* \in \}$
 
 <figure markdown>
 ![](../../diagrams/b/tcs/ea_3.svg)
@@ -141,19 +142,20 @@ We first constructed an infinite set of words. By definition, there cannot exist
 of those words, and there must therefore exist two words (here $x_i$ and $x_j$) which will arrive in the same state.
 This, however, was disproven by above statement.
 
-Let's look for example at the language $L = \{0^{n^2} \; \mid \; n \in \mathbb{N}\}. We construct the following infinite
+Let's look for example at the language $L = \{0^{n^2} \; \mid \; n \in \mathbb{N}\}$. We construct the following
+infinite
 set of words:
 
 - $0$
 - $0^4$
-- $...
+- $...$
 - $0^{n_i^2} \cdot 0^{2i+1} = 0^{(n_i+1)^2} \in L$
 - $0^{n_j^2} \cdot 0^{2i+1} = 0^{(n_i+1)^2} \notin L$
 
 ### Pumping Lemma
 
 To prove the non-regularity through the pumping lemma, we search for **one specific split** of a $w \in L$ with
-$|w| \geq n_0: $w =yxz$. We are free to choose any arbitrary word $w$, but the split must be generalised through below
+$|w| \geq n_0$: $w =yxz$. We are free to choose any arbitrary word $w$, but the split must be generalised through below
 properties.
 
 For a regular language, this split must have the following properties:
@@ -179,12 +181,13 @@ The non-regularity proof through Kolmogorov-Complexity uses a contradiction. Wit
 course, we only consider languages over the binary alphabet. It would be possible to extend the proof on other
 alphabets, but we have not proven this possibility in the course.
 
-We therefore first assume that a given language $L$ is regular. We construct a second language $L' = \{y \in \{0,1\}
+We first assume that a given language $L$ is regular. We construct a second language $L' = \{y \in \{0,1\}
 ^* \mid xy \in L\}$. Then, we look at a word $z$ (not necessarily in $L$), which is defined with some $n \in \mathbb
 {N}$. $z$ is considered to be the $m$-th word in $L'$ (is constant for one proof, but can change for different proofs).
 
 If we can show that $z$ is always the $m$-th word in $L'$, we can conclude that $z$ is not depending on $n$ but on the
-language $L$. The Kolmogorov-Complexity can, in this case, be written as a constant: $K(z) \leq \lceil log_2(m+1)+c=c'$.
+language $L$. The Kolmogorov-Complexity can, in this case, be written as a constant: $K(z) \leq \lceil log_2(m+1) \rceil
++c=c'$.
 
 As there are only infinitely many programs of said constant length, but there are infinitely many words in $L$, we
 have a contradiction and thus $L$ cannot be regular.
@@ -199,6 +202,17 @@ z is the first word in canonical order in the following language:
 $$
 L' = \{y \in \{0,1\}^* \mid 0^{F_n+1}y \in L_1\}
 $$
+
+We find this first word as $0^{F_n+1}z = 0^{F_n+1}0^{F_{n+1}-F_n-1}=F^F_{n+1} \in L_1$. There is no shorter word
+possible, as we know that the fibonacci sequence is growing monotonically. This shows us that $c$ depends on $L_1$, but
+not on $n$ and we arrive at the following formula.
+
+$$
+K(z)=K(0^F_{n-1}-1) \leq \lceil log_2(1+1) \rceil c = 1 + c
+$$
+
+We arrive at the conclusion that the Kolmogorov constant is $1 + c$. This is telling us that only a finite amount of
+programs egxists. However, as there are infinitely many words $z$, we have a contradiction.
 
 ## Non-deterministic finite-state machine
 
