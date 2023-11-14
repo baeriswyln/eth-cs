@@ -1289,6 +1289,34 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#general-notions" class="md-nav__link">
+    General notions
+  </a>
+  
+    <nav class="md-nav" aria-label="General notions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#l_p-norm" class="md-nav__link">
+    \(l_p\)-norm
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1306,13 +1334,37 @@
 
 
 <h1 id="reliable-and-trustworthy-artificial-intelligence">Reliable and Trustworthy Artificial Intelligence</h1>
+<h2 id="general-notions">General notions</h2>
+<h3 id="l_p-norm"><span class="arithmatex">\(l_p\)</span>-norm</h3>
+<p>The similarity of two vectors <span class="arithmatex">\(x\)</span> and <span class="arithmatex">\(x'\)</span> is usually captured through an <span class="arithmatex">\(l_p\)</span> norm. In the following formula, 
+<span class="arithmatex">\(\epsilon\)</span> is a threshold of similarity that can be arbitrary. </p>
+<div class="arithmatex">\[
+x \sim x' \; \mathrm{iff} \; ||x-x'||_p &lt; \epsilon
+\]</div>
+<p>Now, <span class="arithmatex">\(||x-x'||_p\)</span> specifies the distance between the two vectors, which is computed follows, where <span class="arithmatex">\(x_i\)</span> is the <span class="arithmatex">\(i\)</span>-th
+component of the vector <span class="arithmatex">\(x\)</span>.</p>
+<div class="arithmatex">\[
+||x-x'||_p = \Bigg(\sum_{i=1}^n |x_i-x_i'|^p\Bigg)^{\frac{1}{p}}
+\]</div>
+<p>Some of the <span class="arithmatex">\(l_p\)</span> norms are used more often than others. The following list contains important norms.</p>
+<ul>
+<li><span class="arithmatex">\(l_0\)</span>: adds up all changes. Counts, for example, the number of changed pixels in an image</li>
+<li><span class="arithmatex">\(l_2\)</span>: Euclidean distance between <span class="arithmatex">\(x\)</span> and <span class="arithmatex">\(x'\)</span></li>
+<li><span class="arithmatex">\(l_\infty\)</span>: maximum noise (change) added to any component of the vectors. The formula can be simplified as </li>
+</ul>
+<div class="arithmatex">\[
+||x-x'||_\infty = max(|x_1-x_1'|, ..., |x_n-x_n'|)
+\]</div>
+<p>The <span class="arithmatex">\(l_2\)</span>-norm is often used for attacks, but rarely for certification of models due to the difficulties that come
+with the quadratic nature of said norm. <span class="arithmatex">\(l_\infitiy\)</span> can be imagined as a box around the center point. It is also said
+to most naturally capture the human vision, and it is simpler to certify. </p>
 
   <hr>
 <div class="md-source-file">
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">October 12, 2023</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">November 14, 2023</span>
       
         <br>
         Created:

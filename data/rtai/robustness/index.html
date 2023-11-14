@@ -1150,6 +1150,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#carlini-attack" class="md-nav__link">
+    Carlini attack
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#pgd" class="md-nav__link">
     PGD
   </a>
@@ -1164,6 +1171,13 @@
           <li class="md-nav__item">
   <a href="#adversarial-defenses" class="md-nav__link">
     Adversarial defenses
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adversarial-accuracy" class="md-nav__link">
+    Adversarial accuracy
   </a>
   
 </li>
@@ -1467,6 +1481,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#carlini-attack" class="md-nav__link">
+    Carlini attack
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#pgd" class="md-nav__link">
     PGD
   </a>
@@ -1481,6 +1502,13 @@
           <li class="md-nav__item">
   <a href="#adversarial-defenses" class="md-nav__link">
     Adversarial defenses
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adversarial-accuracy" class="md-nav__link">
+    Adversarial accuracy
   </a>
   
 </li>
@@ -1590,7 +1618,37 @@ lead models to recognise it as a different sign.</p>
 <p>The attacks can be further split into <strong>white box</strong> attacks where the attacker knows the complete model including
 parameters and the architecture, and <strong>black box</strong> attacks where the attacker only knows the architectures but has no
 information about the parameters.</p>
-<p>The following chapters only discuss white box attacks.</p>
+<p>The following chapters only discuss white box attacks. Below table describes the three attacks in brief.</p>
+<table>
+<thead>
+<tr>
+<th>Attack type</th>
+<th>Region</th>
+<th>Optimization</th>
+<th>Outcome</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FGSM (targeted, untargeted)</td>
+<td><span class="arithmatex">\([-\epsilon, +\epsilon]\)</span></td>
+<td>One step of size <span class="arithmatex">\(\epsilon\)</span></td>
+<td>Output will be on region boundary</td>
+</tr>
+<tr>
+<td>PGD (mostly untargeted)</td>
+<td>Any region for which projections exist</td>
+<td>Many steps, uses projections to stay inside the region</td>
+<td>Inside region with maximised loss</td>
+</tr>
+<tr>
+<td>Carlini (targeted)</td>
+<td>Image and image + <span class="arithmatex">\(\eta\)</span> must be in <span class="arithmatex">\([0,1]\)</span></td>
+<td>Produce change <span class="arithmatex">\(\eta\)</span> with small <span class="arithmatex">\(l_\infty\)</span>, taking many steps</td>
+<td>Image inside <span class="arithmatex">\([0,1]\)</span> with (hopefully) small <span class="arithmatex">\(_\infty\)</span> distance from original image</td>
+</tr>
+</tbody>
+</table>
 <h4 id="fast-gradient-sign-method-fgsm">Fast Gradient Sign Method (FGSM)</h4>
 <p>This attack uses the gradient descent of the classification model. The loss function of the gradient descent is
 computed, and the added/removed from the input to form a modified output that should be classified with some other
@@ -1610,22 +1668,199 @@ perturbation did not change the output, the next input was looked at. The algori
 <li><strong>Targeted</strong>: <span class="arithmatex">\(x' = x-\eta_t\)</span> modifies the input by <strong>minimising the loss</strong> for the label <span class="arithmatex">\(t\)</span>.</li>
 <li><strong>Untargeted</strong>: <span class="arithmatex">\(x' = x+\eta_s\)</span> modifies the input by <strong>maximising the loss</strong> for the original label <span class="arithmatex">\(s\)</span>.</li>
 </ul>
+<h4 id="carlini-attack">Carlini attack</h4>
+<p>In this attack, we are trying to find a perturbation <span class="arithmatex">\(\eta\)</span> classifies an input <span class="arithmatex">\(x \in X\)</span> to a target label <span class="arithmatex">\(t \in C\)</span>:
+<span class="arithmatex">\(f(x + \eta) = t\)</span> where <span class="arithmatex">\(||\eta||_p\)</span> is minimized. We thus have an optimization problem. We also require that <span class="arithmatex">\(x+\eta\)</span>
+stays in the domain of the problem (<span class="arithmatex">\([0,1]\)</span> for images).</p>
+<p>The optimization problem has currently a <strong>hard discrete constraint</strong> (<span class="arithmatex">\(f(x + \eta) = t\)</span>). However, it is hard to find
+the gradient to such problems. We thus require a relaxation. The Carlini attack uses a relaxation through an objective
+(proxy/soft) function <span class="arithmatex">\(obj_t\)</span> such that</p>
+<div class="arithmatex">\[
+\mathsf{if} \; obj_t(x + \eta) \leq 0 \; \mathsf{then} (x + \eta) = t
+\]</div>
+<p>Using this function, we are now trying to minimize $<span class="arithmatex">\(||\eta||_p + c \cdot obj_t(x + \eta)\)</span>. Notice that we are talking
+about an <strong>if</strong> relation and not an <strong>iff</strong>.</p>
+<p>The paper<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup> cites a series of soft functions. One highlighted in the course is</p>
+<div class="arithmatex">\[
+obj_t(x) = loss_t(x) -1 = -log_2(p_f(x)_t)-1
+\]</div>
+<p>where <span class="arithmatex">\(p_f(x)_t\)</span> is the probability of a class <span class="arithmatex">\(t\)</span> for some input <span class="arithmatex">\(x\)</span> on network <span class="arithmatex">\(f\)</span>. The cross entropy loss is used as
+a loss function. We now have a problem that can be optimized.</p>
+<p>The model additionally has a <strong>hard box constraint</strong> to make sure that the output stays inside the domain of the input.
+This is often solved through PGD (projected gradient descent).</p>
+<p>Compare to the <strong>FGSM</strong>, this attack gets most often less perturbed attacks.</p>
 <h4 id="pgd">PGD</h4>
+<p>The <strong>projected gradient descent</strong> (PGD) can be seen as a series of FGSM attacks.</p>
+<ol>
+<li>We start by picking some point <span class="arithmatex">\(x_{orig}\)</span> from the dataset and put an <span class="arithmatex">\(l_\infty\)</span> ball around it, with some <span class="arithmatex">\(\epsilon\)</span>
+   that is typically bigger than the one used in an FGSM attack.</li>
+<li>Next, we select some random point <span class="arithmatex">\(x\)</span> in the box.</li>
+<li>Now starts the PGD iteration. We compute <span class="arithmatex">\(x' = x + \epsilon' \cdot sign(\nabla_xLoss(x))\)</span>. This is essentially an
+   FGSM attack on <span class="arithmatex">\(x\)</span>. <span class="arithmatex">\(\epsilon'\)</span> is smaller than <span class="arithmatex">\(\epsilon\)</span>.</li>
+<li><span class="arithmatex">\(x'\)</span> might be outside the box around <span class="arithmatex">\(x_{orig}\)</span>. We thus must project it back on the box <span class="arithmatex">\(x'' = project(x',x_{orig},
+   \epsilon)\)</span>. The projection uses clipping to get back into the box.</li>
+<li>If <span class="arithmatex">\(x''\)</span> is not yet a labeled with a different class, we re-assign <span class="arithmatex">\(x = x''\)</span> and repeat from step 3 until we find
+   another label.</li>
+</ol>
+<p>Above algorithm is often run with a constant number of iterations. After that, either an adversarial example has been
+found, or we simply look at the next sample <span class="arithmatex">\(x\)</span>.</p>
 <h3 id="adversarial-defenses">Adversarial defenses</h3>
+<p>To defend somewhat against such attacks, we can use the following approach. For all samples <span class="arithmatex">\(x\)</span> we search for the point
+in a region (eg. <span class="arithmatex">\(l_\infty\)</span>) around <span class="arithmatex">\(x\)</span> that maximizes the loss. We then train the model on these points to minimize
+the loss.</p>
+<p>Although this might improve the adversarial accuracy, it typically reduces the standard accuracy.</p>
+<p>An approach shown in the lecture (PGD-defense) uses a PGD-attack on a mini-batch of the dataset. The output of this
+attack is then used in the training. The attack gives us samples with a maximized loss inside a region around the
+original samples.</p>
+<h3 id="adversarial-accuracy">Adversarial accuracy</h3>
+<p>The adversarial accuracy measures how well a model is holding against attacks in the <span class="arithmatex">\(l_p\)</span>-ball for a specific
+<span class="arithmatex">\(\epsilon\)</span>. It is a metric for the robustness of a network.</p>
+<p>Typically, a PGD attack is used to measure this metric. It takes all samples that were classified correctly, and tries
+to break them. Let's say we have 100 samples out of which 95 are classified correctly (accuracy: 95%). Now, for 15
+samples we found an adversarial example. The <strong>adversarial accuracy</strong> will thus be 80/100 = 80%.</p>
 <h2 id="certification">Certification</h2>
+<p>Until now, we have looked at attacks and defenses that might or might not work well in practice. However, there are no
+formal guarantees. This is what we try to establish in this chapter: prove properties of realistic networks using
+<strong>automated verifiers</strong>. More formally we can state our fundamental problem, given a neural network <span class="arithmatex">\(N\)</span>, a property over
+inputs <span class="arithmatex">\(\phi\)</span> (pre-conditions), and a property over outputs <span class="arithmatex">\(\psi\)</span> (post conditions):</p>
+<p><strong>Prove that <span class="arithmatex">\(\forall i \in I. \models \phi \Rightarrow N(i) \models \psi\)</span> holds or return a violation</strong>.</p>
+<p>We can now instantiate this problem definition for an image classification neural network in the following steps.</p>
+<ol>
+<li><strong>Define <span class="arithmatex">\(\phi\)</span></strong>: to prove adversarial robustness, we define <span class="arithmatex">\(\phi\)</span> as the <span class="arithmatex">\(l_\infty\)</span>-ball around an input <span class="arithmatex">\(x\)</span>:
+   $ball(x)<em>\epsilon = {x' \in I \mid ||x-x'||</em>\infty &lt; \epsilon }.</li>
+<li><strong>Verify <span class="arithmatex">\(\psi\)</span> satisfies <span class="arithmatex">\(\phi\)</span></strong>. We define the property <span class="arithmatex">\(\phi\)</span> as: We want to prove that all inputs inside the
+   ball around <span class="arithmatex">\(x\)</span> are classified identically to <span class="arithmatex">\(x\)</span>.</li>
+</ol>
+<p>The challenge of this approach is, that we cannot simply prove the property for all points in the <span class="arithmatex">\(l_\infty\)</span>-ball as
+there are too many of them. </p>
+<p>Before continuing, we must look at some properties of certification methods:</p>
+<ul>
+<li><strong>Sound vs. Unsound</strong></li>
+<li><strong>Complete vs. Incomplete</strong></li>
+</ul>
 <h3 id="certified-defense">Certified defense</h3>
 <h2 id="relaxation">Relaxation</h2>
 <h3 id="box">Box</h3>
 <h3 id="milp">MILP</h3>
 <h3 id="deeppoly">DeepPoly</h3>
+<p>The relaxations seen in previous chapters are lossy, especially the box relaxation loses much precision on ReLU and
+affine abstract transformers. DeepPoly improves on this by eliminating loss on affine transformers, and reducing loss on
+ReLU transformers. </p>
+<p>Using the box relaxation we defined intervals of possible values for each neuron. For each following neuron, the 
+intervals are combined leading to imprecise results. DeepPoly also works with intervals, but keeps in mind the relation
+of the different neurons. Upon combining layers, we can apply back substitution of those relations which leads to 
+simplifications in the relations and improve the respective precisions. </p>
+<p>Let's look for example at the following affine layers. For both x_1 and x_2, we have an input interval of <span class="arithmatex">\([-1;1]\)</span>. 
+In addition of defining these intervals for each neuron of the first layer, we also compute the lower and upper bound
+<span class="arithmatex">\(l_1, u_1\)</span>. We do the same thing for the second layer but this time we define the intervals using the previous layer's 
+neurons. The lower and upper bounds are computed through back propagation of above intervals. </p>
+<figure>
+<p><img alt="" src="../../../diagrams/d/rtai/deeppoly_1.svg" /></p>
+</figure>
+<p>For instance, nothing of interest has happened, our intervals are identical to the ones computed through the box 
+relaxation. Let's look now at a DeepPoly relaxation for a <strong>ReLU</strong> function. We must consider three separate cases based
+on the lower and upper bounds observed at the neuron's input. We consider the ReLU <span class="arithmatex">\(x_j = max(0, x_i)\)</span>, where <span class="arithmatex">\(x_j\)</span> is 
+our ReLU neuron and <span class="arithmatex">\(x_i\)</span> is the input.</p>
+<ul>
+<li><span class="arithmatex">\(l_i \geq 0\)</span>: strictly positive <span class="arithmatex">\(a_j^\leq = a_j^\geq = x_i, l_j = l_i, u_j = u_i\)</span></li>
+<li><span class="arithmatex">\(u_i \leq 0\)</span>: strictly negative <span class="arithmatex">\(a_j^\leq = a_j^\geq = x_i, l_j = u_j = 0\)</span></li>
+<li><span class="arithmatex">\(l_i &lt; 0\)</span> and <span class="arithmatex">\(u_i &gt; 0\)</span>: crossing ReLU, special relaxation applies</li>
+</ul>
+<p>As illustrated in above case distinction, the relaxation is trivial for strictly negative and strictly positive 
+input intervals. However, the crossing ReLU, where the interval includes both negative and positive values is more 
+complicated. We discuss three possible relaxations.</p>
+<div class="admonition info">
+<p class="admonition-title">Relaxation constraints</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Relaxation I</label><label for="__tabbed_1_2">Relaxation II</label><label for="__tabbed_1_3"><span class="arithmatex">\(\alpha\)</span>-relaxation</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p>For the first relaxation we limit the values to the inside of below triangle. The triangle's sides are defined as
+follows: </p>
+<ul>
+<li>Lower <span class="arithmatex">\(y\)</span> bound: <span class="arithmatex">\(y = 0\)</span></li>
+<li>Upper <span class="arithmatex">\(y\)</span> bound: <span class="arithmatex">\(y = \gamma * (x - x_l)\)</span> with a slope of <span class="arithmatex">\(\gamma = \frac{u_x}{u_x - l_x}\)</span></li>
+<li>Right <span class="arithmatex">\(x\)</span> bound: <span class="arithmatex">\(x = u_x\)</span>. </li>
+</ul>
+<p>Note that the point <span class="arithmatex">\(d\)</span> is at </p>
+<p><figure markdown>
+<img alt="" src="../../../diagrams/d/rtai/deeppoly_relu_1.svg" />
+</figure></p>
+<p>Above line definitions can be translated into the following constraints: </p>
+<ul>
+<li><span class="arithmatex">\(y \geq 0\)</span></li>
+<li><span class="arithmatex">\(y \leq \gamma * (x - x_l)\)</span></li>
+<li><span class="arithmatex">\(x \leq x_u\)</span></li>
+</ul>
+</div>
+<div class="tabbed-block">
+<p>Let's get directly to the constraints. We keep the upper y limit identical to the previous relaxation. The lower
+bound is now defined as the slope of <span class="arithmatex">\(x\)</span>.</p>
+<ul>
+<li>Lower <span class="arithmatex">\(y\)</span> bound: <span class="arithmatex">\(y \geq x\)</span></li>
+<li>Upper <span class="arithmatex">\(y\)</span> bound: <span class="arithmatex">\(y \leq \gamma * (x - x_l)\)</span> with a slope of <span class="arithmatex">\(\gamma = \frac{u_x}{u_x - l_x}\)</span></li>
+<li>Lower <span class="arithmatex">\(x\)</span> bound: <span class="arithmatex">\(x \geq l_x\)</span> </li>
+</ul>
+<p><figure markdown>
+<img alt="" src="../../../diagrams/d/rtai/deeppoly_relu_2.svg" />
+</figure></p>
+</div>
+<div class="tabbed-block">
+<p>The <span class="arithmatex">\(\alpha\)</span>-relaxation keeps some room for optimisation. The upper y limit is again identical. However, the 
+lower bound can be optimised through its slope to get the area of the shape as small as possible while staying
+inside the interval $\alpha = [0,1].</p>
+<ul>
+<li>Lower <span class="arithmatex">\(y\)</span> bound: <span class="arithmatex">\(y \geq \alpha x, \alpha \in [0,1]\)</span></li>
+<li>Upper <span class="arithmatex">\(y\)</span> bound: <span class="arithmatex">\(y \leq \gamma * (x - x_l)\)</span> with a slope of <span class="arithmatex">\(\gamma = \frac{u_x}{u_x - l_x}\)</span></li>
+<li>Lower <span class="arithmatex">\(x\)</span> bound: <span class="arithmatex">\(x \geq l_x\)</span> </li>
+<li>Upper <span class="arithmatex">\(x\)</span> bound: <span class="arithmatex">\(x \leq l_x\)</span> </li>
+</ul>
+<p><figure markdown>
+<img alt="" src="../../../diagrams/d/rtai/deeppoly_relu_3.svg" />
+</figure></p>
+</div>
+</div>
+</div>
+</div>
+<p>We can now apply one of the relaxations to neurons. We extend the network above with two new neurons applying 
+a ReLU on the outputs of <span class="arithmatex">\(x_3\)</span> and <span class="arithmatex">\(x_4\)</span>.</p>
+<figure>
+<p><img alt="" src="../../../diagrams/d/rtai/deeppoly_2.svg" /></p>
+</figure>
+<p>Now, we can stitch those neurons together with the affine layer, and add an output layer to analyse the system. 
+Without any further modification, this leads to the following network with output bounds <span class="arithmatex">\(l_7 = -0.5\)</span> and <span class="arithmatex">\(u_7 = 3.5\)</span>.</p>
+<figure>
+<p><img alt="" src="../../../diagrams/d/rtai/deeppoly_3.svg" /></p>
+</figure>
+<p>We can further improve those bounds by using back substitution. This is where DeepPoly improves over other methods. The
+improved bound can, in this example, be observed with the upper bound <span class="arithmatex">\(u_7\)</span>. </p>
+<div class="arithmatex">\[
+\begin{align*}
+x_7 &amp;\leq x_5 + x_6 - 0.5\\
+&amp;= 0.5 x_3 + 1 + 0.5 x_4 + 1\\
+&amp;= 0.5(x_3 + x_4) + 1.5\\
+&amp;= 0.5(x_1+x_2+x_1-x_2) + 1.5\\
+&amp;= x_1 + 1.5\\
+&amp;= 2.5\\
+x_7 &amp;\leq 2.5
+\end{align*}
+\]</div>
+<p>We observe that the upper bound has been improved from <span class="arithmatex">\(3.5\)</span> to <span class="arithmatex">\(2.5\)</span>.</p>
 <h3 id="diffpoly">DiffPoly</h3>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p><a href="https://arxiv.org/abs/1608.04644">Carlini et al., Towards Evaluating the Robustness of Neural Networks</a>&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
 
   <hr>
 <div class="md-source-file">
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">October 31, 2023</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">November 14, 2023</span>
       
         <br>
         Created:
