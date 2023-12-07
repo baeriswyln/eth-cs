@@ -72,6 +72,58 @@ $$
 
 ## Reduction
 
-## Universal language
+Reductions allow us to compare different languages regarding their difficulty. Using the reduction we can say that a 
+certain language is at least as or at most as difficult as some other language. We have discussed two types of 
+reduction: **EE** (Eingabe zu Eingabe) and **R** (recursive) reduction. These reductions are related:
+
+$$
+L_1 \leq_{EE} L_2 \Rightarrow L_1 \leq_R L_2
+$$
+
+### R-Reduction
+
+The less strong reduction of the two takes and input and moves it through a first turing-machine transforming the input
+on the alphabet from the first language $x \in \sum_1^*$. This input is then given to a turing-machine $A$ that decides
+on $L_2$. The output can then either be given to another TM doing some transformation and giving it back to the first
+TM (recursion), or give it to an (optional) output TM that then outputs the final answer $x \in L_1$ or $x \notin L_1$. 
+
+The complete turing-machine processes the language $L_1$ by internally using a turing-machine processing the language
+$L_2$.
+
+<figure markdown>
+![](../../diagrams/b/tcs/rred_1.svg)
+</figure>
+
+### EE-Reduction
+
+An EE-reduction is similar to an R-reduction, but is more restrictive. The output of the TM $A$ must not be processed, 
+the output of $A$ must be the output of $B$. In this reduction, we are only allowed to modify the input given to $B$ 
+before giving it to the TM $A$
+
+<figure markdown>
+![](../../diagrams/b/tcs/eered_1.svg)
+</figure>
+
+## Languages and their properties
+
+In general, we talk about two groups of languages. They define the behaviour of turing-machines that detect the 
+respective language.
+
+- **Recursive**: The turing-machine will halt on any input either and can thus always decide if a certain input is in
+  the language or not.
+- **Recursive enumerable**: The turing-machine is not guaranteed to halt. It will detect all inputs that are part of 
+  the language. But the TM might run indefinitely on inputs that do not belong to the language.
+
+Regarding these language classes, we can also say: $L \in L_{RE}, L^C \in L_{RE} \Leftrightarrow L \in L_R$. 
+
+$L_U \in L_{\mathcal{R}}$, $L_U \in L_{\mathcal{RE}}$
+
+$$
+L_U
+$$
+
+$$
+L_H
+$$
 
 ## The "Post'sche Korrespondenzproblem" (PKP)
