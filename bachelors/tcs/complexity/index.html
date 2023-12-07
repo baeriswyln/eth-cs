@@ -8,28 +8,28 @@
       
       
       
-        <link rel="canonical" href="https://baeriswyln.github.io/eth-cs/security/zkp/">
+        <link rel="canonical" href="https://baeriswyln.github.io/eth-cs/bachelors/tcs/complexity/">
       
       
-        <link rel="prev" href="../">
+        <link rel="prev" href="../computability/">
       
       
-        <link rel="next" href="intro-definitions/">
+        <link rel="next" href="../../../security/">
       
       
-      <link rel="icon" href="../../assets/images/favicon.png">
+      <link rel="icon" href="../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.0">
     
     
       
-        <title>Zero-Knowledge Proof - ETH - Summaries for CS</title>
+        <title>Complexity - ETH - Summaries for CS</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.45e1311d.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.45e1311d.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -48,9 +48,9 @@
       
     
     
-      <link rel="stylesheet" href="../../stylesheets/extra.css">
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#zero-knowledge-proof" class="md-skip">
+        <a href="#complexity" class="md-skip">
           Skip to content
         </a>
       
@@ -90,7 +90,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="ETH - Summaries for CS" class="md-header__button md-logo" aria-label="ETH - Summaries for CS" data-md-component="logo">
+    <a href="../../.." title="ETH - Summaries for CS" class="md-header__button md-logo" aria-label="ETH - Summaries for CS" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
@@ -110,7 +110,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Zero-Knowledge Proof
+              Complexity
             
           </span>
         </div>
@@ -221,32 +221,12 @@
     
     
       <li class="md-tabs__item">
-        <a href="../.." class="md-tabs__link">
+        <a href="../../.." class="md-tabs__link">
           
   
     
   
   Welcome
-
-        </a>
-      </li>
-    
-  
-
-      
-        
-  
-  
-  
-    
-    
-      <li class="md-tabs__item">
-        <a href="../../bachelors/" class="md-tabs__link">
-          
-  
-    
-  
-  Bachelors
 
         </a>
       </li>
@@ -263,7 +243,27 @@
     
     
       <li class="md-tabs__item md-tabs__item--active">
-        <a href="../" class="md-tabs__link">
+        <a href="../../" class="md-tabs__link">
+          
+  
+    
+  
+  Bachelors
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../security/" class="md-tabs__link">
           
   
     
@@ -283,7 +283,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../data/" class="md-tabs__link">
+        <a href="../../../data/" class="md-tabs__link">
           
   
     
@@ -303,7 +303,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../general/" class="md-tabs__link">
+        <a href="../../../general/" class="md-tabs__link">
           
   
     
@@ -338,7 +338,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="ETH - Summaries for CS" class="md-nav__button md-logo" aria-label="ETH - Summaries for CS" data-md-component="logo">
+    <a href="../../.." title="ETH - Summaries for CS" class="md-nav__button md-logo" aria-label="ETH - Summaries for CS" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
@@ -391,7 +391,7 @@
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../.." class="md-nav__link ">
+            <a href="../../.." class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -423,6 +423,8 @@
       
   
   
+    
+  
   
   
     
@@ -445,17 +447,17 @@
       
       
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
         
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../bachelors/" class="md-nav__link ">
+            <a href="../../" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -472,7 +474,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             Bachelors
@@ -508,7 +510,7 @@
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../bachelors/la/" class="md-nav__link ">
+            <a href="../../la/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -564,7 +566,7 @@
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../bachelors/ads/" class="md-nav__link ">
+            <a href="../../ads/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -597,6 +599,8 @@
                 
   
   
+    
+  
   
   
     
@@ -620,17 +624,17 @@
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4" checked>
         
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../bachelors/tcs/" class="md-nav__link ">
+            <a href="../" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -647,7 +651,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_2_4">
             <span class="md-nav__icon md-icon"></span>
             Theoretical Computer Science
@@ -663,7 +667,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../bachelors/tcs/languages/" class="md-nav__link">
+      <a href="../languages/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -684,7 +688,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../bachelors/tcs/fsm/" class="md-nav__link">
+      <a href="../fsm/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -705,7 +709,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../bachelors/tcs/turingmachine/" class="md-nav__link">
+      <a href="../turingmachine/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -726,7 +730,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../bachelors/tcs/computability/" class="md-nav__link">
+      <a href="../computability/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -744,10 +748,19 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../bachelors/tcs/complexity/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -756,6 +769,7 @@
   
 
       </a>
+      
     </li>
   
 
@@ -779,8 +793,6 @@
       
       
   
-  
-    
   
   
   
@@ -800,17 +812,17 @@
       
       
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
         
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../" class="md-nav__link ">
+            <a href="../../../security/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -827,7 +839,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             Security
@@ -840,8 +852,6 @@
                 
   
   
-    
-  
   
   
     
@@ -863,17 +873,17 @@
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
         
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="./" class="md-nav__link md-nav__link--active">
+            <a href="../../../security/zkp/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -884,13 +894,13 @@
             </a>
             
               
-              <label class="md-nav__link md-nav__link--active" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3_2">
             <span class="md-nav__icon md-icon"></span>
             Zero-Knowledge Proof
@@ -906,7 +916,7 @@
   
   
     <li class="md-nav__item">
-      <a href="intro-definitions/" class="md-nav__link">
+      <a href="../../../security/zkp/intro-definitions/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -927,7 +937,7 @@
   
   
     <li class="md-nav__item">
-      <a href="sigma/" class="md-nav__link">
+      <a href="../../../security/zkp/sigma/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -948,7 +958,7 @@
   
   
     <li class="md-nav__item">
-      <a href="zk-arguments-and-proofs/" class="md-nav__link">
+      <a href="../../../security/zkp/zk-arguments-and-proofs/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -969,7 +979,7 @@
   
   
     <li class="md-nav__item">
-      <a href="non-interactive-zk/" class="md-nav__link">
+      <a href="../../../security/zkp/non-interactive-zk/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1030,7 +1040,7 @@
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../data/" class="md-nav__link ">
+            <a href="../../../data/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -1089,7 +1099,7 @@
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../data/rtai/" class="md-nav__link ">
+            <a href="../../../data/rtai/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -1122,7 +1132,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../data/rtai/robustness/" class="md-nav__link">
+      <a href="../../../data/rtai/robustness/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1143,7 +1153,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../data/rtai/privacy/" class="md-nav__link">
+      <a href="../../../data/rtai/privacy/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1164,7 +1174,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../data/rtai/fairness-bias/" class="md-nav__link">
+      <a href="../../../data/rtai/fairness-bias/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1225,7 +1235,7 @@
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../general/" class="md-nav__link ">
+            <a href="../../../general/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -1278,7 +1288,7 @@
           
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../general/placeholder/" class="md-nav__link ">
+            <a href="../../../general/placeholder/" class="md-nav__link ">
               
   
   <span class="md-ellipsis">
@@ -1350,15 +1360,7 @@
   
 
 
-<h1 id="zero-knowledge-proof">Zero-Knowledge Proof</h1>
-<p>Zero-knowledge proofs are a cryptographic concept and a set of protocols that allow one party, called the prover, to
-demonstrate to another party, called the verifier, that they possess certain knowledge or information without revealing
-what that knowledge or information is. In other words, zero-knowledge proofs enable a party to prove that they know a
-secret or have access to specific data without disclosing the actual content of that secret.</p>
-<p>The primary goals of zero-knowledge proofs are privacy, security, and trust. They are particularly valuable in
-situations where one party needs to authenticate themselves or prove their knowledge of something to another party
-without revealing any sensitive details. Zero-knowledge proofs are used in various applications, including cryptography,
-cyber-security, and privacy-preserving technologies.</p>
+<h1 id="complexity">Complexity</h1>
 
 
 
@@ -1381,7 +1383,7 @@ cyber-security, and privacy-preserving technologies.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">October 15, 2023</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">December 7, 2023</span>
   </span>
 
     
@@ -1391,7 +1393,7 @@ cyber-security, and privacy-preserving technologies.</p>
     <span class="md-icon" title="Created">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3h-2Z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">October 12, 2023</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">December 7, 2023</span>
   </span>
 
     
@@ -1426,7 +1428,7 @@ cyber-security, and privacy-preserving technologies.</p>
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../" class="md-footer__link md-footer__link--prev" aria-label="Previous: Secure and reliable systems">
+          <a href="../computability/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Computability">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
@@ -1436,20 +1438,20 @@ cyber-security, and privacy-preserving technologies.</p>
                 Previous
               </span>
               <div class="md-ellipsis">
-                Secure and reliable systems
+                Computability
               </div>
             </div>
           </a>
         
         
           
-          <a href="intro-definitions/" class="md-footer__link md-footer__link--next" aria-label="Next: Intro and definitions">
+          <a href="../../../security/" class="md-footer__link md-footer__link--next" aria-label="Next: Secure and reliable systems">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Intro and definitions
+                Secure and reliable systems
               </div>
             </div>
             <div class="md-footer__button md-icon">
@@ -1513,12 +1515,12 @@ cyber-security, and privacy-preserving technologies.</p>
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.instant", "navigation.tabs", "navigation.top", "navigation.indexes", "navigation.footer", "search.suggest", "search.highlight"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.instant", "navigation.tabs", "navigation.top", "navigation.indexes", "navigation.footer", "search.suggest", "search.highlight"], "search": "../../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.d7c377c4.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.d7c377c4.min.js"></script>
       
-        <script src="../../javascripts/mathjax.js"></script>
+        <script src="../../../javascripts/mathjax.js"></script>
       
         <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
       
