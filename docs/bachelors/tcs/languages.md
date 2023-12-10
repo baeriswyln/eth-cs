@@ -109,7 +109,7 @@ The language $\{0,1\}^n$ containing only words of length $n$ for example has at 
 compressible. The language contains $2^n$ words, but there exist not enough distinct non-empty programs with length
 strictly smaller than $n$. To be precise, only $2^n-2$ such programs exist.
 
-For the language $\{0,1\}^{\leq n}$ this gets even worse as now $n^2+1$ distinct words exist but there are still only
+For the language $\{0,1\}^{\leq n}$ this gets even worse as now $n^{2+1}-2$ distinct words exist but there are still only
 $2^n-2$ distinct programs. Thus, at least half of the words have $K(x) \geq |x|$.
 
 Such words are called **random**. The same can be said for numbers. A number $n$ is called random if
