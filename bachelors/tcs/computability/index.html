@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.0">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.1">
     
     
       
@@ -868,6 +868,24 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#rices-theorem" class="md-nav__link">
+    <span class="md-ellipsis">
+      Rice's Theorem
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kolmogorov-complexity" class="md-nav__link">
+    <span class="md-ellipsis">
+      Kolmogorov-Complexity
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1566,6 +1584,24 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#rices-theorem" class="md-nav__link">
+    <span class="md-ellipsis">
+      Rice's Theorem
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kolmogorov-complexity" class="md-nav__link">
+    <span class="md-ellipsis">
+      Kolmogorov-Complexity
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1585,11 +1621,11 @@
 
 
 <h1 id="computability">Computability</h1>
-<p>Computability is one of the first theories described in computer science. It is used to classify problems into 
-algorithmically solvable and non-solvable problems. </p>
+<p>Computability is one of the first theories described in computer science. It is used to classify problems into
+algorithmically solvable and non-solvable problems.</p>
 <h2 id="infinities">Infinities</h2>
-<p>At first, we must realize that there are different types of infinity. For example, there are more languages than 
-there are turing-machines: $|KodTM| &lt; |Pot(\Sigma^*)|. We know however, that an infinite amount of TMs and an infinite
+<p>At first, we must realize that there are different types of infinity. For example, there are more languages than
+there are turing-machines: <span class="arithmatex">\(|KodTM| &lt; |Pot(\Sigma^*)|\)</span>. We know however, that an infinite amount of TMs and an infinite
 amount of words in the power product exist. Let's start with the following definition. We have the sets <span class="arithmatex">\(A\)</span> and <span class="arithmatex">\(B\)</span>.</p>
 <ul>
 <li><span class="arithmatex">\(|A| \leq |B|\)</span>, if an injective function <span class="arithmatex">\(f: A \to B\)</span> exists.</li>
@@ -1598,47 +1634,47 @@ amount of words in the power product exist. Let's start with the following defin
 </ul>
 <p>We can make a first observation with the two sets <span class="arithmatex">\(|\mathbb{N}| = |\mathbb{N}_{even}|\)</span>. One would think that the first
 set would be bigger, as the second only contains every second number. However, by the above definitions, we find that
-they are equivalent as the bijective function <span class="arithmatex">\(f(i)=2i\)</span> exists. </p>
+they are equivalent as the bijective function <span class="arithmatex">\(f(i)=2i\)</span> exists.</p>
 <p>A set is defined as <strong>countable</strong> if <span class="arithmatex">\(|A|\)</span> is finite, or if <span class="arithmatex">\(|A| = |\mathbb{N}|\)</span>.</p>
 <h3 id="hilbert-hotel">Hilbert Hotel</h3>
-<p>The hilbert hotel is an intuition to compare finite sets. We assume an infinite hotel where the rooms are enumerated 
-as <span class="arithmatex">\(1,2,...\)</span>. Now, a new guest arrives and we want to find a room for this guest. We tell all the current guests that 
-they should move into the room next to theirs (<span class="arithmatex">\(i \to i+1\)</span>). Room 1 gets empty, and the new guest can move into this 
-room. </p>
-<p>Now, if a bus with an infinite amount of guests arrives, we can now tell all the guests in to the room with double 
-the room number of their current room (<span class="arithmatex">\(i \to 2i\)</span>). </p>
+<p>The hilbert hotel is an intuition to compare finite sets. We assume an infinite hotel where the rooms are enumerated
+as <span class="arithmatex">\(1,2,...\)</span>. Now, a new guest arrives, and we want to find a room for this guest. We tell all the current guests that
+they should move into the room next to theirs (<span class="arithmatex">\(i \to i+1\)</span>). Room 1 gets empty, and the new guest can move into this
+room.</p>
+<p>Now, if a bus with an infinite amount of guests arrives, we can now tell all the guests in to the room with double
+the room number of their current room (<span class="arithmatex">\(i \to 2i\)</span>).</p>
 <h3 id="examples-of-infinities">Examples of infinities</h3>
-<p>We have seen  that <span class="arithmatex">\(\mathbb{N}\)</span> is countable. We can also show that <span class="arithmatex">\((\mathbb{N} - \{0\}) \times (\mathbb{N} - \{0\})\)</span>
+<p>We have seen that <span class="arithmatex">\(\mathbb{N}\)</span> is countable. We can also show that <span class="arithmatex">\((\mathbb{N} - \{0\}) \times (\mathbb{N} - \{0\})\)</span>
 is countable as well. We do this by setting up a matrix where the rows and the columns contain the two sets that are
 multiplied. We then define a canonical order according to the red arrows. With this order, we can enumerate all values
-present in said set. </p>
+present in said set.</p>
 <figure>
 <p><img alt="" src="../../../diagrams/b/tcs/countability_1.svg" /></p>
 </figure>
 <p>The same way we can also show that <span class="arithmatex">\(\mathbb{Q}\)</span> is countable. The rows contain the enumerators, and the columns the
-dividers. </p>
+dividers.</p>
 <h3 id="diagonalisation">Diagonalisation</h3>
 <p>A set that is not countable is the real numbers in the interval <span class="arithmatex">\([0,1] = \{x \in \mathbb{R} \mid 0 \leq x \leq x\}\)</span>. To
-prove this, we first define the following table where we enumerate real numbers in said interval. </p>
+prove this, we first define the following table where we enumerate real numbers in said interval.</p>
 <figure>
 <p><img alt="" src="../../../diagrams/b/tcs/countability_2.svg" /></p>
 </figure>
-<p>We define a new entry to the set <span class="arithmatex">\(C\)</span> as <span class="arithmatex">\(C=0.C_1C_2C_3...\)</span> with <span class="arithmatex">\(C_i \neq a_{ii}, c_i \notin \{0,9\}\)</span> for all <span class="arithmatex">\(i\)</span>. 
-The new entry, however, is not part of the table as it differs on the diagonal <span class="arithmatex">\(a_{ii}\)</span> from all other entries (as 
+<p>We define a new entry to the set <span class="arithmatex">\(C\)</span> as <span class="arithmatex">\(C=0.C_1C_2C_3...\)</span> with <span class="arithmatex">\(C_i \neq a_{ii}, c_i \notin \{0,9\}\)</span> for all <span class="arithmatex">\(i\)</span>.
+The new entry, however, is not part of the table as it differs on the diagonal <span class="arithmatex">\(a_{ii}\)</span> from all other entries (as
 we defined that <span class="arithmatex">\(C_i \neq a_{ii}\)</span>).</p>
-<p>Similarly, we define a new table that combines <span class="arithmatex">\(w_i \in \Sigma^*_{bool}\)</span> and <span class="arithmatex">\(M \in KodTM\)</span>. <span class="arithmatex">\(d_ij = 1\)</span> if <span class="arithmatex">\(M_i\)</span> 
-accepts the word <span class="arithmatex">\(w_j\)</span>.   </p>
+<p>Similarly, we define a new table that combines <span class="arithmatex">\(w_i \in \Sigma^*_{bool}\)</span> and <span class="arithmatex">\(M \in KodTM\)</span>. <span class="arithmatex">\(d_ij = 1\)</span> if <span class="arithmatex">\(M_i\)</span>
+accepts the word <span class="arithmatex">\(w_j\)</span>.</p>
 <figure>
 <p><img alt="" src="../../../diagrams/b/tcs/countability_3.svg" /></p>
 </figure>
-<p>We now construct the diagonal language denoted as <span class="arithmatex">\(L_{diag}\)</span> is not in <span class="arithmatex">\(\mathcal{L}_{RE}\)</span> (the set of recursive 
+<p>We now construct the diagonal language denoted as <span class="arithmatex">\(L_{diag}\)</span> is not in <span class="arithmatex">\(\mathcal{L}_{RE}\)</span> (the set of recursive
 languages). The constructed language does not yet exist in the set <span class="arithmatex">\(L(M_i)\)</span>.</p>
 <div class="arithmatex">\[
 L_{diag} = \{w \in (\Sigma_{bool})^* \mid w = w_i \; for \; some \; i \in \mathbb{N} - \{0\} \; and \; d_{ii} = 0\}
 \]</div>
 <h2 id="reduction">Reduction</h2>
-<p>Reductions allow us to compare different languages regarding their difficulty. Using the reduction we can say that a 
-certain language is at least as or at most as difficult as some other language. We have discussed two types of 
+<p>Reductions allow us to compare different languages regarding their difficulty. Using the reduction we can say that a
+certain language is at least as or at most as difficult as some other language. We have discussed two types of
 reduction: <strong>EE</strong> (Eingabe zu Eingabe) and <strong>R</strong> (recursive) reduction. These reductions are related:</p>
 <div class="arithmatex">\[
 L_1 \leq_{EE} L_2 \Rightarrow L_1 \leq_R L_2
@@ -1647,37 +1683,71 @@ L_1 \leq_{EE} L_2 \Rightarrow L_1 \leq_R L_2
 <p>The less strong reduction of the two takes and input and moves it through a first turing-machine transforming the input
 on the alphabet from the first language <span class="arithmatex">\(x \in \sum_1^*\)</span>. This input is then given to a turing-machine <span class="arithmatex">\(A\)</span> that decides
 on <span class="arithmatex">\(L_2\)</span>. The output can then either be given to another TM doing some transformation and giving it back to the first
-TM (recursion), or give it to an (optional) output TM that then outputs the final answer <span class="arithmatex">\(x \in L_1\)</span> or <span class="arithmatex">\(x \notin L_1\)</span>. </p>
+TM (recursion), or give it to an (optional) output TM that then outputs the final answer <span class="arithmatex">\(x \in L_1\)</span> or <span class="arithmatex">\(x \notin L_1\)</span>.</p>
 <p>The complete turing-machine processes the language <span class="arithmatex">\(L_1\)</span> by internally using a turing-machine processing the language
 <span class="arithmatex">\(L_2\)</span>.</p>
 <figure>
 <p><img alt="" src="../../../diagrams/b/tcs/rred_1.svg" /></p>
 </figure>
 <h3 id="ee-reduction">EE-Reduction</h3>
-<p>An EE-reduction is similar to an R-reduction, but is more restrictive. The output of the TM <span class="arithmatex">\(A\)</span> must not be processed, 
-the output of <span class="arithmatex">\(A\)</span> must be the output of <span class="arithmatex">\(B\)</span>. In this reduction, we are only allowed to modify the input given to <span class="arithmatex">\(B\)</span> 
+<p>An EE-reduction is similar to an R-reduction, but is more restrictive. The output of the TM <span class="arithmatex">\(A\)</span> must not be processed,
+the output of <span class="arithmatex">\(A\)</span> must be the output of <span class="arithmatex">\(B\)</span>. In this reduction, we are only allowed to modify the input given to <span class="arithmatex">\(B\)</span>
 before giving it to the TM <span class="arithmatex">\(A\)</span></p>
 <figure>
 <p><img alt="" src="../../../diagrams/b/tcs/eered_1.svg" /></p>
 </figure>
 <h2 id="languages-and-their-properties">Languages and their properties</h2>
-<p>In general, we talk about two groups of languages. They define the behaviour of turing-machines that detect the 
+<p>In general, we talk about two groups of languages. They define the behaviour of turing-machines that detect the
 respective language.</p>
 <ul>
 <li><strong>Recursive</strong>: The turing-machine will halt on any input either and can thus always decide if a certain input is in
   the language or not.</li>
-<li><strong>Recursive enumerable</strong>: The turing-machine is not guaranteed to halt. It will detect all inputs that are part of 
+<li><strong>Recursive enumerable</strong>: The turing-machine is not guaranteed to halt. It will detect all inputs that are part of
   the language. But the TM might run indefinitely on inputs that do not belong to the language.</li>
 </ul>
-<p>Regarding these language classes, we can also say: <span class="arithmatex">\(L \in L_{RE}, L^C \in L_{RE} \Leftrightarrow L \in L_R\)</span>. </p>
-<p><span class="arithmatex">\(L_U \in L_{\mathcal{R}}\)</span>, <span class="arithmatex">\(L_U \in L_{\mathcal{RE}}\)</span></p>
+<p>Regarding these language classes, we can also say: <span class="arithmatex">\(L \in L_{RE}, L^C \in L_{RE} \Leftrightarrow L \in L_R\)</span>.</p>
+<p>The universal language is defined as the set of encoded-turing machines with an input, where the turing-machine accepts
+the given input. <span class="arithmatex">\(L_U \in \mathcal{L}_{R}\)</span>, <span class="arithmatex">\(L_U \in \mathcal{L}_{RE}\)</span></p>
 <div class="arithmatex">\[
-L_U
+L_U = \{\text{Kod}(M)\#w \mid w \in \Sigma_{bool}^* \text{ and } M \text{ accepts } w\}
 \]</div>
+<p>The halting problem is similar to the universal language. However, this time we accept all inputs where the
+turing-machine halts (thus accepts or rejects) <span class="arithmatex">\(x\)</span>. <span class="arithmatex">\(L_H \notin \mathcal{L}_R\)</span></p>
 <div class="arithmatex">\[
-L_H
+L_H = \{\text{Kod}(M)\#x \mid x \in \Sigma_{bool}^*, M \text{ holds on } x\}
+\]</div>
+<p>The empty language is defined as the set of encoded turing-machines that accept no input.
+<span class="arithmatex">\((L_{empty})^C \in \mathcal{L}_{RE}\)</span>, <span class="arithmatex">\((L_{empty})^C \notin \mathcal{L}_R\)</span></p>
+<div class="arithmatex">\[
+L_{empty} = \{\text{Kod}(M) \mid L(M) = \emptyset\}
 \]</div>
 <h2 id="the-postsche-korrespondenzproblem-pkp">The "Post'sche Korrespondenzproblem" (PKP)</h2>
+<p>The PKP is defined as a pair <span class="arithmatex">\((A,B)\)</span> where <span class="arithmatex">\(A=w_1,w_2,...\)</span> and <span class="arithmatex">\(B=v_1,v_2,...\)</span> with <span class="arithmatex">\(A=B\)</span>. The problem has a set of
+building blocks <span class="arithmatex">\(w_i\)</span>, <span class="arithmatex">\(v_i\)</span>. By concatenating these blocks, we want to create a pair of string <span class="arithmatex">\(A\)</span> and <span class="arithmatex">\(B\)</span>. The PKP
+has a solution if there exists <span class="arithmatex">\(i_1,i_2,i_3,...\)</span> such that <span class="arithmatex">\(w_{i_1}w_{i_2}w_{i_3}... = v_{i_1}v_{i_2}v_{i_3}...\)</span>.</p>
+<p>Once we found one solution to the PKP, we know that there are an infinite amount of solution, as the same series of
+blocks can simply be concatenated.</p>
+<p>The <strong>Modified</strong> PKP (MKPK) is quite similar, to the regular PKP, but with a fixed starting word. If a PKP can be
+decided, a MPKP with the same building blocks can also be decided.</p>
+<p>Let's have an example. Our building blocks are: <span class="arithmatex">\(((1,1110111,101),(111,1110,01))\)</span>. A possible solution to this
+instance is:</p>
+<div class="arithmatex">\[
+A=1110111,1,1,101
+\]</div>
+<div class="arithmatex">\[
+B=1110,111,111,01
+\]</div>
+<h2 id="rices-theorem">Rice's Theorem</h2>
+<p>Before we get to rice's theorem, we must define the languages called "<strong>semanticaly non-trivial decision problems on
+turing-machines</strong>". Such a language must fulfill the following conditions:</p>
+<ul>
+<li><span class="arithmatex">\(\exists \text{ TM } M_1 \text{ with Kod}(M_1) \in L\)</span></li>
+<li><span class="arithmatex">\(\exists \text{ TM } M_2 \text{ with Kod}(M_2) \notin L\)</span></li>
+<li>For two turing-machines <span class="arithmatex">\(A\)</span> and <span class="arithmatex">\(B\)</span>, <span class="arithmatex">\(L(A)=L(B)\)</span> implies <span class="arithmatex">\(\text{KodTM}(A) \in L \Leftrightarrow \text{KodTM}(B) \in L\)</span></li>
+</ul>
+<p>The first two conditions make sure that the language <span class="arithmatex">\(L\)</span> is non-trivial (it does not contain all TMs, but is not empty
+either).</p>
+<h2 id="kolmogorov-complexity">Kolmogorov-Complexity</h2>
 
 
 
@@ -1700,7 +1770,7 @@ L_H
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">December 7, 2023</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">December 10, 2023</span>
   </span>
 
     
