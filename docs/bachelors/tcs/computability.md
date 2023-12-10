@@ -80,6 +80,9 @@ $$
 L_1 \leq_{EE} L_2 \Rightarrow L_1 \leq_R L_2
 $$
 
+Further, $L \leq_R L^C \Leftrightarrow L^c \leq_R L$. And, if $L \in \mathcal{L}_{RE}$ and $L^C \in \mathcal{L}_{RE}$, 
+it follows that $L \in \mathcal{L}_{R}$.
+
 ### R-Reduction
 
 The less strong reduction of the two takes and input and moves it through a first turing-machine transforming the input
@@ -117,14 +120,14 @@ respective language.
 Regarding these language classes, we can also say: $L \in L_{RE}, L^C \in L_{RE} \Leftrightarrow L \in L_R$.
 
 The universal language is defined as the set of encoded-turing machines with an input, where the turing-machine accepts
-the given input. $L_U \in \mathcal{L}_{R}$, $L_U \in \mathcal{L}_{RE}$
+the given input. $L_U \notin \mathcal{L}_{R}$, $L_U \in \mathcal{L}_{RE}$
 
 $$
 L_U = \{\text{Kod}(M)\#w \mid w \in \Sigma_{bool}^* \text{ and } M \text{ accepts } w\}
 $$
 
 The halting problem is similar to the universal language. However, this time we accept all inputs where the
-turing-machine halts (thus accepts or rejects) $x$. $L_H \notin \mathcal{L}_R$
+turing-machine halts (thus accepts or rejects) $x$. $L_H \notin \mathcal{L}_R$, $L_H \in \mathcal{L}_{RE}$
 
 $$
 L_H = \{\text{Kod}(M)\#x \mid x \in \Sigma_{bool}^*, M \text{ holds on } x\}
@@ -135,6 +138,13 @@ $(L_{empty})^C \in \mathcal{L}_{RE}$, $(L_{empty})^C \notin \mathcal{L}_R$
 
 $$
 L_{empty} = \{\text{Kod}(M) \mid L(M) = \emptyset\}
+$$
+
+The complement of the diagonal language. $(L_{diag})^C \in \mathcal{L}_{RE}$, $(L_{diag})^C \notin \mathcal{L}_{R}$
+
+$$
+(L_{diag})^C = \{x \in \Sigma_{bool}^* \mid \text{if } x = w_i \text{ for some } i \in \mathbb{N} - \{0\}, M_i 
+\text{ accepts the word } w_i\}
 $$
 
 ## The "Post'sche Korrespondenzproblem" (PKP)
@@ -172,4 +182,14 @@ turing-machines**". Such a language must fulfill the following conditions:
 The first two conditions make sure that the language $L$ is non-trivial (it does not contain all TMs, but is not empty
 either).
 
+Rice's theorem tells us that "**all semanticaly non-trivial decision problems on turing-machines cannot be decided**" 
+and thus any such decision problem $\text{Kod}_L \notin \mathcal{L}_R$.
+
 ## Kolmogorov-Complexity
+
+It is impossible to algorithmically compute the Kolmogorov-complexity $K$ for any $x \in \{0,1\}^*$. This can be 
+further extended: in case the output of the $K$ function is in binary form ($\{0,1\}^*$), we can say that $K$ is not 
+completely recursive. 
+
+A completely recursive function $f: \Sigma_1^* \to \Sigma_2^*$ requires a turing-machine that halts on any input and 
+computes the function $f$. 
