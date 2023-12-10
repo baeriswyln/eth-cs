@@ -1679,6 +1679,8 @@ reduction: <strong>EE</strong> (Eingabe zu Eingabe) and <strong>R</strong> (recu
 <div class="arithmatex">\[
 L_1 \leq_{EE} L_2 \Rightarrow L_1 \leq_R L_2
 \]</div>
+<p>Further, <span class="arithmatex">\(L \leq_R L^C \Leftrightarrow L^c \leq_R L\)</span>. And, if <span class="arithmatex">\(L \in \mathcal{L}_{RE}\)</span> and <span class="arithmatex">\(L^C \in \mathcal{L}_{RE}\)</span>, 
+it follows that <span class="arithmatex">\(L \in \mathcal{L}_{R}\)</span>.</p>
 <h3 id="r-reduction">R-Reduction</h3>
 <p>The less strong reduction of the two takes and input and moves it through a first turing-machine transforming the input
 on the alphabet from the first language <span class="arithmatex">\(x \in \sum_1^*\)</span>. This input is then given to a turing-machine <span class="arithmatex">\(A\)</span> that decides
@@ -1707,12 +1709,12 @@ respective language.</p>
 </ul>
 <p>Regarding these language classes, we can also say: <span class="arithmatex">\(L \in L_{RE}, L^C \in L_{RE} \Leftrightarrow L \in L_R\)</span>.</p>
 <p>The universal language is defined as the set of encoded-turing machines with an input, where the turing-machine accepts
-the given input. <span class="arithmatex">\(L_U \in \mathcal{L}_{R}\)</span>, <span class="arithmatex">\(L_U \in \mathcal{L}_{RE}\)</span></p>
+the given input. <span class="arithmatex">\(L_U \notin \mathcal{L}_{R}\)</span>, <span class="arithmatex">\(L_U \in \mathcal{L}_{RE}\)</span></p>
 <div class="arithmatex">\[
 L_U = \{\text{Kod}(M)\#w \mid w \in \Sigma_{bool}^* \text{ and } M \text{ accepts } w\}
 \]</div>
 <p>The halting problem is similar to the universal language. However, this time we accept all inputs where the
-turing-machine halts (thus accepts or rejects) <span class="arithmatex">\(x\)</span>. <span class="arithmatex">\(L_H \notin \mathcal{L}_R\)</span></p>
+turing-machine halts (thus accepts or rejects) <span class="arithmatex">\(x\)</span>. <span class="arithmatex">\(L_H \notin \mathcal{L}_R\)</span>, <span class="arithmatex">\(L_H \in \mathcal{L}_{RE}\)</span></p>
 <div class="arithmatex">\[
 L_H = \{\text{Kod}(M)\#x \mid x \in \Sigma_{bool}^*, M \text{ holds on } x\}
 \]</div>
@@ -1720,6 +1722,11 @@ L_H = \{\text{Kod}(M)\#x \mid x \in \Sigma_{bool}^*, M \text{ holds on } x\}
 <span class="arithmatex">\((L_{empty})^C \in \mathcal{L}_{RE}\)</span>, <span class="arithmatex">\((L_{empty})^C \notin \mathcal{L}_R\)</span></p>
 <div class="arithmatex">\[
 L_{empty} = \{\text{Kod}(M) \mid L(M) = \emptyset\}
+\]</div>
+<p>The complement of the diagonal language. <span class="arithmatex">\((L_{diag})^C \in \mathcal{L}_{RE}\)</span>, <span class="arithmatex">\((L_{diag})^C \notin \mathcal{L}_{R}\)</span></p>
+<div class="arithmatex">\[
+(L_{diag})^C = \{x \in \Sigma_{bool}^* \mid \text{if } x = w_i \text{ for some } i \in \mathbb{N} - \{0\}, M_i 
+\text{ accepts the word } w_i\}
 \]</div>
 <h2 id="the-postsche-korrespondenzproblem-pkp">The "Post'sche Korrespondenzproblem" (PKP)</h2>
 <p>The PKP is defined as a pair <span class="arithmatex">\((A,B)\)</span> where <span class="arithmatex">\(A=w_1,w_2,...\)</span> and <span class="arithmatex">\(B=v_1,v_2,...\)</span> with <span class="arithmatex">\(A=B\)</span>. The problem has a set of
@@ -1747,7 +1754,14 @@ turing-machines</strong>". Such a language must fulfill the following conditions
 </ul>
 <p>The first two conditions make sure that the language <span class="arithmatex">\(L\)</span> is non-trivial (it does not contain all TMs, but is not empty
 either).</p>
+<p>Rice's theorem tells us that "<strong>all semanticaly non-trivial decision problems on turing-machines cannot be decided</strong>" 
+and thus any such decision problem <span class="arithmatex">\(\text{Kod}_L \notin \mathcal{L}_R\)</span>.</p>
 <h2 id="kolmogorov-complexity">Kolmogorov-Complexity</h2>
+<p>It is impossible to algorithmically compute the Kolmogorov-complexity <span class="arithmatex">\(K\)</span> for any <span class="arithmatex">\(x \in \{0,1\}^*\)</span>. This can be 
+further extended: in case the output of the <span class="arithmatex">\(K\)</span> function is in binary form (<span class="arithmatex">\(\{0,1\}^*\)</span>), we can say that <span class="arithmatex">\(K\)</span> is not 
+completely recursive. </p>
+<p>A completely recursive function <span class="arithmatex">\(f: \Sigma_1^* \to \Sigma_2^*\)</span> requires a turing-machine that halts on any input and 
+computes the function <span class="arithmatex">\(f\)</span>. </p>
 
 
 
