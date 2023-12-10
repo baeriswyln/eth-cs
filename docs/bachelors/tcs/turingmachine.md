@@ -50,9 +50,9 @@ can **run indefinitely**, or **stop** on $w_1qw_2$ with $q \in \{q_{acc},q_{rej}
 indefinitely.
 
 The **accepted language** is denoted as $L(M) = \{w \in \Sigma^* \mid q_0 \notin w\; |_{\!\overline{\;M\;}}^* \; w_1
-q_{acc}w_2, \: w1,w2 \in \Gamma^*\}$. A language is **recursively enumerable** (rekursiv aufzählbar) if M is able to
-tell if a word $x$ is in the language, but might run indefinitely if $l \notin L$. If M can also always tell if
-$x \notin L$, the language is said to be **recursively (decidable)**.
+q_{acc}w_2, \: w1,w2 \in \Gamma^*\}$. A language is **recursively enumerable** (rekursiv aufzählbar, ($\mathcal{L}_
+{RE}$)) if M is able to tell if a word $x$ is in the language, but might run indefinitely if $l \notin L$. If M can 
+also always tell if $x \notin L$, the language is said to be **recursively (decidable)** ($\mathcal{L}_{R}$).
 
 ### TM example
 
