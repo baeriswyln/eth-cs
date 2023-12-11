@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.1">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.2">
     
     
       
@@ -26,7 +26,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.45e1311d.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.50c56a3b.min.css">
       
         
         <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
@@ -760,6 +760,17 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Complexity
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -769,6 +780,91 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#complexity-classes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Complexity classes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Complexity classes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#deterministic-classes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deterministic classes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#non-deterministic-classes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Non-deterministic classes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#np-hard-and-np-complete" class="md-nav__link">
+    <span class="md-ellipsis">
+      NP-hard and NP-complete
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#problems" class="md-nav__link">
+    <span class="md-ellipsis">
+      Problems
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Problems">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#p-reduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      P-reduction
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1344,6 +1440,80 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#complexity-classes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Complexity classes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Complexity classes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#deterministic-classes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deterministic classes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#non-deterministic-classes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Non-deterministic classes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#np-hard-and-np-complete" class="md-nav__link">
+    <span class="md-ellipsis">
+      NP-hard and NP-complete
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#problems" class="md-nav__link">
+    <span class="md-ellipsis">
+      Problems
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Problems">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#p-reduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      P-reduction
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1361,6 +1531,161 @@
 
 
 <h1 id="complexity">Complexity</h1>
+<p>Problems are divided into different complexity classes. The most used complexity types are time-complexity and
+space-complexity. These complexity classes can also help to stop infinite calculations: if we know the complexity of a
+certain problem, but the algorithm runs longer than expected on working out the solution, the calculation can be
+stopped, and we know that no solution exists.</p>
+<p>The <em>time-complexity</em> of a turing-machine is defined as the complexity of the longest calculation on some input with
+length <span class="arithmatex">\(n\)</span>. More formally: <span class="arithmatex">\(\text{Time}_M(n) = max \{\text{Time}_M(x) \mid x \in \Sigma^n\}\)</span>.</p>
+<p>To compute the <em>memory-complexity</em> of a k-tape turing-machine <span class="arithmatex">\(M\)</span>, we define multiple instances of the space function.
+Let <span class="arithmatex">\(C\)</span> be a configuration of the TM, and <span class="arithmatex">\(\alpha_i\)</span> the content of tape <span class="arithmatex">\(i\)</span>. The memory-complexity is defined as</p>
+<div class="arithmatex">\[\begin{align}
+\text{Space}_M(C) &amp;= max\{|\alpha_i| \mid i = 1, ..., k\}\\
+\text{Space}_M(x) &amp;= max\{\text{Space}_M(C_i) \mid i = 1,...,l\}\\
+\text{Space}_M(n) &amp;= max\{\text{Space}_M(x) \mid x \in \Sigma^n\}
+\end{align}\]</div>
+<h2 id="complexity-classes">Complexity classes</h2>
+<p>Problems are generally separated into problems that are solvable using a deterministic TM, and solvable using a non-
+deterministic TM.</p>
+<p>The most important classes are:</p>
+<ul>
+<li><strong>P</strong>: the class of practically decidable problems. A problem is practically solvable if a polynomial algorithm
+  exists.</li>
+<li><strong>NP</strong>: the class of practically decidable problems with the use of a non-deterministic turing-machine.</li>
+</ul>
+<h3 id="deterministic-classes">Deterministic classes</h3>
+<p>We now look at a couple of classes for deterministic problems.</p>
+<div class="arithmatex">\[\begin{align}
+TIME(f) &amp;= \{L(B) \mid B \text{ is an MTM with Time}_B(n) \in O(f(n))\}\\
+SPACE(g) &amp;= \{L(A) \mid A \text{ is an MTM with Space}_B(n) \in O(g(n))\}\\
+DLOG &amp;= SPACE(log_2n)\\
+P &amp;= \bigcup_{c \in \mathbb{N}}TIME(n^c)\\
+PSPACE &amp;= \bigcup_{c \in \mathbb{N}}SPACE(n^c)\\
+EXPTIME &amp;= \bigcup_{n \in \mathbb{N}}TIME(n^{n^d})
+\end{align}\]</div>
+<p>To continue, we are talking about constructable functions:</p>
+<ul>
+<li><strong>Platzkonstruierbar</strong>: <span class="arithmatex">\(s: \mathbb{N} \to \mathbb{N}\)</span>. A function called <em>platzkonstruierbar</em> is, if there exists
+  a single-tape turing-machine <span class="arithmatex">\(M\)</span> such that <span class="arithmatex">\(\text{Space}_M(n) \leq s(n)\)</span> for all <span class="arithmatex">\(n \in \mathbb{N}\)</span> and generates
+  for any input <span class="arithmatex">\(0^n, n \in \mathbb{N}\)</span> the word <span class="arithmatex">\(0^{s(n)}\)</span> on its working-tape, and stops on its accepting state.</li>
+<li><strong>Zeitkonstruierbar</strong>: <span class="arithmatex">\(t: \mathbb{N} \to \mathbb{N}\)</span>. A function is called <em>zeitkonstruierbar</em> if there exists a
+  multi-tape turing-machine <span class="arithmatex">\(M\)</span> such that <span class="arithmatex">\(\text{Time}_A(n) \in O(t(n))\)</span> and for every input <span class="arithmatex">\(0^n, n \in \mathbb{N}\)</span>,
+  the word <span class="arithmatex">\(0^{t(n)}\)</span> is generated on its working-tape, and <span class="arithmatex">\(M\)</span> stops on its accepting state.</li>
+</ul>
+<p>We can define the following relations between above classes:</p>
+<ul>
+<li><span class="arithmatex">\(TIME(t(n)) \subseteq SPACE(t(n))\)</span>: every TM working in time <span class="arithmatex">\(n\)</span> cannot write on more than <span class="arithmatex">\(n\)</span> cells on the tapes,
+  as the TM can move its head by only one cell on every instruction. Thus: <span class="arithmatex">\(P \subseteq PSPACE\)</span></li>
+<li><span class="arithmatex">\(SPACE(s(n) \subseteq \bigcup_{c\in \mathbb{N}} TIME(c^{s(n)})\)</span>. The TM cannot run longer than it takes to check every
+  possible configuration. Otherwise, there is a duplicate configuration, and the TM runs indefinitely (the function <span class="arithmatex">\(s\)</span>
+  must be platzkonstruierbar). Thus: <span class="arithmatex">\(DLOG \subseteq P\)</span>, <span class="arithmatex">\(PSPACE \subseteq EXPTIME\)</span>.</li>
+</ul>
+<p>From above relations, we can find the following fundamental hierarchy of deterministic complexity classes:</p>
+<div class="arithmatex">\[
+DLOG \subseteq P \subseteq PSPACE \subseteq EXPTIME
+\]</div>
+<h3 id="non-deterministic-classes">Non-deterministic classes</h3>
+<p>The non-deterministic classes contain problems that can be solved using a non-deterministic turing-machine. The NTM is
+capable of choosing the "best" input, meaning, it chooses the input leading to the correct result that is most
+efficient.</p>
+<p>In such a computation, the time-complexity for a TM <span class="arithmatex">\(M\)</span> on an input <span class="arithmatex">\(x\)</span> ($\text{Time}_M(x)) is defined as the shortest
+path to an accepting state (inside an NTM tree of states). For some input of length <span class="arithmatex">\(n\)</span>, this generalizes to</p>
+<p>$\text{Time}_M(n) = max{\text{Time}_M(x) \mid x \in L(M) \cap \Sigma^n}</p>
+<p>The space-complexity is related to the time complexity, as it is defined as the longest configuration in above described
+computation.</p>
+<p>We define the following complexity classes</p>
+<div class="arithmatex">\[\begin{align}
+NTIME(f) &amp;= \{L(B) \mid B \text{ is an N-MTM with Time}_B(n) \in O(f(n))\}\\
+NSPACE(g) &amp;= \{L(A) \mid A \text{ is an N-MTM with Space}_B(n) \in O(g(n))\}\\
+NLOG &amp;= NSPACE(log_2n)\\
+NP &amp;= \bigcup_{c \in \mathbb{N}}NTIME(n^c)\\
+NPSPACE &amp;= \bigcup_{c \in \mathbb{N}}NSPACE(n^c)\\
+\end{align}\]</div>
+<p>We can put those classes into relations, that are valid for all functions <span class="arithmatex">\(t\)</span> and <span class="arithmatex">\(s\)</span> with <span class="arithmatex">\(s(n) \geq log_2n\)</span>:</p>
+<ul>
+<li><span class="arithmatex">\(NTIME(t) \subseteq NSPACE(t)\)</span></li>
+<li><span class="arithmatex">\(NSPACE(s) \subseteq \bigcup_{c \in \mathbb{N}}(c^{s(n)})\)</span></li>
+</ul>
+<p>Further, we can also put those functions in relation with the deterministic complexity classes:</p>
+<ul>
+<li><span class="arithmatex">\(TIME(t) \subseteq NTIME(t)\)</span></li>
+<li><span class="arithmatex">\(SPACE(t) \subseteq NSPACE(t)\)</span></li>
+<li><span class="arithmatex">\(NTIME(s(n)) \subseteq SPACE(s(n)) \subseteq \bigcup_{c \in \mathbb{N}} TIME(c^{s(n)})\)</span></li>
+</ul>
+<h3 id="np-hard-and-np-complete">NP-hard and NP-complete</h3>
+<p>The two classes NP-hard and NP-complete define sets of problems.</p>
+<ul>
+<li>A language <span class="arithmatex">\(L\)</span> is called <strong>NP-hard</strong> if any language <span class="arithmatex">\(L' \in NP\)</span> can be reduced to <span class="arithmatex">\(L\)</span>: <span class="arithmatex">\(L' \leq L\)</span>.</li>
+<li>A language <span class="arithmatex">\(L\)</span> is called <strong>NP-complete</strong> if it is NP-hard, and <span class="arithmatex">\(L \in NP\)</span>.</li>
+</ul>
+<p>If some NP-hard language <span class="arithmatex">\(L\)</span> is in <span class="arithmatex">\(P\)</span>, then <span class="arithmatex">\(P=NP\)</span>, meaning that all practically solvable problems using a non-
+deterministic turing-machine are also practically solvable using a deterministic turing-machine. Our current 
+understanding is, however, that <span class="arithmatex">\(P \neq NP\)</span>. </p>
+<h2 id="problems">Problems</h2>
+<p>The first problem we look at called <span class="arithmatex">\(SAT\)</span> (satisfiability) is <strong>NP-complete</strong>, thus all other problems can be reduced to
+a SAT problem in polynomial time. A KNF is defined by variables <span class="arithmatex">\(x_i\)</span> and their literals <span class="arithmatex">\(x_i,\overline{x_i}\)</span>. These
+literals create a set of clauses, where the literals are combined in a disjunction <span class="arithmatex">\(\lor\)</span>. These clauses are then
+combined in a conjunction <span class="arithmatex">\(\land\)</span>. See the following example of a KNF:</p>
+<div class="arithmatex">\[
+\Phi = (x_1 \lor x_2) \land (x_1 \lor \overline{x_2} \lor \overline{x_3}) \land (\overline{x_1} \lor x_3) \land (
+\overline{x_2})
+\]</div>
+<p>The SAT problem tries to find out if the KNF has an input that evaluates the output to true. One input can be checked
+in polynomial time, as the KNF can simply be evaluated. However, finding one that evaluates to true, requires a non-
+deterministic TM to have result in polynomial time. It is simple to create a tree containing all possible input
+configurations (each variable evaluating to 0 or 1).</p>
+<div class="arithmatex">\[
+SAT = \{ x \in \Sigma_{logic}^* \mid x \text{ encodes a satisfiable KNF} \}
+\]</div>
+<p>A special case of the <span class="arithmatex">\(SAT\)</span> problem is the <span class="arithmatex">\(3SAT\)</span> problem, where each clause in the KNF can only contain three literals.
+The input KNF can be recoded to a conjunction of multiple KNF with three literals. See the following transformation.</p>
+<div class="arithmatex">\[\begin{align}
+\Phi &amp;= (x_1 \lor \overline{x_2} \lor x_5 \lor \overline{x_7} \lor x_4 \lor \overline{x_6})\\
+\Phi' &amp;= (x_1 \lor \overline{x_2} \lor y_1) \land (\overline{y_1} \lor x_5 \lor y_2) \land
+(\overline{y_2} \lor \overline{x_7} \lor y_3) \land (\overline{y_3} \lor x_4 \lor \overline{x_6})
+\end{align}\]</div>
+<p>The <span class="arithmatex">\(CLIQUE\)</span> problem is defined on a graph. We search for sub-graphs of size <span class="arithmatex">\(k\)</span> (or <span class="arithmatex">\(y\)</span> depending on how the input is
+defined) that is completely connected.</p>
+<div class="arithmatex">\[
+CLIQUE = \{ x\#y \mid x,y \in \Sigma_{bool}^*, x \text{ encodes a graph } G_x \text{ containing a y-clique} \}
+\]</div>
+<p>The <span class="arithmatex">\(IND-SET\)</span> problem is somewhat the opposite of above problem. It looks for sub-graphs in <span class="arithmatex">\(G\)</span> of size <span class="arithmatex">\(k\)</span>, where
+all vertices are pairwise not connected.</p>
+<div class="arithmatex">\[
+IND-SET = \{(G,k) \mid G \text{ has } k\text{-independent-sets} \}
+\]</div>
+<p>The last problem we looked at during the lectures is the <em>vertex-cover</em> problem, where we search for a set of <span class="arithmatex">\(k\)</span>
+vertices, such that every edge of the graph is connected to one of the selected vertices.</p>
+<div class="arithmatex">\[
+VC = \{ (G,k) \mid G \text{ has a vertex-cover of size } k\}
+\]</div>
+<h3 id="p-reduction">P-reduction</h3>
+<p>We have seen earlier, that a subset of problems from NP called NP-complete is at least as hard as all other problems in
+NP. If any of these problems turns out to be in P, all other NP problems can be solved in polynomial time. This is
+because we can create a P-reduction that <em>translate</em> one problem into a different problem. It is similar to an EE-
+reduction, but the TM transforming the input <strong>must run in polynomial time</strong>.</p>
+<p>A reduction helps us find out the complexity of a problem. If <span class="arithmatex">\(L_1 \leq_P L_2\)</span>, and <span class="arithmatex">\(L_1\)</span> is NP-hard, <span class="arithmatex">\(L_2\)</span> is NP-hard
+as well. More formally, we define the reduction as follows.</p>
+<p>Let <span class="arithmatex">\(L_1 \subseteq \Sigma_1^*\)</span> and <span class="arithmatex">\(L_2 \subseteq \Sigma_2^*\)</span>, where <span class="arithmatex">\(L_1\)</span> can be reduced on <span class="arithmatex">\(L_2\)</span> in polynomial time:
+<span class="arithmatex">\(L_1 \leq_P L_2\)</span> if <span class="arithmatex">\(\exists\)</span> a polynomial TM <span class="arithmatex">\(A\)</span>, computing <span class="arithmatex">\(\forall x \in \Sigma_1^*\)</span> a word <span class="arithmatex">\(A(x) \in \Sigma_2^*\)</span>
+such that <span class="arithmatex">\(x \in L_1 \Leftrightarrow A(x) \in L_2\)</span>.</p>
+<figure>
+<p><img alt="" src="../../../diagrams/b/tcs/pred_1.svg" /></p>
+</figure>
+<p>To illustrate this, let's have a couple of examples.</p>
+<p><span class="arithmatex">\(SAT \leq_P CLIQUE\)</span>: The TM <span class="arithmatex">\(A\)</span> converts the KNF into a graph problem, where each literal becomes a vertex. Vertices of
+one clause are logically regrouped into groups <span class="arithmatex">\(F\)</span>. The edges are constructed as follows: each literal is connected to
+all other vertices outside its group <span class="arithmatex">\(F\)</span> except for the negated literal (<span class="arithmatex">\(x_i\)</span> has no edge towards <span class="arithmatex">\(\overline{x_i}\)</span>).
+This graph can now be passed to a TM <span class="arithmatex">\(B\)</span> with <span class="arithmatex">\(L(B) = CLIQUE\)</span>, and <span class="arithmatex">\(k\)</span> is set to the number of clauses. If the KNF is
+satisfiable, the graph will contain a clique of size <span class="arithmatex">\(k\)</span>. We have thus converted a problem <span class="arithmatex">\(SAT(\Phi)\)</span> to
+<span class="arithmatex">\(CLIQUE(G,k)\)</span></p>
+<p><span class="arithmatex">\(CLIQUE \leq_P IND-SET\)</span>: The TM <span class="arithmatex">\(A\)</span> simply takes the input graph <span class="arithmatex">\(G\)</span> and converts it to <span class="arithmatex">\(G^C\)</span>, which means that existing
+edges are removed, and replaced with the set of all possible edges between vertices that were not present in <span class="arithmatex">\(G\)</span>. The
+value of <span class="arithmatex">\(k\)</span> is kept the same. If the original graph contained a clique of size <span class="arithmatex">\(k\)</span>, the graph complement now contains
+<span class="arithmatex">\(k\)</span> pairwise independent vertices (as before the complement, they were fully connected). We have thus converted a
+problem <span class="arithmatex">\(CLIQUE(G,k)\)</span> to <span class="arithmatex">\(IND-SET(G^C,k)\)</span>.</p>
+<p><span class="arithmatex">\(CLIQUE \leq_P VC\)</span>: The TM <span class="arithmatex">\(A\)</span> again computes the graph complement $G^C. However, <span class="arithmatex">\(k'\)</span> is set to <span class="arithmatex">\(|V| - k\)</span>. The 
+complement of a graph having a clique of size <span class="arithmatex">\(k\)</span> thus has a vertex cover of <span class="arithmatex">\(|V| - k\)</span>. </p>
 
 
 
@@ -1383,7 +1708,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">December 7, 2023</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">December 11, 2023</span>
   </span>
 
     
