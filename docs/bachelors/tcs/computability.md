@@ -193,3 +193,24 @@ completely recursive.
 
 A completely recursive function $f: \Sigma_1^* \to \Sigma_2^*$ requires a turing-machine that halts on any input and 
 computes the function $f$. 
+
+This is proven indirectly through a proof by contradiction. Suppose an algorithm $A$ exists, computing the Kolmogorov-
+complexity $K(x)$. Let $x_n$ be the first word in canonical order with $K(n) \geq n$. We have a second algorithm $B_n$ 
+computing the word $x_n$. $B_n$ is used by $A$, and receives $\lambda$ as an input. Our algorithm looks as follows:
+
+```
+x := lambda
+kn = A(x)
+while kn < n:
+  x <= nextWordInCanOrder(x)
+  kn = A(x)
+return x
+```
+
+The above described algorithm $B_n$ has a Kolmogorov-complexity of
+
+$$
+|B_n| \leq \lceil log_2n \rceil + c \Rightarrow K(x_n) \leq \lceil log_2n \rceil + c
+$$
+
+Here we have a contradiction, because we originally set $K(x) \geq n$.
