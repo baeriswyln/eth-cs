@@ -1667,10 +1667,10 @@ accepts the word <span class="arithmatex">\(w_j\)</span>.</p>
 <figure>
 <p><img alt="" src="../../../diagrams/b/tcs/countability_3.svg" /></p>
 </figure>
-<p>We now construct the diagonal language denoted as <span class="arithmatex">\(L_{diag}\)</span> is not in <span class="arithmatex">\(\mathcal{L}_{RE}\)</span> (the set of recursive
-languages). The constructed language does not yet exist in the set <span class="arithmatex">\(L(M_i)\)</span>.</p>
+<p>We now construct the diagonal language denoted as <span class="arithmatex">\(L_{diag} \notin \mathcal{L}_{RE}\)</span> (the set of recursively
+enumerable languages). The constructed language does not yet exist in the set <span class="arithmatex">\(L(M_i)\)</span>.</p>
 <div class="arithmatex">\[
-L_{diag} = \{w \in (\Sigma_{bool})^* \mid w = w_i \; for \; some \; i \in \mathbb{N} - \{0\} \; and \; d_{ii} = 0\}
+L_{diag} = \{w \in (\Sigma_{bool})^* \mid w = w_i \text{ for some } i \in \mathbb{N} - \{0\} \text{ and } d_{ii} = 0\}
 \]</div>
 <h2 id="reduction">Reduction</h2>
 <p>Reductions allow us to compare different languages regarding their difficulty. Using the reduction we can say that a
@@ -1679,7 +1679,7 @@ reduction: <strong>EE</strong> (Eingabe zu Eingabe) and <strong>R</strong> (recu
 <div class="arithmatex">\[
 L_1 \leq_{EE} L_2 \Rightarrow L_1 \leq_R L_2
 \]</div>
-<p>Further, <span class="arithmatex">\(L \leq_R L^C \Leftrightarrow L^c \leq_R L\)</span>. And, if <span class="arithmatex">\(L \in \mathcal{L}_{RE}\)</span> and <span class="arithmatex">\(L^C \in \mathcal{L}_{RE}\)</span>, 
+<p>Further, <span class="arithmatex">\(L \leq_R L^C \Leftrightarrow L^C \leq_R L\)</span>. And, if <span class="arithmatex">\(L \in \mathcal{L}_{RE}\)</span> and <span class="arithmatex">\(L^C \in \mathcal{L}_{RE}\)</span>,
 it follows that <span class="arithmatex">\(L \in \mathcal{L}_{R}\)</span>.</p>
 <h3 id="r-reduction">R-Reduction</h3>
 <p>The less strong reduction of the two takes and input and moves it through a first turing-machine transforming the input
@@ -1702,7 +1702,7 @@ before giving it to the TM <span class="arithmatex">\(A\)</span></p>
 <p>In general, we talk about two groups of languages. They define the behaviour of turing-machines that detect the
 respective language.</p>
 <ul>
-<li><strong>Recursive</strong>: The turing-machine will halt on any input either and can thus always decide if a certain input is in
+<li><strong>Recursive</strong>: The turing-machine will halt on any input and can thus always decide if a certain input is in
   the language or not.</li>
 <li><strong>Recursive enumerable</strong>: The turing-machine is not guaranteed to halt. It will detect all inputs that are part of
   the language. But the TM might run indefinitely on inputs that do not belong to the language.</li>
@@ -1725,7 +1725,7 @@ L_{empty} = \{\text{Kod}(M) \mid L(M) = \emptyset\}
 \]</div>
 <p>The complement of the diagonal language. <span class="arithmatex">\((L_{diag})^C \in \mathcal{L}_{RE}\)</span>, <span class="arithmatex">\((L_{diag})^C \notin \mathcal{L}_{R}\)</span></p>
 <div class="arithmatex">\[
-(L_{diag})^C = \{x \in \Sigma_{bool}^* \mid \text{if } x = w_i \text{ for some } i \in \mathbb{N} - \{0\}, M_i 
+(L_{diag})^C = \{x \in \Sigma_{bool}^* \mid \text{if } x = w_i \text{ for some } i \in \mathbb{N} - \{0\}, M_i
 \text{ accepts the word } w_i\}
 \]</div>
 <h2 id="the-postsche-korrespondenzproblem-pkp">The "Post'sche Korrespondenzproblem" (PKP)</h2>
@@ -1754,16 +1754,16 @@ turing-machines</strong>". Such a language must fulfill the following conditions
 </ul>
 <p>The first two conditions make sure that the language <span class="arithmatex">\(L\)</span> is non-trivial (it does not contain all TMs, but is not empty
 either).</p>
-<p>Rice's theorem tells us that "<strong>all semanticaly non-trivial decision problems on turing-machines cannot be decided</strong>" 
+<p>Rice's theorem tells us that "<strong>all semanticaly non-trivial decision problems on turing-machines cannot be decided</strong>"
 and thus any such decision problem <span class="arithmatex">\(\text{Kod}_L \notin \mathcal{L}_R\)</span>.</p>
 <h2 id="kolmogorov-complexity">Kolmogorov-Complexity</h2>
-<p>It is impossible to algorithmically compute the Kolmogorov-complexity <span class="arithmatex">\(K\)</span> for any <span class="arithmatex">\(x \in \{0,1\}^*\)</span>. This can be 
-further extended: in case the output of the <span class="arithmatex">\(K\)</span> function is in binary form (<span class="arithmatex">\(\{0,1\}^*\)</span>), we can say that <span class="arithmatex">\(K\)</span> is not 
-completely recursive. </p>
-<p>A completely recursive function <span class="arithmatex">\(f: \Sigma_1^* \to \Sigma_2^*\)</span> requires a turing-machine that halts on any input and 
-computes the function <span class="arithmatex">\(f\)</span>. </p>
+<p>It is impossible to algorithmically compute the Kolmogorov-complexity <span class="arithmatex">\(K\)</span> for any <span class="arithmatex">\(x \in \{0,1\}^*\)</span>. This can be
+further extended: in case the output of the <span class="arithmatex">\(K\)</span> function is in binary form (<span class="arithmatex">\(\{0,1\}^*\)</span>), we can say that <span class="arithmatex">\(K\)</span> is not
+completely recursive.</p>
+<p>A completely recursive function <span class="arithmatex">\(f: \Sigma_1^* \to \Sigma_2^*\)</span> requires a turing-machine that halts on any input and
+computes the function <span class="arithmatex">\(f\)</span>.</p>
 <p>This is proven indirectly through a proof by contradiction. Suppose an algorithm <span class="arithmatex">\(A\)</span> exists, computing the Kolmogorov-
-complexity <span class="arithmatex">\(K(x)\)</span>. Let <span class="arithmatex">\(x_n\)</span> be the first word in canonical order with <span class="arithmatex">\(K(n) \geq n\)</span>. We have a second algorithm <span class="arithmatex">\(B_n\)</span> 
+complexity <span class="arithmatex">\(K(x)\)</span>. Let <span class="arithmatex">\(x_n\)</span> be the first word in canonical order with <span class="arithmatex">\(K(n) \geq n\)</span>. We have a second algorithm <span class="arithmatex">\(B_n\)</span>
 computing the word <span class="arithmatex">\(x_n\)</span>. <span class="arithmatex">\(B_n\)</span> is used by <span class="arithmatex">\(A\)</span>, and receives <span class="arithmatex">\(\lambda\)</span> as an input. Our algorithm looks as follows:</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
 <span class="normal">2</span>

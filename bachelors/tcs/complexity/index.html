@@ -1686,6 +1686,17 @@ value of <span class="arithmatex">\(k\)</span> is kept the same. If the original
 problem <span class="arithmatex">\(CLIQUE(G,k)\)</span> to <span class="arithmatex">\(IND-SET(G^C,k)\)</span>.</p>
 <p><span class="arithmatex">\(CLIQUE \leq_P VC\)</span>: The TM <span class="arithmatex">\(A\)</span> again computes the graph complement $G^C. However, <span class="arithmatex">\(k'\)</span> is set to <span class="arithmatex">\(|V| - k\)</span>. The 
 complement of a graph having a clique of size <span class="arithmatex">\(k\)</span> thus has a vertex cover of <span class="arithmatex">\(|V| - k\)</span>. </p>
+<div class="admonition info">
+<p class="admonition-title">Proof template</p>
+<p>We want to show <span class="arithmatex">\(L_1 \leq_P L_2\)</span>.</p>
+<p>To show this, we build a TM <span class="arithmatex">\(A\)</span> running in polynomial time that converts a problem instance of <span class="arithmatex">\(L_1\)</span> into an 
+instsance of <span class="arithmatex">\(L_2\)</span>. </p>
+<p><em>[insert the work of the TM here, typically somthing in the form of what was shown in above examples]</em></p>
+<p>This TM obviously runs in polynomial time. <em>[short description why that is]</em></p>
+<p>Proof for <span class="arithmatex">\(\Rightarrow\)</span>: Suppose we have an input <span class="arithmatex">\((...) \in L_1\)</span>. <em>[show why <span class="arithmatex">\(A(...) \in L_2\)</span>. if deemed necessary,
+also show proof for an input <span class="arithmatex">\((...) \notin L_1 \Rightarrow A(...) \notin L_2\)</span>]</em></p>
+<p>Proof for <span class="arithmatex">\(\Leftarrow\)</span>: Suppose we have an input <span class="arithmatex">\((...) \in L_2\)</span>. <em>[identical to above proof]</em></p>
+</div>
 
 
 
