@@ -63,11 +63,11 @@ accepts the word $w_j$.
 ![](../../diagrams/b/tcs/countability_3.svg)
 </figure>
 
-We now construct the diagonal language denoted as $L_{diag}$ is not in $\mathcal{L}_{RE}$ (the set of recursive
-languages). The constructed language does not yet exist in the set $L(M_i)$.
+We now construct the diagonal language denoted as $L_{diag} \notin \mathcal{L}_{RE}$ (the set of recursively
+enumerable languages). The constructed language does not yet exist in the set $L(M_i)$.
 
 $$
-L_{diag} = \{w \in (\Sigma_{bool})^* \mid w = w_i \; for \; some \; i \in \mathbb{N} - \{0\} \; and \; d_{ii} = 0\}
+L_{diag} = \{w \in (\Sigma_{bool})^* \mid w = w_i \text{ for some } i \in \mathbb{N} - \{0\} \text{ and } d_{ii} = 0\}
 $$
 
 ## Reduction
@@ -80,7 +80,7 @@ $$
 L_1 \leq_{EE} L_2 \Rightarrow L_1 \leq_R L_2
 $$
 
-Further, $L \leq_R L^C \Leftrightarrow L^c \leq_R L$. And, if $L \in \mathcal{L}_{RE}$ and $L^C \in \mathcal{L}_{RE}$, 
+Further, $L \leq_R L^C \Leftrightarrow L^C \leq_R L$. And, if $L \in \mathcal{L}_{RE}$ and $L^C \in \mathcal{L}_{RE}$,
 it follows that $L \in \mathcal{L}_{R}$.
 
 ### R-Reduction
@@ -112,7 +112,7 @@ before giving it to the TM $A$
 In general, we talk about two groups of languages. They define the behaviour of turing-machines that detect the
 respective language.
 
-- **Recursive**: The turing-machine will halt on any input either and can thus always decide if a certain input is in
+- **Recursive**: The turing-machine will halt on any input and can thus always decide if a certain input is in
   the language or not.
 - **Recursive enumerable**: The turing-machine is not guaranteed to halt. It will detect all inputs that are part of
   the language. But the TM might run indefinitely on inputs that do not belong to the language.
@@ -143,7 +143,7 @@ $$
 The complement of the diagonal language. $(L_{diag})^C \in \mathcal{L}_{RE}$, $(L_{diag})^C \notin \mathcal{L}_{R}$
 
 $$
-(L_{diag})^C = \{x \in \Sigma_{bool}^* \mid \text{if } x = w_i \text{ for some } i \in \mathbb{N} - \{0\}, M_i 
+(L_{diag})^C = \{x \in \Sigma_{bool}^* \mid \text{if } x = w_i \text{ for some } i \in \mathbb{N} - \{0\}, M_i
 \text{ accepts the word } w_i\}
 $$
 
@@ -182,20 +182,20 @@ turing-machines**". Such a language must fulfill the following conditions:
 The first two conditions make sure that the language $L$ is non-trivial (it does not contain all TMs, but is not empty
 either).
 
-Rice's theorem tells us that "**all semanticaly non-trivial decision problems on turing-machines cannot be decided**" 
+Rice's theorem tells us that "**all semanticaly non-trivial decision problems on turing-machines cannot be decided**"
 and thus any such decision problem $\text{Kod}_L \notin \mathcal{L}_R$.
 
 ## Kolmogorov-Complexity
 
-It is impossible to algorithmically compute the Kolmogorov-complexity $K$ for any $x \in \{0,1\}^*$. This can be 
-further extended: in case the output of the $K$ function is in binary form ($\{0,1\}^*$), we can say that $K$ is not 
-completely recursive. 
+It is impossible to algorithmically compute the Kolmogorov-complexity $K$ for any $x \in \{0,1\}^*$. This can be
+further extended: in case the output of the $K$ function is in binary form ($\{0,1\}^*$), we can say that $K$ is not
+completely recursive.
 
-A completely recursive function $f: \Sigma_1^* \to \Sigma_2^*$ requires a turing-machine that halts on any input and 
-computes the function $f$. 
+A completely recursive function $f: \Sigma_1^* \to \Sigma_2^*$ requires a turing-machine that halts on any input and
+computes the function $f$.
 
 This is proven indirectly through a proof by contradiction. Suppose an algorithm $A$ exists, computing the Kolmogorov-
-complexity $K(x)$. Let $x_n$ be the first word in canonical order with $K(n) \geq n$. We have a second algorithm $B_n$ 
+complexity $K(x)$. Let $x_n$ be the first word in canonical order with $K(n) \geq n$. We have a second algorithm $B_n$
 computing the word $x_n$. $B_n$ is used by $A$, and receives $\lambda$ as an input. Our algorithm looks as follows:
 
 ```

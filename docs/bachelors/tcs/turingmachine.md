@@ -113,7 +113,7 @@ If above apply, we can say that **$A$ and $B$ are equivalent $\Rightarrow L(A) =
 
 The non-deterministic turing-machine (NTM) is an extension to the TM. It's formally defined as the seven-tuple
 $M = (Q,\Sigma,\Gamma,\delta,q_0,q_{acc},q_{rej})$ where $\delta$ has been redefined as 
-$\delta: (Q-\{q_acc,q_rej\}) \times \Gamma \to Pot(Q \times \Gamma \times \{L,R,N\})$. Additionally, delta must make 
+$\delta: (Q-\{q_{acc},q_{rej}\}) \times \Gamma \to Pot(Q \times \Gamma \times \{L,R,N\})$. Additionally, delta must make 
 sure that the tapes are not left. 
 
 The non-determinism is similar to the one described for the finite-state machines; it is possible for the NTM to 

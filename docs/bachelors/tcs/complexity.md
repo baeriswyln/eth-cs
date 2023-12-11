@@ -196,3 +196,19 @@ problem $CLIQUE(G,k)$ to $IND-SET(G^C,k)$.
 
 $CLIQUE \leq_P VC$: The TM $A$ again computes the graph complement $G^C. However, $k'$ is set to $|V| - k$. The 
 complement of a graph having a clique of size $k$ thus has a vertex cover of $|V| - k$. 
+
+!!! info "Proof template"
+
+    We want to show $L_1 \leq_P L_2$.
+
+    To show this, we build a TM $A$ running in polynomial time that converts a problem instance of $L_1$ into an 
+    instsance of $L_2$. 
+
+    _[insert the work of the TM here, typically somthing in the form of what was shown in above examples]_
+
+    This TM obviously runs in polynomial time. _[short description why that is]_
+
+    Proof for $\Rightarrow$: Suppose we have an input $(...) \in L_1$. _[show why $A(...) \in L_2$. if deemed necessary,
+    also show proof for an input $(...) \notin L_1 \Rightarrow A(...) \notin L_2$]_
+
+    Proof for $\Leftarrow$: Suppose we have an input $(...) \in L_2$. _[identical to above proof]_
