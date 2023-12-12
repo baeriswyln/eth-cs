@@ -34,6 +34,10 @@ nav:
       - bachelors/la/index.md
     - Algorithms and Datastructures:
       - bachelors/ads/index.md
+      - Search and Sort: bachelors/ads/search-sort.md
+      - Datastructures: bachelors/ads/datastructures.md
+      - Dynamic programming: bachelors/ads/dynamic-programming.md
+      - Graph theory: bachelors/ads/graph-theory.md
     - Theoretical Computer Science:
       - bachelors/tcs/index.md
       - Languages: bachelors/tcs/languages.md
