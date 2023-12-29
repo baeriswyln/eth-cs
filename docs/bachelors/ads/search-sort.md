@@ -39,20 +39,20 @@ their complexity in terms of number of compare and copy operations, as well as t
 | Quick sort     | $O(n \cdot log(n))$ | $O(n \cdot log(n))$ | $O(1)$       |
 | Heap sort      | $O(n \cdot log(n))$ | $O(n \cdot log(n))$ | $O(1)$       |
 
-We have proven in the lecture that the best possible complexity for (comparison-based) sorting algorithms is 
-$O(n log(n))$. The proof is similar to the one for sorting algorithms. The number of nodes in the decision tree is 
+We have proven in the lecture that the best possible complexity for (comparison-based) sorting algorithms is
+$O(n log(n))$. The proof is similar to the one for sorting algorithms. The number of nodes in the decision tree is
 greater or equal the number of possible outputs, which is $n!$ (there are $n!$ many different permutations of an array).
-The depth of such a decision tree is $log(2!)-1 \geq \Omega(n log(n))$, and it requires thus that many comparisons. 
+The depth of such a decision tree is $log(2!)-1 \geq \Omega(n log(n))$, and it requires thus that many comparisons.
 
 ### Bubble sort
 
 **Invariant** $I(k)$: the $k$ biggest elements are at the correct (and final) position.
 
-This algorithm iterates many times (at most $n$ to be exact) through the entire array. In one iteration, it always 
-compares neighbouring entries. If they are in the wrong order, the elements are swapped. This is done until in one 
+This algorithm iterates many times (at most $n$ to be exact) through the entire array. In one iteration, it always
+compares neighbouring entries. If they are in the wrong order, the elements are swapped. This is done until in one
 iteration, no swap was made, or at most $n$-times.
 
-**Complexity**: Compare: $\Theta(n^2)$, Swap: $O(n^2)$  
+**Complexity**: Compare: $\Theta(n^2)$, Swap: $O(n^2)$
 
 ??? tip "Pseudocode"
 
@@ -70,9 +70,9 @@ iteration, no swap was made, or at most $n$-times.
 
 **Invariant** $I(k)$: the $k$ biggest elements are at the correct (and final) position.
 
-Selection sort searches the biggest element in the array, and swaps it with the last element. In the next iteration, 
+Selection sort searches the biggest element in the array, and swaps it with the last element. In the next iteration,
 it searches for the next largest element, and puts it right in front of the largest element. This process is repeated
-$n$ times, at which point the array is sorted. 
+$n$ times, at which point the array is sorted.
 
 **Complexity**: Compare: $\Theta(n^2)$, Swap: $O(n)$
 
@@ -93,20 +93,149 @@ $n$ times, at which point the array is sorted.
 
 ### Insertion sort
 
-### Merge sort
+**Invariant** $I(k)$: the first $k$ elements are correctly sorted.
 
-### Quick sort
+In iteration $k$, the algorithm takes the element $A[k]$ and places it in $A[0:k]$ such that the ordering in this
+subarray is correct. Let $j$ the index in the subarray where the element $A[k]$ will be placed. All elements $A[j:k-1]$
+are required to move one position to their right. The correct position in the subarray can be found using the _binary
+search_ algorithm, as it is known to be sorted.
 
-### Heap sort
-
-**Invariant** $I(k)$:
-
-**Complexity**: Compare: $O()$, Swap: $O()$
+**Complexity**: Compare: $O(n \cdot log(n))$, Swap: $O(n^2)$
 
 ??? tip "Pseudocode"
 
     ```go
-    func bubbleSort(A int[], n int){
+    func InsertionSort(A int[], n int){
+        for k := range A {
+            k_val := A[k]
+            j := bin_search(A[0:k])
+            
+            for i := k; i > j; k-- {
+                A[i] = A[i-1]
+            }
+            A[j] = k_val
+        }
+    }
+    ```
 
+### Merge sort
+
+**Recursion**: Both halves of the array are correctly sorted.
+
+Merge sort is the only algorithm taking a significant additional amount of space, as it must temporarily store an array
+of size $n$ in addition to the original array. It uses the _divide and conquer_ approach: the array is halved and
+recursively sorted. Both halves are than merged together which can be done in $O(n)$ because both halves are already
+sorted.
+
+**Complexity**: Compare: $O(n \cdot log(n))$, Swap: $O(n \cdot log(n))$ (one level is $O(n)$, and there are $log(n)$
+recursion levels)
+
+??? tip "Pseudocode"
+
+    ```go
+    func MergeSort(A int[], l int, r int) {
+        if l < r {
+            mid = (l + r)  / 2
+            MergeSort(A, l, mid)        // sort left halve
+            MergeSort(A, mid + 1, r)    // sort right halve
+            Merge(A, l, mid, r)         // merge sorted halves
+        }
+    }
+
+    func Merge(A int[], l int, mid int, r int) {
+        B := int[r - l + 1]
+        i, j, k := l, mid + 1, 1
+
+        while i <= mid && j <= r {
+            if A[i] < A[j] {
+                B[k] = A[i]
+                k++; i++;
+            } else {
+                B[k] = A[j]
+                k++; j++;
+            }
+        }
+        A[l:r] = B
+    }
+    ```
+
+### Quick sort
+
+**Recursion**: All elements left to the _pivot_ are smaller, all elements to the right are bigger. 
+
+The QuickSort algorithm is a randomized and recursive algorithm. In every recursion step, a random **pivot** element is
+chosen. Next, the algorithm iterates through the array, making sure that the pivot element is put at a position where
+all elements to its left are smaller, and all elements to its right are bigger. This will also be the final position of 
+the pivot. This procedure is then recursively applied on both sides of the array. 
+
+Due to its probabilistic nature, the algorithm has a worst case complexity of $O(n^2)$. However, this is only the case 
+if the chosen pivot is always the biggest or smallest element of the array. As this is very unlikely, the mean 
+complexity is $O(n \cdot log(n))$.
+
+**Complexity**: Compare: $O(n \cdot log(n))$, Swap: $O(n \cdot log(n))$
+
+??? tip "Pseudocode"
+
+    ```go
+    func QuickSort(A int[], l int, r int) {
+        if l < r {
+            pivot_index = MoveAroundPivot(A, l, r)
+            QuickSort(A, l, pivot_index-1)
+            QuickSort(A, pivot_index+1, r)
+        }
+    }
+
+    func MoveAroundPivot(A int[], l int, r int) {
+        // use the last element in the curernt array section as pivot. 
+        // can also be any random element
+        pivot = A[r]         
+        il, ir := l, r-1
+
+        while(il < ir) {
+            // search for next pair of elements that can be swaped
+            while(A[il] <= pivot && il < r) il++
+            while(A[ir] > pivot && ir > l) ir--
+            if(il < ir) {
+                A[il], A[ir] = A[ir], A[il]
+            }
+        }
+        // put pivot element in the middle
+        A[il], A[r] = A[r], A[il]
+
+        return il
+    }
+    ```
+
+### Heap sort
+
+**Recursion**: The root of the heap is the biggest element of the array.
+
+Unlike all other sorting algorithms, this one makes use of an alternative data structure. In fact, the sorting algorithm
+only uses the basic operations of the data structure to sort an array. The data structure at stake is the **Max-heap**.
+This is a complete binary tree where the keys are the values of the array. The key of each vertex must be greater or 
+equal to all keys of its descendants. More on this data structure is to be found in the respective chapter. 
+
+As mentioned, the algorithm is fairly simple. The max-heap is created using the array, and then the maximum is extracted
+until the hea is empty. The order of these maximums is the reverse order of the array. Due to the max-heaps structure, 
+the sorting algorithm has memory accesses that are jumping all over the memory, which somewhat reduces the speed. 
+
+As shown in the chapter about the max-heap data structure, the operations `Insert` and `ExtractMax` both have a time 
+complexity of $log(n)$. The complete time complexity comes from the fact that both operations are executed $n$-times to
+get the sorted array. Although the algorithm below would let you think that additional memory is required, some clever
+thinking allows the array to be sorted in place by using it to store the heap. 
+
+**Complexity**: Compare: $O(n \cdot log(n))$, Swap: $O(n \cdot log(n))$
+
+??? tip "Pseudocode"
+
+    ```go
+    func HeapSort(A int[], n int){
+        H := new Heap()
+        for v := range A {
+            H.Insert(v)
+        }
+        for i := range n-1..0 {
+            A[i] = H.ExtractMax()
+        }
     }
     ```
