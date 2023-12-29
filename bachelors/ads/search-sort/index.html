@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.2">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.3">
     
     
       
@@ -1768,16 +1768,16 @@ their complexity in terms of number of compare and copy operations, as well as t
 </tr>
 </tbody>
 </table>
-<p>We have proven in the lecture that the best possible complexity for (comparison-based) sorting algorithms is 
-<span class="arithmatex">\(O(n log(n))\)</span>. The proof is similar to the one for sorting algorithms. The number of nodes in the decision tree is 
+<p>We have proven in the lecture that the best possible complexity for (comparison-based) sorting algorithms is
+<span class="arithmatex">\(O(n log(n))\)</span>. The proof is similar to the one for sorting algorithms. The number of nodes in the decision tree is
 greater or equal the number of possible outputs, which is <span class="arithmatex">\(n!\)</span> (there are <span class="arithmatex">\(n!\)</span> many different permutations of an array).
-The depth of such a decision tree is <span class="arithmatex">\(log(2!)-1 \geq \Omega(n log(n))\)</span>, and it requires thus that many comparisons. </p>
+The depth of such a decision tree is <span class="arithmatex">\(log(2!)-1 \geq \Omega(n log(n))\)</span>, and it requires thus that many comparisons.</p>
 <h3 id="bubble-sort">Bubble sort</h3>
 <p><strong>Invariant</strong> <span class="arithmatex">\(I(k)\)</span>: the <span class="arithmatex">\(k\)</span> biggest elements are at the correct (and final) position.</p>
-<p>This algorithm iterates many times (at most <span class="arithmatex">\(n\)</span> to be exact) through the entire array. In one iteration, it always 
-compares neighbouring entries. If they are in the wrong order, the elements are swapped. This is done until in one 
+<p>This algorithm iterates many times (at most <span class="arithmatex">\(n\)</span> to be exact) through the entire array. In one iteration, it always
+compares neighbouring entries. If they are in the wrong order, the elements are swapped. This is done until in one
 iteration, no swap was made, or at most <span class="arithmatex">\(n\)</span>-times.</p>
-<p><strong>Complexity</strong>: Compare: <span class="arithmatex">\(\Theta(n^2)\)</span>, Swap: <span class="arithmatex">\(O(n^2)\)</span>  </p>
+<p><strong>Complexity</strong>: Compare: <span class="arithmatex">\(\Theta(n^2)\)</span>, Swap: <span class="arithmatex">\(O(n^2)\)</span></p>
 <details class="tip">
 <summary>Pseudocode</summary>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
@@ -1797,9 +1797,9 @@ iteration, no swap was made, or at most <span class="arithmatex">\(n\)</span>-ti
 </details>
 <h3 id="selection-sort">Selection sort</h3>
 <p><strong>Invariant</strong> <span class="arithmatex">\(I(k)\)</span>: the <span class="arithmatex">\(k\)</span> biggest elements are at the correct (and final) position.</p>
-<p>Selection sort searches the biggest element in the array, and swaps it with the last element. In the next iteration, 
+<p>Selection sort searches the biggest element in the array, and swaps it with the last element. In the next iteration,
 it searches for the next largest element, and puts it right in front of the largest element. This process is repeated
-<span class="arithmatex">\(n\)</span> times, at which point the array is sorted. </p>
+<span class="arithmatex">\(n\)</span> times, at which point the array is sorted.</p>
 <p><strong>Complexity</strong>: Compare: <span class="arithmatex">\(\Theta(n^2)\)</span>, Swap: <span class="arithmatex">\(O(n)\)</span></p>
 <details class="tip">
 <summary>Pseudocode</summary>
@@ -1825,17 +1825,195 @@ it searches for the next largest element, and puts it right in front of the larg
 </code></pre></div></td></tr></table></div>
 </details>
 <h3 id="insertion-sort">Insertion sort</h3>
+<p><strong>Invariant</strong> <span class="arithmatex">\(I(k)\)</span>: the first <span class="arithmatex">\(k\)</span> elements are correctly sorted.</p>
+<p>In iteration <span class="arithmatex">\(k\)</span>, the algorithm takes the element <span class="arithmatex">\(A[k]\)</span> and places it in <span class="arithmatex">\(A[0:k]\)</span> such that the ordering in this
+subarray is correct. Let <span class="arithmatex">\(j\)</span> the index in the subarray where the element <span class="arithmatex">\(A[k]\)</span> will be placed. All elements <span class="arithmatex">\(A[j:k-1]\)</span>
+are required to move one position to their right. The correct position in the subarray can be found using the <em>binary
+search</em> algorithm, as it is known to be sorted.</p>
+<p><strong>Complexity</strong>: Compare: <span class="arithmatex">\(O(n \cdot log(n))\)</span>, Swap: <span class="arithmatex">\(O(n^2)\)</span></p>
+<details class="tip">
+<summary>Pseudocode</summary>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">InsertionSort</span><span class="p">(</span><span class="nx">A</span><span class="w"> </span><span class="kt">int</span><span class="p">[],</span><span class="w"> </span><span class="nx">n</span><span class="w"> </span><span class="kt">int</span><span class="p">){</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="nx">k</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">range</span><span class="w"> </span><span class="nx">A</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">k_val</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">A</span><span class="p">[</span><span class="nx">k</span><span class="p">]</span>
+<span class="w">        </span><span class="nx">j</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">bin_search</span><span class="p">(</span><span class="nx">A</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="nx">k</span><span class="p">])</span>
+
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">k</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="p">&gt;</span><span class="w"> </span><span class="nx">j</span><span class="p">;</span><span class="w"> </span><span class="nx">k</span><span class="o">--</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">A</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">A</span><span class="p">[</span><span class="nx">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="nx">A</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">k_val</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+</details>
 <h3 id="merge-sort">Merge sort</h3>
+<p><strong>Recursion</strong>: Both halves of the array are correctly sorted.</p>
+<p>Merge sort is the only algorithm taking a significant additional amount of space, as it must temporarily store an array
+of size <span class="arithmatex">\(n\)</span> in addition to the original array. It uses the <em>divide and conquer</em> approach: the array is halved and
+recursively sorted. Both halves are than merged together which can be done in <span class="arithmatex">\(O(n)\)</span> because both halves are already
+sorted.</p>
+<p><strong>Complexity</strong>: Compare: <span class="arithmatex">\(O(n \cdot log(n))\)</span>, Swap: <span class="arithmatex">\(O(n \cdot log(n))\)</span> (one level is <span class="arithmatex">\(O(n)\)</span>, and there are <span class="arithmatex">\(log(n)\)</span>
+recursion levels)</p>
+<details class="tip">
+<summary>Pseudocode</summary>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">MergeSort</span><span class="p">(</span><span class="nx">A</span><span class="w"> </span><span class="kt">int</span><span class="p">[],</span><span class="w"> </span><span class="nx">l</span><span class="w"> </span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="nx">r</span><span class="w"> </span><span class="kt">int</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">l</span><span class="w"> </span><span class="p">&lt;</span><span class="w"> </span><span class="nx">r</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">mid</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">(</span><span class="nx">l</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">r</span><span class="p">)</span><span class="w">  </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span>
+<span class="w">        </span><span class="nx">MergeSort</span><span class="p">(</span><span class="nx">A</span><span class="p">,</span><span class="w"> </span><span class="nx">l</span><span class="p">,</span><span class="w"> </span><span class="nx">mid</span><span class="p">)</span><span class="w">        </span><span class="c1">// sort left halve</span>
+<span class="w">        </span><span class="nx">MergeSort</span><span class="p">(</span><span class="nx">A</span><span class="p">,</span><span class="w"> </span><span class="nx">mid</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nx">r</span><span class="p">)</span><span class="w">    </span><span class="c1">// sort right halve</span>
+<span class="w">        </span><span class="nx">Merge</span><span class="p">(</span><span class="nx">A</span><span class="p">,</span><span class="w"> </span><span class="nx">l</span><span class="p">,</span><span class="w"> </span><span class="nx">mid</span><span class="p">,</span><span class="w"> </span><span class="nx">r</span><span class="p">)</span><span class="w">         </span><span class="c1">// merge sorted halves</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="nx">Merge</span><span class="p">(</span><span class="nx">A</span><span class="w"> </span><span class="kt">int</span><span class="p">[],</span><span class="w"> </span><span class="nx">l</span><span class="w"> </span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="nx">mid</span><span class="w"> </span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="nx">r</span><span class="w"> </span><span class="kt">int</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">B</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="kt">int</span><span class="p">[</span><span class="nx">r</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">l</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span>
+<span class="w">    </span><span class="nx">i</span><span class="p">,</span><span class="w"> </span><span class="nx">j</span><span class="p">,</span><span class="w"> </span><span class="nx">k</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">l</span><span class="p">,</span><span class="w"> </span><span class="nx">mid</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span>
+
+<span class="w">    </span><span class="nx">while</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="nx">mid</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">j</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="nx">r</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nx">A</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span><span class="w"> </span><span class="p">&lt;</span><span class="w"> </span><span class="nx">A</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">B</span><span class="p">[</span><span class="nx">k</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">A</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span>
+<span class="w">            </span><span class="nx">k</span><span class="o">++</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="o">++</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">B</span><span class="p">[</span><span class="nx">k</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">A</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span>
+<span class="w">            </span><span class="nx">k</span><span class="o">++</span><span class="p">;</span><span class="w"> </span><span class="nx">j</span><span class="o">++</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="nx">A</span><span class="p">[</span><span class="nx">l</span><span class="p">:</span><span class="nx">r</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">B</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+</details>
 <h3 id="quick-sort">Quick sort</h3>
+<p><strong>Recursion</strong>: All elements left to the <em>pivot</em> are smaller, all elements to the right are bigger. </p>
+<p>The QuickSort algorithm is a randomized and recursive algorithm. In every recursion step, a random <strong>pivot</strong> element is
+chosen. Next, the algorithm iterates through the array, making sure that the pivot element is put at a position where
+all elements to its left are smaller, and all elements to its right are bigger. This will also be the final position of 
+the pivot. This procedure is then recursively applied on both sides of the array. </p>
+<p>Due to its probabilistic nature, the algorithm has a worst case complexity of <span class="arithmatex">\(O(n^2)\)</span>. However, this is only the case 
+if the chosen pivot is always the biggest or smallest element of the array. As this is very unlikely, the mean 
+complexity is <span class="arithmatex">\(O(n \cdot log(n))\)</span>.</p>
+<p><strong>Complexity</strong>: Compare: <span class="arithmatex">\(O(n \cdot log(n))\)</span>, Swap: <span class="arithmatex">\(O(n \cdot log(n))\)</span></p>
+<details class="tip">
+<summary>Pseudocode</summary>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">QuickSort</span><span class="p">(</span><span class="nx">A</span><span class="w"> </span><span class="kt">int</span><span class="p">[],</span><span class="w"> </span><span class="nx">l</span><span class="w"> </span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="nx">r</span><span class="w"> </span><span class="kt">int</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">l</span><span class="w"> </span><span class="p">&lt;</span><span class="w"> </span><span class="nx">r</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">pivot_index</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">MoveAroundPivot</span><span class="p">(</span><span class="nx">A</span><span class="p">,</span><span class="w"> </span><span class="nx">l</span><span class="p">,</span><span class="w"> </span><span class="nx">r</span><span class="p">)</span>
+<span class="w">        </span><span class="nx">QuickSort</span><span class="p">(</span><span class="nx">A</span><span class="p">,</span><span class="w"> </span><span class="nx">l</span><span class="p">,</span><span class="w"> </span><span class="nx">pivot_index</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="w">        </span><span class="nx">QuickSort</span><span class="p">(</span><span class="nx">A</span><span class="p">,</span><span class="w"> </span><span class="nx">pivot_index</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nx">r</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="nx">MoveAroundPivot</span><span class="p">(</span><span class="nx">A</span><span class="w"> </span><span class="kt">int</span><span class="p">[],</span><span class="w"> </span><span class="nx">l</span><span class="w"> </span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="nx">r</span><span class="w"> </span><span class="kt">int</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// use the last element in the curernt array section as pivot. </span>
+<span class="w">    </span><span class="c1">// can also be any random element</span>
+<span class="w">    </span><span class="nx">pivot</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">A</span><span class="p">[</span><span class="nx">r</span><span class="p">]</span><span class="w">         </span>
+<span class="w">    </span><span class="nx">il</span><span class="p">,</span><span class="w"> </span><span class="nx">ir</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">l</span><span class="p">,</span><span class="w"> </span><span class="nx">r</span><span class="o">-</span><span class="mi">1</span>
+
+<span class="w">    </span><span class="nx">while</span><span class="p">(</span><span class="nx">il</span><span class="w"> </span><span class="p">&lt;</span><span class="w"> </span><span class="nx">ir</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// search for next pair of elements that can be swaped</span>
+<span class="w">        </span><span class="nx">while</span><span class="p">(</span><span class="nx">A</span><span class="p">[</span><span class="nx">il</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="nx">pivot</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">il</span><span class="w"> </span><span class="p">&lt;</span><span class="w"> </span><span class="nx">r</span><span class="p">)</span><span class="w"> </span><span class="nx">il</span><span class="o">++</span>
+<span class="w">        </span><span class="nx">while</span><span class="p">(</span><span class="nx">A</span><span class="p">[</span><span class="nx">ir</span><span class="p">]</span><span class="w"> </span><span class="p">&gt;</span><span class="w"> </span><span class="nx">pivot</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">ir</span><span class="w"> </span><span class="p">&gt;</span><span class="w"> </span><span class="nx">l</span><span class="p">)</span><span class="w"> </span><span class="nx">ir</span><span class="o">--</span>
+<span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="nx">il</span><span class="w"> </span><span class="p">&lt;</span><span class="w"> </span><span class="nx">ir</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">A</span><span class="p">[</span><span class="nx">il</span><span class="p">],</span><span class="w"> </span><span class="nx">A</span><span class="p">[</span><span class="nx">ir</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">A</span><span class="p">[</span><span class="nx">ir</span><span class="p">],</span><span class="w"> </span><span class="nx">A</span><span class="p">[</span><span class="nx">il</span><span class="p">]</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="c1">// put pivot element in the middle</span>
+<span class="w">    </span><span class="nx">A</span><span class="p">[</span><span class="nx">il</span><span class="p">],</span><span class="w"> </span><span class="nx">A</span><span class="p">[</span><span class="nx">r</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">A</span><span class="p">[</span><span class="nx">r</span><span class="p">],</span><span class="w"> </span><span class="nx">A</span><span class="p">[</span><span class="nx">il</span><span class="p">]</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">il</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+</details>
 <h3 id="heap-sort">Heap sort</h3>
-<p><strong>Invariant</strong> <span class="arithmatex">\(I(k)\)</span>:</p>
-<p><strong>Complexity</strong>: Compare: <span class="arithmatex">\(O()\)</span>, Swap: <span class="arithmatex">\(O()\)</span></p>
+<p><strong>Recursion</strong>: The root of the heap is the biggest element of the array.</p>
+<p>Unlike all other sorting algorithms, this one makes use of an alternative data structure. In fact, the sorting algorithm
+only uses the basic operations of the data structure to sort an array. The data structure at stake is the <strong>Max-heap</strong>.
+This is a complete binary tree where the keys are the values of the array. The key of each vertex must be greater or 
+equal to all keys of its descendants. More on this data structure is to be found in the respective chapter. </p>
+<p>As mentioned, the algorithm is fairly simple. The max-heap is created using the array, and then the maximum is extracted
+until the hea is empty. The order of these maximums is the reverse order of the array. Due to the max-heaps structure, 
+the sorting algorithm has memory accesses that are jumping all over the memory, which somewhat reduces the speed. </p>
+<p>As shown in the chapter about the max-heap data structure, the operations <code>Insert</code> and <code>ExtractMax</code> both have a time 
+complexity of <span class="arithmatex">\(log(n)\)</span>. The complete time complexity comes from the fact that both operations are executed <span class="arithmatex">\(n\)</span>-times to
+get the sorted array. Although the algorithm below would let you think that additional memory is required, some clever
+thinking allows the array to be sorted in place by using it to store the heap. </p>
+<p><strong>Complexity</strong>: Compare: <span class="arithmatex">\(O(n \cdot log(n))\)</span>, Swap: <span class="arithmatex">\(O(n \cdot log(n))\)</span></p>
 <details class="tip">
 <summary>Pseudocode</summary>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
 <span class="normal">2</span>
-<span class="normal">3</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">bubbleSort</span><span class="p">(</span><span class="nx">A</span><span class="w"> </span><span class="kt">int</span><span class="p">[],</span><span class="w"> </span><span class="nx">n</span><span class="w"> </span><span class="kt">int</span><span class="p">){</span>
-
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span>
+<span class="normal">9</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">HeapSort</span><span class="p">(</span><span class="nx">A</span><span class="w"> </span><span class="kt">int</span><span class="p">[],</span><span class="w"> </span><span class="nx">n</span><span class="w"> </span><span class="kt">int</span><span class="p">){</span>
+<span class="w">    </span><span class="nx">H</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">new</span><span class="w"> </span><span class="nx">Heap</span><span class="p">()</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="nx">v</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">range</span><span class="w"> </span><span class="nx">A</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">H</span><span class="p">.</span><span class="nx">Insert</span><span class="p">(</span><span class="nx">v</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">range</span><span class="w"> </span><span class="nx">n</span><span class="o">-</span><span class="mf">1..0</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">A</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">H</span><span class="p">.</span><span class="nx">ExtractMax</span><span class="p">()</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div></td></tr></table></div>
 </details>
@@ -1861,7 +2039,7 @@ it searches for the next largest element, and puts it right in front of the larg
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">December 12, 2023</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">December 29, 2023</span>
   </span>
 
     
