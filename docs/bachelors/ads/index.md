@@ -118,7 +118,7 @@ Here a couple of things to remember.
     ```
 
 
-### Running-time of divide-and-conquer
+### Running-time of divide-and-conquer (master-theorem)
 
 To compute the running-time of divide-and-conquer algorithms, we use the following theorem. Let $a,C > 0$ and $b \geq 0$
 be constant, and $T: \mathbb{N} \to \mathbb{R}^+$ for all even $n \in \mathbb{N}$.
