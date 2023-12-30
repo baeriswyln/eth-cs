@@ -1800,7 +1800,7 @@ T(n) &amp;= T(n-1) + T(n-2) + c\\
 <h2 id="examples-by-problem-definitions">Examples by problem definitions</h2>
 <p>We are now looking at seven problem examples that can be solved through a DP approach.</p>
 <h3 id="maximum-subarray-sum">Maximum subarray sum</h3>
-<p>In an array, we are looking for the biggest sum built from consecutive cells.</p>
+<p>Given an array <span class="arithmatex">\(A\)</span> of length <span class="arithmatex">\(n\)</span>, we are looking for the biggest sum built from consecutive cells.</p>
 <details class="tip">
 <summary>Solution description</summary>
 <ol>
@@ -1845,7 +1845,7 @@ sequence. The letters must be in the correct order, but between the letters we a
 <li><strong>Sub-problems</strong>: <span class="arithmatex">\(DP[i][j]\)</span> longest common subsequence using the first <span class="arithmatex">\(i\)</span> letters from <span class="arithmatex">\(A\)</span> and the first 
    <span class="arithmatex">\(j\)</span> letters of <span class="arithmatex">\(B\)</span></li>
 <li><strong>Recursion</strong>: <ul>
-<li><span class="arithmatex">\(BC: DP[0][j]=DP[i][0]=0\)</span></li>
+<li>BC: <span class="arithmatex">\(DP[0][j]=DP[i][0]=0\)</span></li>
 <li><span class="arithmatex">\(A[i] = B[j] \Rightarrow DP[i][j] = DP[i-1][j-1] + 1\)</span></li>
 <li><span class="arithmatex">\(A[i] \neq B[j] \Rightarrow DP[i][j] = max\{DP[i-1][j], DP[i][j-1]\}\)</span></li>
 </ul>
@@ -1871,7 +1871,7 @@ the string <span class="arithmatex">\(A\)</span> into the string <span class="ar
 <li><strong>Dimensions of the DP table</strong>: <span class="arithmatex">\((n+1) \times (m+1)\)</span></li>
 <li><strong>Sub-problems</strong>: <span class="arithmatex">\(DP[i][j]\)</span> the number of operations required to convert the string <span class="arithmatex">\(A[1..i]\)</span> to <span class="arithmatex">\(B[1..j]\)</span></li>
 <li><strong>Recursion</strong>: <ul>
-<li><span class="arithmatex">\(BC: DP[i][0] = i, DP[0][j] = j\)</span> (converting the string <span class="arithmatex">\(A\)</span> into the empty string requires the deletion of 
+<li>BC: <span class="arithmatex">\(DP[i][0] = i, DP[0][j] = j\)</span> (converting the string <span class="arithmatex">\(A\)</span> into the empty string requires the deletion of 
   <span class="arithmatex">\(i\)</span> letters)</li>
 <li><span class="arithmatex">\(A[i] = B[j] \Rightarrow DP[i][j] = DP[i-1][j-i]\)</span></li>
 <li><span class="arithmatex">\(A[i] \neq B[j] \Rightarrow DP[i][j] = min\{DP[i-1][j]+1, DP[i][j-1]+1, DP[i-1][j-1]+1\}\)</span></li>
@@ -1955,7 +1955,7 @@ array - we allow for values in between that are not used in the subsequence. </p
 <li>BC: <span class="arithmatex">\(DP[1][1] = A[1]\)</span>, <span class="arithmatex">\(DP[1][j&gt;1] = \infty\)</span></li>
 <li><span class="arithmatex">\(DP[i-1][j-1] &lt; A[i] &lt; DP[i-1][j]\)</span> (<span class="arithmatex">\(A[i]\)</span> can be used, and it is better than the previous minimum for this 
   length): <span class="arithmatex">\(DP[i][j] = A[i]\)</span></li>
-<li>Otherwise: $DP[i][j] = DP[i-1][j]</li>
+<li>Otherwise: <span class="arithmatex">\(DP[i][j] = DP[i-1][j]\)</span></li>
 </ul>
 </li>
 <li><strong>Calculation order</strong>: bottom-up</li>
