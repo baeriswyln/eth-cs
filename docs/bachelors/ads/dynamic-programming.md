@@ -91,7 +91,7 @@ We are now looking at seven problem examples that can be solved through a DP app
 
 ### Maximum subarray sum
 
-In an array, we are looking for the biggest sum built from consecutive cells.
+Given an array $A$ of length $n$, we are looking for the biggest sum built from consecutive cells.
 
 ??? tip "Solution description"
 
@@ -133,7 +133,7 @@ sequence. The letters must be in the correct order, but between the letters we a
     2. **Sub-problems**: $DP[i][j]$ longest common subsequence using the first $i$ letters from $A$ and the first 
        $j$ letters of $B$
     3. **Recursion**: 
-        - $BC: DP[0][j]=DP[i][0]=0$
+        - BC: $DP[0][j]=DP[i][0]=0$
         - $A[i] = B[j] \Rightarrow DP[i][j] = DP[i-1][j-1] + 1$
         - $A[i] \neq B[j] \Rightarrow DP[i][j] = max\{DP[i-1][j], DP[i][j-1]\}$
     4. **Calculation order**: bottom-up
@@ -157,7 +157,7 @@ the string $A$ into the string $B$? The allowed operations are: insert a new let
     1. **Dimensions of the DP table**: $(n+1) \times (m+1)$
     2. **Sub-problems**: $DP[i][j]$ the number of operations required to convert the string $A[1..i]$ to $B[1..j]$
     3. **Recursion**: 
-        - $BC: DP[i][0] = i, DP[0][j] = j$ (converting the string $A$ into the empty string requires the deletion of 
+        - BC: $DP[i][0] = i, DP[0][j] = j$ (converting the string $A$ into the empty string requires the deletion of 
           $i$ letters)
         - $A[i] = B[j] \Rightarrow DP[i][j] = DP[i-1][j-i]$
         - $A[i] \neq B[j] \Rightarrow DP[i][j] = min\{DP[i-1][j]+1, DP[i][j-1]+1, DP[i-1][j-1]+1\}$
@@ -242,7 +242,7 @@ array - we allow for values in between that are not used in the subsequence.
         - BC: $DP[1][1] = A[1]$, $DP[1][j>1] = \infty$
         - $DP[i-1][j-1] < A[i] < DP[i-1][j]$ ($A[i]$ can be used, and it is better than the previous minimum for this 
           length): $DP[i][j] = A[i]$
-        - Otherwise: $DP[i][j] = DP[i-1][j]
+        - Otherwise: $DP[i][j] = DP[i-1][j]$
     4. **Calculation order**: bottom-up
     5. **Extracting the solution**: $DP[n][j]$ where $j$ is the largest value for which $DP[n][j] \neq \infty$
     6. **Running time**: $O(n^2)$
