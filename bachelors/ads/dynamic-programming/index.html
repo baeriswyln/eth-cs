@@ -697,6 +697,24 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#approaches" class="md-nav__link">
+    <span class="md-ellipsis">
+      Approaches
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#solution-description" class="md-nav__link">
+    <span class="md-ellipsis">
+      Solution description
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#examples-by-problem-definitions" class="md-nav__link">
     <span class="md-ellipsis">
       Examples by problem definitions
@@ -771,6 +789,15 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#backtracking" class="md-nav__link">
+    <span class="md-ellipsis">
+      Backtracking
+    </span>
+  </a>
   
 </li>
       
@@ -1556,6 +1583,24 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#approaches" class="md-nav__link">
+    <span class="md-ellipsis">
+      Approaches
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#solution-description" class="md-nav__link">
+    <span class="md-ellipsis">
+      Solution description
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#examples-by-problem-definitions" class="md-nav__link">
     <span class="md-ellipsis">
       Examples by problem definitions
@@ -1633,6 +1678,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#backtracking" class="md-nav__link">
+    <span class="md-ellipsis">
+      Backtracking
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1652,15 +1706,274 @@
 
 
 <h1 id="dynamic-programming-dp">Dynamic Programming (DP)</h1>
-<p>[bottom-up, top-down, subproblem]</p>
+<p>Dynamic programming is an approach to solving problems where results of previous computations are reused. Such results
+are stored inside the <em>DP-table</em>. If applied correctly, the running time of an algorithm can be greatly reduced, and 
+often even the code gets simpler. </p>
+<p>To find such algorithms, a suitable <strong>sub-problem</strong> is defined - it generally describes the meaning of an entry in 
+the DP-table. Using the sub-problem, we can then define the <strong>recursion</strong> describing how such han entry can be 
+computed from previously established values. </p>
+<h2 id="approaches">Approaches</h2>
+<p>To solve a sub-problem, we have seen two general approaches:</p>
+<p><strong>Top-down (memoization)</strong>: this approach is often used with recursive algorithms. Essentially, before returning the 
+result, such an algorithm stores the computed value inside a memoization table such that later function calls for 
+the same value can simply return the value of a table lookup.  </p>
+<details class="info">
+<summary>FIB using a top-down approach</summary>
+<p>Please note that the <code>memo</code> array is a global array whose values is not stored in the function. </p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">fib</span><span class="p">(</span><span class="nx">n</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">memo</span><span class="p">[</span><span class="nx">n</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">n</span><span class="w"> </span><span class="p">&gt;</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">memo</span><span class="p">[</span><span class="nx">n</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">fib</span><span class="p">(</span><span class="nx">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">fib</span><span class="p">(</span><span class="nx">n</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">memo</span><span class="p">[</span><span class="nx">n</span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+</details>
+<p><strong>Bottom-up</strong>: such algorithms use an iterative approach by starting with the base case. The value of this base case 
+is stored in a table. The computation of the subsequent values are based on the previously computed values. In the 
+case of fibonacci, we have the base cases <code>fib(1)=1</code> and <code>fib(2)=1</code> which are then used to compute <code>fib(3)</code>. </p>
+<details class="info">
+<summary>FIB using a bottom-up approach</summary>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span>
+<span class="normal">9</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">fib</span><span class="p">(</span><span class="nx">n</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">dp</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nb">make</span><span class="p">(</span><span class="kt">int</span><span class="p">[],</span><span class="w"> </span><span class="nx">n</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">dp</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="nx">dp</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span>
+
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">range</span><span class="w"> </span><span class="mf">2.</span><span class="p">.</span><span class="nx">n</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">dp</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">dp</span><span class="p">[</span><span class="nx">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">dp</span><span class="p">[</span><span class="nx">i</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">dp</span><span class="p">[</span><span class="nx">n</span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+</details>
+<details class="info">
+<summary>Naive approach to computing the fibonacci number</summary>
+<p>The following algorithm runs in <span class="arithmatex">\(\Omega(2^{\frac{n}{2}})\)</span>.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">fib</span><span class="p">(</span><span class="nx">n</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">n</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">fib</span><span class="p">(</span><span class="nx">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">fib</span><span class="p">(</span><span class="nx">n</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>Running time: </p>
+<div class="arithmatex">\[\begin{align}
+T(n) &amp;= T(n-1) + T(n-2) + c\\
+&amp; \geq 2 \cdot T(n-2)\\
+&amp; \geq 4 \cdot T(n-4)\\
+&amp; ...\\
+&amp; \geq \Omega(2^{\frac{n}{2}})
+\end{align}\]</div>
+</details>
+<h2 id="solution-description">Solution description</h2>
+<p>A solution to a DP-problem can be described using the following six points. </p>
+<ol>
+<li><strong>Dimensions of the DP table</strong>: What are the dimensions of the DP table?</li>
+<li><strong>Sub-problems</strong>: What is the meaning of each entry?</li>
+<li><strong>Recursion</strong>: How can an entry of the table be computed from previous entries? Justify why your recurrence 
+   relation is correct. Specify the base cases of the recursion, i.e., the cases that do not depend on others.</li>
+<li><strong>Calculation order</strong>: In which order can entries be computed so that values needed for each entry have been 
+   determined in previous steps?</li>
+<li><strong>Extracting the solution</strong>: How can the solution be extracted once the table has been filled?</li>
+<li><strong>Running time</strong>: What is the running time of your solution</li>
+</ol>
 <h2 id="examples-by-problem-definitions">Examples by problem definitions</h2>
+<p>We are now looking at seven problem examples that can be solved through a DP approach.</p>
 <h3 id="maximum-subarray-sum">Maximum subarray sum</h3>
+<p>In an array, we are looking for the biggest sum built from consecutive cells.</p>
+<details class="tip">
+<summary>Solution description</summary>
+<ol>
+<li><strong>Dimensions of the DP table</strong>: <span class="arithmatex">\(n\)</span></li>
+<li><strong>Sub-problems</strong>: <span class="arithmatex">\(DP[j]\)</span> max subarray sum using the first <span class="arithmatex">\(j\)</span> cells of the input array. </li>
+<li><strong>Recursion</strong>: <ul>
+<li>BC: <span class="arithmatex">\(DP[1] = max\{0, A[1]\}\)</span></li>
+<li><span class="arithmatex">\(DP[j] = max\{A[j], A[j] + DP[j-1]\}\)</span></li>
+</ul>
+</li>
+<li><strong>Calculation order</strong>: bottom-up</li>
+<li><strong>Extracting the solution</strong>: <span class="arithmatex">\(max\{DP\}\)</span></li>
+<li><strong>Running time</strong>: <span class="arithmatex">\(O(n)\)</span></li>
+</ol>
+</details>
 <h3 id="jump-game">Jump Game</h3>
+<p>Given an array of positive integers <span class="arithmatex">\(A\)</span>. We start on position <span class="arithmatex">\(1\)</span> and try to reach the end of the array with as few 
+jumps as possible. The number at the current position defines how far we can jump in the array. </p>
+<details class="tip">
+<summary>Solution description</summary>
+<ol>
+<li><strong>Dimensions of the DP table</strong>: <span class="arithmatex">\(n\)</span></li>
+<li><strong>Sub-problems</strong>: <span class="arithmatex">\(DP[i]\)</span> max index reachible in <span class="arithmatex">\(i\)</span> jumps</li>
+<li><strong>Recursion</strong>: <ul>
+<li>BC: <span class="arithmatex">\(DP[1] = A[1]\)</span></li>
+<li><span class="arithmatex">\(DP[i] = max\{j + A[j] \mid DP[i-2] \leq i \leq DP[i-1]\}\)</span></li>
+</ul>
+</li>
+<li><strong>Calculation order</strong>: bottom-up</li>
+<li><strong>Extracting the solution</strong>: <span class="arithmatex">\(min\{i \mid DP[i] \geq n\}\)</span></li>
+<li><strong>Running time</strong>: <span class="arithmatex">\(O(n)\)</span></li>
+</ol>
+</details>
 <h3 id="longest-common-subsequence">Longest common subsequence</h3>
+<p>Given two strings <span class="arithmatex">\(A\)</span> with length <span class="arithmatex">\(n\)</span> and <span class="arithmatex">\(B\)</span> with length <span class="arithmatex">\(m\)</span>, we are searching for the length of the longest common 
+sequence. The letters must be in the correct order, but between the letters we allow for whitespaces. </p>
+<details class="tip">
+<summary>Solution description</summary>
+<p>In this solution, we start indexing the DP-table at 0.</p>
+<ol>
+<li><strong>Dimensions of the DP table</strong>: <span class="arithmatex">\((n+1) \times (m+1)\)</span></li>
+<li><strong>Sub-problems</strong>: <span class="arithmatex">\(DP[i][j]\)</span> longest common subsequence using the first <span class="arithmatex">\(i\)</span> letters from <span class="arithmatex">\(A\)</span> and the first 
+   <span class="arithmatex">\(j\)</span> letters of <span class="arithmatex">\(B\)</span></li>
+<li><strong>Recursion</strong>: <ul>
+<li><span class="arithmatex">\(BC: DP[0][j]=DP[i][0]=0\)</span></li>
+<li><span class="arithmatex">\(A[i] = B[j] \Rightarrow DP[i][j] = DP[i-1][j-1] + 1\)</span></li>
+<li><span class="arithmatex">\(A[i] \neq B[j] \Rightarrow DP[i][j] = max\{DP[i-1][j], DP[i][j-1]\}\)</span></li>
+</ul>
+</li>
+<li><strong>Calculation order</strong>: bottom-up</li>
+<li><strong>Extracting the solution</strong>: <span class="arithmatex">\(DP[n][m]\)</span></li>
+<li><strong>Running time</strong>: <span class="arithmatex">\(O(n \cdot m)\)</span></li>
+</ol>
+<p>The clue here in the recursion is to define what we do with the letters from the strings A and B. For an index 
+<span class="arithmatex">\(i\)</span> and <span class="arithmatex">\(j\)</span>, there are essentially three possibilities.</p>
+<ol>
+<li>Use both <span class="arithmatex">\(A[i]\)</span> and <span class="arithmatex">\(B[j]\)</span>. This is only possible if both letters are identical.</li>
+<li>Don't use <span class="arithmatex">\(A[i]\)</span>: <span class="arithmatex">\(DP[i][j] = max\{DP[i-1][j], DP[i][j-1]\}\)</span></li>
+<li>Don't use <span class="arithmatex">\(B[j]\)</span>: <span class="arithmatex">\(DP[i][j] = max\{DP[i-1][j], DP[i][j-1]\}\)</span></li>
+</ol>
+</details>
 <h3 id="edit-distance">Edit distance</h3>
+<p>Given two strings <span class="arithmatex">\(A\)</span> with length <span class="arithmatex">\(n\)</span> and <span class="arithmatex">\(B\)</span> with length <span class="arithmatex">\(m\)</span>, what's the minimum of operations required to convert 
+the string <span class="arithmatex">\(A\)</span> into the string <span class="arithmatex">\(B\)</span>? The allowed operations are: insert a new letter, delete a letter, change a letter.</p>
+<details class="tip">
+<summary>Solution description</summary>
+<ol>
+<li><strong>Dimensions of the DP table</strong>: <span class="arithmatex">\((n+1) \times (m+1)\)</span></li>
+<li><strong>Sub-problems</strong>: <span class="arithmatex">\(DP[i][j]\)</span> the number of operations required to convert the string <span class="arithmatex">\(A[1..i]\)</span> to <span class="arithmatex">\(B[1..j]\)</span></li>
+<li><strong>Recursion</strong>: <ul>
+<li><span class="arithmatex">\(BC: DP[i][0] = i, DP[0][j] = j\)</span> (converting the string <span class="arithmatex">\(A\)</span> into the empty string requires the deletion of 
+  <span class="arithmatex">\(i\)</span> letters)</li>
+<li><span class="arithmatex">\(A[i] = B[j] \Rightarrow DP[i][j] = DP[i-1][j-i]\)</span></li>
+<li><span class="arithmatex">\(A[i] \neq B[j] \Rightarrow DP[i][j] = min\{DP[i-1][j]+1, DP[i][j-1]+1, DP[i-1][j-1]+1\}\)</span></li>
+</ul>
+</li>
+<li><strong>Calculation order</strong>: bottom-up</li>
+<li><strong>Extracting the solution</strong>: <span class="arithmatex">\(DP[n][m]\)</span></li>
+<li><strong>Running time</strong>: <span class="arithmatex">\(O(n^2)\)</span></li>
+</ol>
+<p>We are again making a case distinction:</p>
+<ol>
+<li>Letter A[j] is used as is in B[j]: only possible if the letters are identical. <span class="arithmatex">\(DP[i][j] = DP[i-1][j-i]\)</span></li>
+<li>Letter A[i] is converted into B[j]: <span class="arithmatex">\(DP[i][j] = DP[i-1][j-1]+1\)</span></li>
+<li>Letter A[i] is deleted: <span class="arithmatex">\(DP[i][j] = DP[i-1][j]+1\)</span></li>
+<li>Letter B[j] is inserted: <span class="arithmatex">\(DP[i][j] = DP[i][j-1]+1\)</span></li>
+</ol>
+</details>
 <h3 id="subset-sum">Subset sum</h3>
+<p>Given an array of <span class="arithmatex">\(n\)</span> integers <span class="arithmatex">\(A\)</span> and an integer <span class="arithmatex">\(b\)</span> we are looking for the subset of integers in <span class="arithmatex">\(A\)</span> whose sum is 
+equal to <span class="arithmatex">\(b\)</span> (if one exists). </p>
+<details class="tip">
+<summary>Solution description</summary>
+<p>The approach first completely ignores what elements are used to reach the sub. We are simly computing if it is 
+possible at all to reach the sum. To get one possible subset, we use backtracking.</p>
+<ol>
+<li><strong>Dimensions of the DP table</strong>: <span class="arithmatex">\((n+1) \times (b+1)\)</span></li>
+<li><strong>Sub-problems</strong>: <span class="arithmatex">\(DP[i][j]\)</span> is it possible to reach the sum <span class="arithmatex">\(j\)</span> using a subset from the first <span class="arithmatex">\(i\)</span> entries of 
+   <span class="arithmatex">\(A\)</span> </li>
+<li><strong>Recursion</strong>:<ul>
+<li>BC: <span class="arithmatex">\(DP[i][0] = True\)</span> it is always possible to have a sum of <span class="arithmatex">\(0\)</span></li>
+<li><span class="arithmatex">\(DP[i][j] = DP[i-1][j] \vee DP[i-1][j-A[i]]\)</span></li>
+</ul>
+</li>
+<li><strong>Calculation order</strong>: bottom-up</li>
+<li><strong>Extracting the solution</strong>: <span class="arithmatex">\(DP[n][b]\)</span></li>
+<li><strong>Running time</strong>: <span class="arithmatex">\(O(nb)\)</span> this is also called <strong>pseudo-polynomial</strong> because the running time now also depends 
+   on the size of an input number.  </li>
+</ol>
+</details>
 <h3 id="knapsack">Knapsack</h3>
+<p>Given a rucksack with a weight limit <span class="arithmatex">\(W\)</span> and <span class="arithmatex">\(n\)</span> objects all having a weight <span class="arithmatex">\(w_i \in \mathbb{N}\)</span> and a value <span class="arithmatex">\(v_i 
+\in \mathbb{N}\)</span>, we are looking for the subset of objects such that the sum of the values is maximal while staying 
+below the weight limit of the rucksack.</p>
+<details class="tip">
+<summary>Solution description</summary>
+<ol>
+<li><strong>Dimensions of the DP table</strong>: <span class="arithmatex">\(n \times W\)</span></li>
+<li><strong>Sub-problems</strong>: <span class="arithmatex">\(DP[i][j]\)</span> the maximum achievable value with the first <span class="arithmatex">\(i\)</span> items while not surpassing a weight 
+   limit of <span class="arithmatex">\(j\)</span>. </li>
+<li><strong>Recursion</strong>: <span class="arithmatex">\(DP[i][j] = max\{DP[i-1][j], v_i + DP[i-1][j-w_i]\}\)</span></li>
+<li><strong>Calculation order</strong>: bottom-up</li>
+<li><strong>Extracting the solution</strong>: <span class="arithmatex">\(DP[n][W]\)</span></li>
+<li><strong>Running time</strong>: <span class="arithmatex">\(O(n \cdot W)\)</span>, again this is a <strong>pseudo-polynomial</strong> algorithm.</li>
+</ol>
+<p>The above approach tries to maximize the value for a certain weight. A slightly modified version of the problem 
+searches for the minimum weight required to reach a combined value of <span class="arithmatex">\(V\)</span>. This problem's recursion is defined as 
+<span class="arithmatex">\(DP[i][j] = min\{DP[i-1][j], w_i + DP[i-1][j-v_i]\}\)</span> and the running time is <span class="arithmatex">\(O(n \cdot V)\)</span>.</p>
+</details>
+<p>Currently, there is no known algorithm improving the running time. However, by slightly modifying the problem, we 
+are able to improve the running time (here, we take the modified version "minimum weight to  reach a combined value 
+of <span class="arithmatex">\(V\)</span>"): Instead of knowing the exact values, are underestimating the values through an approximation. The values 
+<span class="arithmatex">\(v_i\)</span> are replaced with <span class="arithmatex">\(\tilde{v_i} = K \lfloor \frac{v_i}{K} \rfloor, K \in \mathbb{N}\)</span>. All values are rounded 
+down to the next closest multiple of <span class="arithmatex">\(K\)</span>. The algorithm essentially stays identical, but now we are only required to 
+fill out k-th column.</p>
+<p>This approximated solution has a running time of <span class="arithmatex">\(O(\frac{n \tilde{V}}{K}) \leq O(\frac{n^2 v_{max}}{K})\)</span> and a 
+precision of <span class="arithmatex">\(V_{\tilde{opd}} \geq V_{opd} \cdot (1 - \frac{nK}{v_{max}})\)</span>.</p>
+<p>By defining <span class="arithmatex">\(K = \frac{\epsilon v_{max}}{n}\)</span> where <span class="arithmatex">\(\epsilon &gt; 0\)</span> is small, we can define the value of our 
+approximated solution also as <span class="arithmatex">\(V_{\tilde{opd}} \geq V_{opt} (1 - \epsilon)\)</span> and the running time as <span class="arithmatex">\(O(\frac{n^3}
+{\epsilon})\)</span></p>
 <h3 id="longest-ascending-subsequence">Longest ascending subsequence</h3>
+<p>Given an array of <span class="arithmatex">\(n\)</span> (supposedly unique) integers <span class="arithmatex">\(A\)</span> we search for the longest ascending subsequence (LAS). The 
+integers in the subsequence must always grow, and the subsequence is not necessarily chained together in the given 
+array - we allow for values in between that are not used in the subsequence. </p>
+<details class="tip">
+<summary>Solution description</summary>
+<ol>
+<li><strong>Dimensions of the DP table</strong>: <span class="arithmatex">\(n \times n\)</span></li>
+<li><strong>Sub-problems</strong>: <span class="arithmatex">\(DP[i][j]\)</span> the smallest ending possible for a sequence of length <span class="arithmatex">\(j\)</span> using the first <span class="arithmatex">\(i\)</span> values 
+   of <span class="arithmatex">\(A\)</span>.</li>
+<li><strong>Recursion</strong>:<ul>
+<li>BC: <span class="arithmatex">\(DP[1][1] = A[1]\)</span>, <span class="arithmatex">\(DP[1][j&gt;1] = \infty\)</span></li>
+<li><span class="arithmatex">\(DP[i-1][j-1] &lt; A[i] &lt; DP[i-1][j]\)</span> (<span class="arithmatex">\(A[i]\)</span> can be used, and it is better than the previous minimum for this 
+  length): <span class="arithmatex">\(DP[i][j] = A[i]\)</span></li>
+<li>Otherwise: $DP[i][j] = DP[i-1][j]</li>
+</ul>
+</li>
+<li><strong>Calculation order</strong>: bottom-up</li>
+<li><strong>Extracting the solution</strong>: <span class="arithmatex">\(DP[n][j]\)</span> where <span class="arithmatex">\(j\)</span> is the largest value for which <span class="arithmatex">\(DP[n][j] \neq \infty\)</span></li>
+<li><strong>Running time</strong>: <span class="arithmatex">\(O(n^2)\)</span></li>
+</ol>
+<p>The exact subset can be found through backtracking. </p>
+<p>The same approach can be modified slightly by reusing the first column in every iteration to receive a running time 
+of <span class="arithmatex">\(O(n \cdot log(n))\)</span>: the numbers in the DP table are always sorted from smallest to largest, and in every iteration, 
+exactly one entry is modified. If the next value in the input array is <span class="arithmatex">\(x\)</span>, we can use the binary search algorithm 
+to find the next smallest value in the DP table, and then replace the value to its right with <span class="arithmatex">\(x\)</span>.   </p>
+</details>
+<h2 id="backtracking">Backtracking</h2>
+<p>A DP-table often contains only number values. For example, in the "Longest common subsequence", the DP-table stores 
+the length of the subsequence. However, the table still allows to extract the subsequence itself through strategic 
+backtracking through the table. </p>
+<p>We start by looking at the value of the final result and search our way back through the array to the starting 
+position. </p>
 
 
 
@@ -1683,7 +1996,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">December 12, 2023</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">December 30, 2023</span>
   </span>
 
     
