@@ -1934,7 +1934,7 @@ with <span class="arithmatex">\(u \neq v\)</span>. Directed graphs are quite sim
 <p><strong>Vertices</strong>:</p>
 <ul>
 <li><strong>Vertex degree <span class="arithmatex">\(\text{deg}(u)\)</span></strong>: Number of adjacent vertices. In a directed graph, this is further split into
-  <span class="arithmatex">\(\text{deg}_{in}\)</span> (number of outgoing edges) and \text{deg}_{out} (incoming edges)</li>
+  <span class="arithmatex">\(\text{deg}_{in}\)</span> (number of incoming edges) and <span class="arithmatex">\(\text{deg}_{out}\)</span> (outgoing edges)</li>
 <li><strong>Source (Quelle)</strong>: Vertex with <span class="arithmatex">\(\text{deg}_{in} = 0\)</span></li>
 <li><strong>Sink (Senke)</strong>: Vertex with <span class="arithmatex">\(\text{deg}_{out} = 0\)</span> (exists, if the graph is acyclic)</li>
 <li><strong>Leaf</strong>: Vertex with <span class="arithmatex">\(\text{deg}(u) = 1\)</span></li>
@@ -1981,7 +1981,7 @@ most once, and all edges incident to the final node were used.</p>
         mark uv
         Walk(v)
 </code></pre></div></td></tr></table></div>
-<p>This algorithm has the <strong>invariant</strong>: number of unmarked edges incident to <span class="arithmatex">\(v\)</span> is odd. If the invariant is valid
+<p>This algorithm has the <strong>invariant</strong>: number of unmarked edges incident to <span class="arithmatex">\(v\)</span> is even. If the invariant is valid
 before the execution of <span class="arithmatex">\(Walk(v)\)</span>, it is also valid afterward. Actually, if it is valid before the execution, the
 algorithm will find a <em>closed walk</em>.</p>
 <p>By slightly modifying this algorithm, we are able to use it to find an Eulerian walk. We put every vertex into a global
@@ -1998,7 +1998,9 @@ list <code>z</code> after it has been fully processed (has no more unmarked inci
 </code></pre></div></td></tr></table></div>
 <p>By executing the above algorithm on any node in the graph, we can find an Eulerian cycle in <span class="arithmatex">\(z\)</span> <strong>IFF</strong> the graph is
 connected, and all vertex degrees are even. See the following example.</p>
+<figure>
 <p><img alt="" src="../../../diagrams/b/ads/eulerian-walk.svg" /></p>
+</figure>
 <h3 id="storing-a-graph-in-memory">Storing a graph in memory</h3>
 <p>An <strong>adjacency matrix</strong> stores the edges in a square matrix of size <span class="arithmatex">\(|V|^2\)</span>. Due to its size, it is often considered
 inefficient, as most of the cells will be empty (set to <span class="arithmatex">\(0\)</span>), except if <span class="arithmatex">\(|E| \geq \Omega(|V|^2)\)</span>.</p>
@@ -2079,7 +2081,7 @@ negative.</p>
 <ul>
 <li>Path cost (Wegkosten) <span class="arithmatex">\(c(W)\)</span>: sum of the edge weights</li>
 <li>Distance <span class="arithmatex">\(d(u,v) = \text{min}\{c(W) \mid \text{W is walk from } u \text{ to } v\}\)</span></li>
-<li>$d(u,v) \leq d(u, w) + d(w,v)</li>
+<li><span class="arithmatex">\(d(u,v) \leq d(u, w) + d(w,v)\)</span></li>
 </ul>
 <p>Once the shortest paths towards all vertices was found, the <strong>shortest-path-tree</strong> can be constructed, spanning up a
 tree where a path from the starting vertex to all other vertices exists.</p>
@@ -2193,7 +2195,7 @@ Executed on the vertex A in the graph below, the shown enter and leave numbers r
 </figure>
 <h3 id="dijkstra-non-negative-edges">Dijkstra (non-negative edges)</h3>
 <p>To find the shortest paths in graphs without negative weighted edges, the Dijkstra algorithm can be applied. In
-general, this algorithm sorts the vertices by distance to the starting vertex <span class="arithmatex">\(s\)</span>. We use the following recurrent:</p>
+general, this algorithm sorts the vertices by distance to the starting vertex <span class="arithmatex">\(s\)</span>. We use the following recursion:</p>
 <div class="arithmatex">\[
 d(s, v_k) = \text{min}_{v_i \to v_k} \{d(s, v_i) + c(v_i,v_k)\}
 \]</div>
@@ -2234,7 +2236,7 @@ green the order of processing.</p>
 <p>The Bellman-Ford algorithm finds shortest paths in a graph without negative cycles. The principle of this algorithm
 is to have <span class="arithmatex">\(l\)</span>-precise bounds - bounds that are only exact for the first <span class="arithmatex">\(l\)</span> vertices in the shortest-path-tree. These
 bounds are iteratively improved, until the costs do no longer change, which is after <span class="arithmatex">\((n-1)\)</span> runs at the latest. The
-recurrence of this algorithm is defined as:</p>
+recursion of this algorithm is defined as:</p>
 <div class="arithmatex">\[\begin{align}
 \forall v &amp;\in S_{\leq l} \; \backslash \; \{s\}\\
 d(s,v) &amp;= min\{d(s,u) + c(u,v) \mid u \to v,\; u \in S_{\leq l-1}\}
@@ -2390,6 +2392,15 @@ the minimum weighted edge incident to the ZHK is added.</p>
 </code></pre></div></td></tr></table></div>
 <h4 id="kruskal">Kruskal</h4>
 <h2 id="layered-graphs">Layered graphs</h2>
+<p>Sometimes, it is beneficial to modify a given graph for an improved algorithm performance. An approach that is often 
+taken is to create multiple layers of the same graph, where the layers serve as a sort of <strong>memory</strong>. An example for 
+such a problem is finding the shortest path in a graph where <span class="arithmatex">\(k\)</span> cheats are allowed. A cheat is defined as 
+essentially setting the weight of an edge to <span class="arithmatex">\(0\)</span>. </p>
+<p>To solve this problem, our modified graph <span class="arithmatex">\(G'\)</span> contains <span class="arithmatex">\(k+1\)</span> copies of the original graph (including all edges). 
+Next, we add the edges such that for every edge <span class="arithmatex">\(uv \in E\)</span>, we add the edge <span class="arithmatex">\(u_iu_{i+1}\)</span> with a weight of 
+<span class="arithmatex">\(c(u_i,u_{i+1}) = 0\)</span>. Now, as long as we are in the first layer, we have cheated on <span class="arithmatex">\(0\)</span> edges. Once we pass a layer 
+down, we have cheated on one additional layer. </p>
+<p>The problem in this modified graph <span class="arithmatex">\(G'\)</span> is now to find the shortest path between <span class="arithmatex">\(s_0\)</span> and <span class="arithmatex">\(d_k\)</span>.</p>
 <div class="footnote">
 <hr />
 <ol>
