@@ -8,7 +8,7 @@ with $u \neq v$. Directed graphs are quite similar, but edges are defined as _or
 **Vertices**:
 
 - **Vertex degree $\text{deg}(u)$**: Number of adjacent vertices. In a directed graph, this is further split into
-  $\text{deg}_{in}$ (number of outgoing edges) and \text{deg}_{out} (incoming edges)
+  $\text{deg}_{in}$ (number of incoming edges) and $\text{deg}_{out}$ (outgoing edges)
 - **Source (Quelle)**: Vertex with $\text{deg}_{in} = 0$
 - **Sink (Senke)**: Vertex with $\text{deg}_{out} = 0$ (exists, if the graph is acyclic)
 - **Leaf**: Vertex with $\text{deg}(u) = 1$
@@ -56,7 +56,7 @@ Walk(u):
         Walk(v)
 ```
 
-This algorithm has the **invariant**: number of unmarked edges incident to $v$ is odd. If the invariant is valid
+This algorithm has the **invariant**: number of unmarked edges incident to $v$ is even. If the invariant is valid
 before the execution of $Walk(v)$, it is also valid afterward. Actually, if it is valid before the execution, the
 algorithm will find a _closed walk_.
 
@@ -74,7 +74,9 @@ EulerianWalk(u):
 By executing the above algorithm on any node in the graph, we can find an Eulerian cycle in $z$ **IFF** the graph is
 connected, and all vertex degrees are even. See the following example.
 
+<figure markdown>
 ![](../../diagrams/b/ads/eulerian-walk.svg)
+</figure>
 
 ### Storing a graph in memory
 
@@ -167,7 +169,7 @@ negative.
 
 - Path cost (Wegkosten) $c(W)$: sum of the edge weights
 - Distance $d(u,v) = \text{min}\{c(W) \mid \text{W is walk from } u \text{ to } v\}$
-- $d(u,v) \leq d(u, w) + d(w,v)
+- $d(u,v) \leq d(u, w) + d(w,v)$
 
 Once the shortest paths towards all vertices was found, the **shortest-path-tree** can be constructed, spanning up a
 tree where a path from the starting vertex to all other vertices exists.
@@ -229,7 +231,7 @@ Executed on the vertex A in the graph below, the shown enter and leave numbers r
 ### Dijkstra (non-negative edges)
 
 To find the shortest paths in graphs without negative weighted edges, the Dijkstra algorithm can be applied. In
-general, this algorithm sorts the vertices by distance to the starting vertex $s$. We use the following recurrent:
+general, this algorithm sorts the vertices by distance to the starting vertex $s$. We use the following recursion:
 
 $$
 d(s, v_k) = \text{min}_{v_i \to v_k} \{d(s, v_i) + c(v_i,v_k)\}
@@ -266,7 +268,7 @@ green the order of processing.
 The Bellman-Ford algorithm finds shortest paths in a graph without negative cycles. The principle of this algorithm
 is to have $l$-precise bounds - bounds that are only exact for the first $l$ vertices in the shortest-path-tree. These
 bounds are iteratively improved, until the costs do no longer change, which is after $(n-1)$ runs at the latest. The
-recurrence of this algorithm is defined as:
+recursion of this algorithm is defined as:
 
 \begin{align}
 \forall v &\in S_{\leq l} \; \backslash \; \{s\}\\
@@ -373,3 +375,15 @@ Prim(V,E,s):
 #### Kruskal
 
 ## Layered graphs
+
+Sometimes, it is beneficial to modify a given graph for an improved algorithm performance. An approach that is often 
+taken is to create multiple layers of the same graph, where the layers serve as a sort of **memory**. An example for 
+such a problem is finding the shortest path in a graph where $k$ cheats are allowed. A cheat is defined as 
+essentially setting the weight of an edge to $0$. 
+
+To solve this problem, our modified graph $G'$ contains $k+1$ copies of the original graph (including all edges). 
+Next, we add the edges such that for every edge $uv \in E$, we add the edge $u_iu_{i+1}$ with a weight of 
+$c(u_i,u_{i+1}) = 0$. Now, as long as we are in the first layer, we have cheated on $0$ edges. Once we pass a layer 
+down, we have cheated on one additional layer. 
+
+The problem in this modified graph $G'$ is now to find the shortest path between $s_0$ and $d_k$.
