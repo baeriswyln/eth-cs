@@ -3,6 +3,19 @@
 A graph $G$ is a set of vertices $V$ and edges $E$ where an edge is defined as an _unordered pair_ of vertices $e = uv$
 with $u \neq v$. Directed graphs are quite similar, but edges are defined as _ordered pairs_.
 
+??? info "Variable names"
+
+    The following chapters will use a series o variable names that, if not signaled otherwise, have the following 
+    meaning.
+
+    - $V$: set of vertices
+    - $E$: set of edges
+    - $e$: one specific edge
+    - $n = |V|$: number of vertices in the graph
+    - $m = |E|$: number of edges in the graph
+    - $d(u, v)$: distance function between vertices $u$, $v$
+    - $c(e)$: cost/weight of the edge $e$
+
 ## Definitions
 
 **Vertices**:
@@ -16,6 +29,7 @@ with $u \neq v$. Directed graphs are quite similar, but edges are defined as _or
 - **Incident (Inzident, angliegen)**: edges connected to a vertex
 - **$u$ reaches $v$**: There exists a path from $u$ to $v$
 - **Strongly connected** (in directed graphs): both edges $uv$ and $vu$ exist
+- **Loop**: an edge $uu$
 
 **Graphs**:
 
@@ -301,13 +315,88 @@ This algorithm can be seen in below graph where the red values show how the cost
 
 #### Finding negative cycles
 
-As soon as an algorithm has negative cycles, there is the potential to have negative cycles. To find if such a cycle
+As soon as a graph has negative edge costs, there is the potential to have negative cycles. To find if such a cycle
 exists, we simply execute the Bellman-Ford algorithm. If a negative cycle exists, the algorithm will never terminate
 as the weights become smaller in each iteration.
 
 ### Floyd-Warshall
 
+The Floyd-Warshall algorithm applies a solution using the dynamic-programming technique. We define the sub-problem as
+$d_{u,v}^{i}$: shortest path from $u$ to $v$ using the intermediate nodes $\{1,...,i\}$. The recursion gives us the
+following case distinction.
+
+1. $i$ is not an intermediate node: $d_{u,v}^{i} = d_{u,v}^{i-1}$
+2. $i$ is an intermediate node exactly once: $d_{u,v}^{i} = d_{u,i}^{i-1} + d_{i,v}^{i-1}$
+3. $i$ is an intermediate node multiple times: ignore this case if no negative cycles exist
+
+This can be translated into pseudocode as follows. This algorithm has a running time and memory usage of $O(n^3)$
+
+```g
+FloydWarshall(V, E):
+    d = int[n][n][n] // weights on diagonal are left at 0
+    for u in V:
+        for v in V:
+            if u != v && E.contains(u,v):
+                d[0][u][v] = E.contains(u,v) ? c(u,v) : infinity
+    
+    for i in 1..len(V): 
+        for u in 0..len(V):
+            for v in 0..len(V):
+                d[i][u][v] = min(d[i-1][u][v], d[i-1][u][i] + d[i-1][i][v])
+                
+    return d[len(v)-1]
+```
+
+#### Finding negative cycles
+
+After the algorithm has been executed, we can look at the diagonal of the DP table. If any value on this diagonal
+is negative, there exists a walk from some $u$ to itself having a negative distance. In this case we can conclude
+that at least one negative cycle exists.
+
+In our algorithm, we can now conclude that: if for any $u \to v$ walk, there exists a walk (not necessarily the shortest
+one) through some vertex $w$ with $d[n][w][w] < 0$, the walk $u \to v$ has a shortest distance of $-\infty$. Otherwise,
+its distance is defined by $d[n][u][v]$.
+
 ### Johnson
+
+The algorithm of Johnson applies the Dijkstra algorithm $n$-times, which is faster than using Floyd-Warshall. However,
+as we have discussed before, Dijkstra only works for graphs without negative edge costs. Now, Johnson modifies the edge
+costs in a clever way such that they are all positive but without changing the outcome of the algorithm.
+
+This is for example a problem if we simply add the minimum weight in the graph to all edges. While this eliminates
+negative weights, the outcome might change: say we have a shortest path crossing $n$ edges. The minimum weight is added
+$n$-times to the path. There might exist some more direct path with fewer edge crossings and thus the minimum weight is
+added fewer times. This path might now become the shortest path.
+
+This problem is overcome by using a **telescoping sum** to modify the cost function. We chose some height $h(u) \in
+\mathbb{R}$ for each vertex such that for any edge in the graph, the modified cost function defined below remains
+positive.
+
+$$
+\hat{c}(u,v) = c(u,v) + h(u) - h(v)
+$$
+
+Due to the nature of the telescoping sum, the distance of any path between $s$ and $t$ is defined as follows. As we can
+see, the final distance contains only the height of the starting and ending vertex - all other heights have canceled
+out.
+
+\begin{align}
+\hat{d}(s, t) &= \sum_{i=0}^{K-1} \hat{c}(v_i,v_{i+1})\\
+&= \sum_{i=0}^{K-1} \Bigg(c(v_i,v_{i+1}) + h(v_i) - h(v_{i+1})\Bigg)\\
+&= \Bigg(\sum_{i=0}^{K-1} c(v_i,v_{i+1})\Bigg) + h(v_0) - h(v_k)\\
+&= \Bigg(\sum_{i=0}^{K-1} c(v_i,v_{i+1})\Bigg) + h(s) - h(t)
+\end{align}
+
+To compute the height function, we add a vertex $z$ and connected it to all other vertices in the graph with $c(z,v)=0$.
+The height of some vertex $u$ is then defined as the shortest path from $z$ to $u$. Due to the construction of the
+graph, $h(u) \leq 0 \forall u \in V$. Further, the following holds for any $(uv) \in E$:
+
+\begin{align}
+h(v) &\leq h(u) + c(u,v)\\
+0 &\leq c(u,v) +h(u) - h(v)
+\end{align}
+
+The height computation requires the graph to have **no negative cycles**.
 
 ## Minimum spanning tree (MST)
 
@@ -316,8 +405,8 @@ incident to each vertex and add it to the MST. This, however, most certainly lea
 tree - we now have a series of connected components. To connect the forest into a single tree, we repeatedly add the
 minimum weight edge on each ZHK to the MST.
 
-While the MST results in the minimum graph weight, it should not be confused with an alternative to find the 
-shortest paths. 
+While the MST results in the minimum graph weight, it should not be confused with an alternative to find the
+shortest paths.
 
 ### Uniqueness
 
@@ -334,7 +423,7 @@ The following chapters describe three algorithms that search for the MST.
 
 #### Boruvka
 
-This first algorithm was already described in the introduction to the MSTs. The following pseudocode describes it 
+This first algorithm was already described in the introduction to the MSTs. The following pseudocode describes it
 in more details. In the first iteration, every vertex is its own ZHK. One iteration of the loop has a duration of $O
 (n+m)$, and it is executed $log(n)$-times, as after each iteration, the number of ZHKs is halved.
 
@@ -350,7 +439,7 @@ Boruvka(V,E)
 
 #### Prim
 
-Prim's algorithm is quite similar but here we look at one vertex after the other. Some starting vertex represents 
+Prim's algorithm is quite similar but here we look at one vertex after the other. Some starting vertex represents
 the first ZHK, which is getting extended after each iteration until the spanning-tree is complete. In each iteration,
 the minimum weighted edge incident to the ZHK is added.
 
@@ -374,16 +463,100 @@ Prim(V,E,s):
 
 #### Kruskal
 
+This algorithm sorts the edges by their weights (in ascending order), and then iteratively evaluates each edge. If it
+connects two independent ZHKs, the edge is added to the MST. To start, each vertex is one ZHK. Implemented like this,
+the algorithm will run in $O(n \cdot m)$ ($m$ iterations, and each iteration requires $n$ comparisons to check if the
+vertices are in the same ZHK). The running time can be improved to $O((n+m) \cdot log(n))$ by using the data structure
+_union-find_ to keep track of the ZHKs.
+
+```
+func Kruskal(V Vertex[], E Edge[]) Edge[] {
+  F := make(Edge[], 0)
+  ZHK := new UnionFind(V)
+  E = E.sort()
+  
+  for e := range E {
+    if !ZHK.same(e.u, e.v) {
+      ZHK.union(e.u, e.v)
+      F.add(e)
+    }
+  }
+  return F
+}
+```
+
+??? info "A note on the running time"
+
+    If analysed like this, the running time of the algorithm would $O(n \cdot m)$. However, due to how the UnionFind
+    algorithm is designed, an amortised analysis provides us with a better running time. 
+    
+    The worst case running time of a union is said to be 
+    
+    $$
+    \Theta(\text{min}\{\text{ZHK}(u), \text{ZHK}(v)\}) = \Theta(n/2) = \Theta(n)
+    $$ 
+    
+    This worst case, however, is only the case in a few cases as with every iteration the sets are at least being 
+    doubled in size. This leads to a mean running time of $O(log(n))$.
+
 ## Layered graphs
 
-Sometimes, it is beneficial to modify a given graph for an improved algorithm performance. An approach that is often 
-taken is to create multiple layers of the same graph, where the layers serve as a sort of **memory**. An example for 
-such a problem is finding the shortest path in a graph where $k$ cheats are allowed. A cheat is defined as 
-essentially setting the weight of an edge to $0$. 
+Sometimes, it is beneficial to modify a given graph for an improved algorithm performance. An approach that is often
+taken is to create multiple layers of the same graph, where the layers serve as a sort of **memory**. An example for
+such a problem is finding the shortest path in a graph where $k$ cheats are allowed. A cheat is defined as
+essentially setting the weight of an edge to $0$.
 
-To solve this problem, our modified graph $G'$ contains $k+1$ copies of the original graph (including all edges). 
-Next, we add the edges such that for every edge $uv \in E$, we add the edge $u_iu_{i+1}$ with a weight of 
-$c(u_i,u_{i+1}) = 0$. Now, as long as we are in the first layer, we have cheated on $0$ edges. Once we pass a layer 
-down, we have cheated on one additional layer. 
+To solve this problem, our modified graph $G'$ contains $k+1$ copies of the original graph (including all edges).
+Next, we add the edges such that for every edge $uv \in E$, we add the edge $u_iu_{i+1}$ with a weight of
+$c(u_i,u_{i+1}) = 0$. Now, as long as we are in the first layer, we have cheated on $0$ edges. Once we pass a layer
+down, we have cheated on one additional layer.
 
 The problem in this modified graph $G'$ is now to find the shortest path between $s_0$ and $d_k$.
+
+## Graphs and matrices
+
+Matrices are actually quite close to graphs. In this chapter, we will see three possible applications on graphs. We
+consider $i$-$j$-walks of length $K$ (here, we refer to the length as the number of crossed edges). We always start
+with a matrix of size $n \times n$. Additionally, we know that any $i$-$j$-walk has a before-last vertex
+$s$.
+
+$L_{ij}^{(K)}$: does an $i$-$j$-walk of length $k$ exist? $L^{(1)}$ is the adjacency list.
+
+$$
+L_{ij}^{(K)} = \bigvee_{s=1}^n \big(L_{is}^{(K-1)} \land L_{sj}^{(1)}\big)
+$$
+
+$M_{ij}^{(K)}$: what's the minimum cost for an $i$-$j$-walk of length $K$? $M^{(1)}$ is the adjacency list but
+instead of storing $1$ and $0$, we store the costs of edges connecting two vertices.
+
+$$
+M_{ij}^{(K)} = \text{min}_{s=1..n}\big\{M_{is}^{(K-1)} + M_{sj}^{(1)}\big\}
+$$
+
+$N_{ij}^{(K)}$: how many $i$-$j$-walk of length $K$ exist? $N^{(1)}$ is the adjacency list.
+
+$$
+N_{ij}^{(K)} = \sum_{s=1}^n N_{is}^{(K-1)} \cdot N_{sj}^{(1)}
+$$
+
+This last formula is actually a simple matrix multiplication: $N^{(K)}$ is equal to the $K$-th power of the
+adjacency matrix.
+
+### Use cases
+
+**Counting the number of triangles** (in a graph without loops):  A triangle is defined as a $u$-$u$-walk of length $3$.
+To compute the number of such triangles, we simply take the third power of the adjacency list $A_G$, and take the sum
+over the diagonal: $tr(A_G^3)/3$. The division by $3$ is necessary because each triangle is found three times (once for
+each of the three vertices).
+
+**Is every vertex reachable from every other vertex** (in directed graphs): For this use case, the graph must be
+slightly modified. A loop is added on each vertex, allowing us to find walks of length $\leq K$. Any two vertices, are
+connected by a walk of length $\leq n-1$, if a walk exists. We can thus compute $A_G^{n-1}$ and check that all entries 
+are $> 0$. 
+
+- Naive algorithm (multiplying $n-1$-times): $O(n^4)
+- Iterative squaring ($A^n = A^\frac{n}{2} \cdot A^\frac{n}{2}$): $O(n^3 \cdot log(n))$
+- Strassen (dividing an $n \times n$ matrix into four $\frac{n}{2}\times \frac{n}{2}$ matrices): $\Theta(n^{2.807})$,
+  useful once $n > 1000$, otherwise the constant factor is too big
+- Best algorithm: $O(n^{2.3715})$, in reality not applicable due to the constant factor being too big
+

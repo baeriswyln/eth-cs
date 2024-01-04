@@ -161,15 +161,15 @@ recursion levels)
 
 ### Quick sort
 
-**Recursion**: All elements left to the _pivot_ are smaller, all elements to the right are bigger. 
+**Recursion**: All elements left to the _pivot_ are smaller, all elements to the right are bigger.
 
 The QuickSort algorithm is a randomized and recursive algorithm. In every recursion step, a random **pivot** element is
 chosen. Next, the algorithm iterates through the array, making sure that the pivot element is put at a position where
-all elements to its left are smaller, and all elements to its right are bigger. This will also be the final position of 
-the pivot. This procedure is then recursively applied on both sides of the array. 
+all elements to its left are smaller, and all elements to its right are bigger. This will also be the final position of
+the pivot. This procedure is then recursively applied on both sides of the array.
 
-Due to its probabilistic nature, the algorithm has a worst case complexity of $O(n^2)$. However, this is only the case 
-if the chosen pivot is always the biggest or smallest element of the array. As this is very unlikely, the mean 
+Due to its probabilistic nature, the algorithm has a worst case complexity of $O(n^2)$. However, this is only the case
+if the chosen pivot is always the biggest or smallest element of the array. As this is very unlikely, the mean
 complexity is $O(n \cdot log(n))$.
 
 **Complexity**: Compare: $O(n \cdot log(n))$, Swap: $O(n \cdot log(n))$
@@ -206,23 +206,70 @@ complexity is $O(n \cdot log(n))$.
     }
     ```
 
+??? info "Running QuickSort deterministically in $0(n \cdot log(n))$"
+
+      It is possible to have a deterministic running time of $0(n \cdot log(n))$, if we are able to find the median (thus
+      the pivot element) in $O(n)$. In reality this is not one for the QuickSort algorithm.
+      
+      The QuickSelect algorithm finds the median recursively in $O(n)$. Actually, it is able to find the $i$-th smallest
+      element, and the median is then a special case of this algorithm.
+      
+      We need to find a pivot that is not too close to the ends of the given array. In fact, it must not be under the first
+      $\epsilon n$ elements. In the worst case, the recursion runs on $(1-\epsilon)n$ elements. Using the master-theorem,
+      we can compute a running time of $O(n)$:
+
+      - $T(n) \leq T((1-\epsilon)n) + cn$
+      - $\leq T((1-\epsilon)^2n) + c(1-\epsilon)n + cn$
+      - $\leq T((1-\epsilon)^3n) + c(1-\epsilon)^2n + c(1-\epsilon)n + cn$
+      - $...$
+      - $\leq T(1) + cn \sum_{i=0}^{...}(1-\epsilon)^i \leq O(n)$
+      
+      To achieve this, the algorithm splits the input into groups of five elements, and then finds the median of these
+      elements in a linear time factor.
+
+      $\text{QuickSelect}(A,i)$
+
+      1. Select pivot $p$:
+          1. Split $A$ into groups of five
+          2. Find the median of each group, and put them into $A'$ of length $\lceil \frac{n}{5} \rceil$
+          3. $p = \text{QuickSelect}(A',\frac{1+ \lceil n/5 \rceil}{2})$
+      2. $k = \text{Split}(A[1..n],p)$, split on pivot where $k$ is the pivot index
+      3. Recursion:
+          - $i=k$: return $k$
+          - $i<k$: $\text{QuickSelect}(A[1..k-1],i)$
+          - $i>k$: $\text{QuickSelect}(A[k+1..n],i-k)$
+
+      With this algorithm we find a pivot where at least $3n/10$ elements are smaller and $3n/10$ elements are bigger than
+      $p$. Our recursion finds the pivot in $A'$ to be in the middle, and thus $n/10$ elements are smaller than $p$ (half of
+      $A'$s size). Additionally, we know that for each element in $A'$, there are two elements that were left out that were 
+      smaller than those other medians to the left of $p$.
+   
+      To find the running time, we use the master-theorem. We have a double recursion. The recursion in 1c is $T(n/5)$, the
+      recursion in 3 is $T(7n/10)$, giving us $T(n) \leq T(n/5) + T(7n/10) + cn$. We state that $T(n) \leq 10cn$, which we 
+      prove through induction: 
+      
+      - $T(n) \leq T(n/5) + T(7n/10) + cn$
+      - $\leq 10c \frac{n}{5} + 10cn\frac{7}{10} + cn$
+      - $=10c(\frac{9}{10}n) + cn$
+      - $= 10cn \leq O(n)$
+
 ### Heap sort
 
 **Recursion**: The root of the heap is the biggest element of the array.
 
 Unlike all other sorting algorithms, this one makes use of an alternative data structure. In fact, the sorting algorithm
 only uses the basic operations of the data structure to sort an array. The data structure at stake is the **Max-heap**.
-This is a complete binary tree where the keys are the values of the array. The key of each vertex must be greater or 
-equal to all keys of its descendants. More on this data structure is to be found in the respective chapter. 
+This is a complete binary tree where the keys are the values of the array. The key of each vertex must be greater or
+equal to all keys of its descendants. More on this data structure is to be found in the respective chapter.
 
 As mentioned, the algorithm is fairly simple. The max-heap is created using the array, and then the maximum is extracted
-until the hea is empty. The order of these maximums is the reverse order of the array. Due to the max-heaps structure, 
-the sorting algorithm has memory accesses that are jumping all over the memory, which somewhat reduces the speed. 
+until the hea is empty. The order of these maximums is the reverse order of the array. Due to the max-heaps structure,
+the sorting algorithm has memory accesses that are jumping all over the memory, which somewhat reduces the speed.
 
-As shown in the chapter about the max-heap data structure, the operations `Insert` and `ExtractMax` both have a time 
+As shown in the chapter about the max-heap data structure, the operations `Insert` and `ExtractMax` both have a time
 complexity of $log(n)$. The complete time complexity comes from the fact that both operations are executed $n$-times to
 get the sorted array. Although the algorithm below would let you think that additional memory is required, some clever
-thinking allows the array to be sorted in place by using it to store the heap. 
+thinking allows the array to be sorted in place by using it to store the heap.
 
 **Complexity**: Compare: $O(n \cdot log(n))$, Swap: $O(n \cdot log(n))$
 
