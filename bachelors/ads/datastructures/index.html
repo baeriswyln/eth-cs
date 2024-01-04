@@ -777,6 +777,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#union-find" class="md-nav__link">
+    <span class="md-ellipsis">
+      Union-Find
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1681,6 +1690,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#union-find" class="md-nav__link">
+    <span class="md-ellipsis">
+      Union-Find
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1701,8 +1719,8 @@
 
 <h1 id="datastructures">Datastructures</h1>
 <h2 id="abstract-data-type-vs-data-structures">Abstract data type (vs. data structures)</h2>
-<p>Abstract data types define what we want to do with some data. The following chapter describe a series of 
-abstract data types (ADT) and discuss possible implementations. In general, the objects as well as their operations 
+<p>Abstract data types define what we want to do with some data. The following chapter describe a series of
+abstract data types (ADT) and discuss possible implementations. In general, the objects as well as their operations
 are described.</p>
 <h2 id="list">List</h2>
 <p>A list is defined as an ADT containing objects/keys in a set order and defines (among others) the following operations:</p>
@@ -1754,59 +1772,59 @@ are described.</p>
 </tr>
 </tbody>
 </table>
-<p>*operations require the memory location of the object to be known. </p>
+<p>*operations require the memory location of the object to be known.</p>
 <h2 id="dictionary">Dictionary</h2>
-<p>The dictionary is a collection of unique keys - each key can be found at most one time in the collection. Important 
-operations are: </p>
+<p>The dictionary is a collection of unique keys - each key can be found at most one time in the collection. Important
+operations are:</p>
 <ul>
 <li><code>search(x, W)</code>: is <code>x</code> in <code>W</code>?</li>
 <li><code>insert(x, W)</code>: insert <code>x</code> into <code>W</code>, do nothing if it's already in there</li>
 <li><code>delete(x, W)</code>: remove <code>x</code> from <code>W</code></li>
 </ul>
-<p>This ADT can be implemented using some type of list. However, such dictionaries are not very efficient as most 
-operations would run in <span class="arithmatex">\(O(n)\)</span>. We are looking for something more efficient, namely <span class="arithmatex">\(O(log(n))\)</span>. This is possible 
-using binary trees (with the additional AVL condition) described in the chapter below. It is possible to have more 
-efficient data structures, but these are probabilistic, and were not discussed in this course. </p>
+<p>This ADT can be implemented using some type of list. However, such dictionaries are not very efficient as most
+operations would run in <span class="arithmatex">\(O(n)\)</span>. We are looking for something more efficient, namely <span class="arithmatex">\(O(log(n))\)</span>. This is possible
+using binary trees (with the additional AVL condition) described in the chapter below. It is possible to have more
+efficient data structures, but these are probabilistic, and were not discussed in this course.</p>
 <h3 id="binarysearch-tree">Binary/Search Tree</h3>
 <p>A binary tree is a structure where every node links to (at most) two child nodes. At the top we have the root node that
-has no parent node. Each binary tree has a <strong>search-tree condition</strong> that defines how the child keys compare to the 
+has no parent node. Each binary tree has a <strong>search-tree condition</strong> that defines how the child keys compare to the
 parent key. A typical condition is: all node's keys in the left subtree are smaller than the parent node's key, and all
-node's keys in the right subtree are greater. </p>
+node's keys in the right subtree are greater.</p>
 <figure>
 <p><img alt="" src="../../../diagrams/b/ads/bintree.svg" /></p>
 </figure>
 <p>We are talking about a <em>complete</em> binary tree, if all levels are completely filled (except for the last level).</p>
-<p>The <em>search</em> and <em>insert</em> operations are trivial: <em>search</em> goes through the tree height once. By using the 
-search-tree condition, the algorithm always knows in which subtree to continue searching. <em>insert</em> is quite similar, 
-as it is just using the <em>search</em> algorithm. If the key does not yet exist, a new leaf is created where <em>search</em> 
-ended up. </p>
-<p>The <em>delete</em> operation is somewhat more complicated, as the tree might have to be restructured. We make a case 
-distinction. The element <code>x</code> is to be deleted. </p>
+<p>The <em>search</em> and <em>insert</em> operations are trivial: <em>search</em> goes through the tree height once. By using the
+search-tree condition, the algorithm always knows in which subtree to continue searching. <em>insert</em> is quite similar,
+as it is just using the <em>search</em> algorithm. If the key does not yet exist, a new leaf is created where <em>search</em>
+ended up.</p>
+<p>The <em>delete</em> operation is somewhat more complicated, as the tree might have to be restructured. We make a case
+distinction. The element <code>x</code> is to be deleted.</p>
 <ol>
 <li><code>x</code> is a leaf: trivial, just remove the node from its parent</li>
-<li><code>x</code> has only one child: trivial, x's child becomes its parent's child. </li>
-<li><code>x</code> has two children: x must be replaced with the next-biggest element of the tree. This element can be found by 
-   going into the right subtree of x, and then following the left subtrees until no left subtree exists. This 
-   element becomes the new x. Now, the delete operation can be used on the element replacing x. </li>
+<li><code>x</code> has only one child: trivial, x's child becomes its parent's child.</li>
+<li><code>x</code> has two children: x must be replaced with the next-biggest element of the tree. This element can be found by
+   going into the right subtree of x, and then following the left subtrees until no left subtree exists. This
+   element becomes the new x. Now, the delete operation can be used on the element replacing x.</li>
 </ol>
-<p>Such a binary tree has, however, a problem in some cases. If a sorted array is converted into a binary tree, the 
-tree depth will be equal to the array length - all operations are inefficient. We require thus a slightly modified 
+<p>Such a binary tree has, however, a problem in some cases. If a sorted array is converted into a binary tree, the
+tree depth will be equal to the array length - all operations are inefficient. We require thus a slightly modified
 search-tree condition.</p>
 <h3 id="avl-tree">AVL Tree</h3>
-<p>The AVL tree is built on a binary search-tree but with an additional <strong>AVL-condition</strong>: the height of the left and 
-right subtree must have a difference of at most 1. This must be valid for every node in the tree. In case the 
-condition is no longer met, the tree must be restructured. This condition leads to trees where the number of nodes 
-is equal to <span class="arithmatex">\(\text{Fib}(h + 2) -1\)</span> where <span class="arithmatex">\(h\)</span> is the tree's height. </p>
-<p>After the operations <em>insert</em> and <em>delete</em>, the tree might have to be <strong>rebalanced</strong>. All predecessors of the 
-affected node must be checked (in some cases, the check must not be followed all the way up to the root). In case 
-the AVL-condition of some node <code>u</code> is no longer met, the following operation is to be done: </p>
-<p>In this case the left subtree of <code>u</code> has grown too large. As the left subtree of <code>v</code> has grown, a single rotation has 
-to be carried out, as shown in the below picture. </p>
+<p>The AVL tree is built on a binary search-tree but with an additional <strong>AVL-condition</strong>: the height of the left and
+right subtree must have a difference of at most 1. This must be valid for every node in the tree. In case the
+condition is no longer met, the tree must be restructured. This condition leads to trees where the number of nodes
+is equal to <span class="arithmatex">\(\text{Fib}(h + 2) -1\)</span> where <span class="arithmatex">\(h\)</span> is the tree's height.</p>
+<p>After the operations <em>insert</em> and <em>delete</em>, the tree might have to be <strong>rebalanced</strong>. All predecessors of the
+affected node must be checked (in some cases, the check must not be followed all the way up to the root). In case
+the AVL-condition of some node <code>u</code> is no longer met, the following operation is to be done:</p>
+<p>In this case the left subtree of <code>u</code> has grown too large. As the left subtree of <code>v</code> has grown, a single rotation has
+to be carried out, as shown in the below picture.</p>
 <figure>
 <p><img alt="" src="../../../diagrams/b/ads/avl-rot.svg" /></p>
 </figure>
 <p>Again the left subtree of <code>u</code> has become too large. But this time, the right subtree of <code>v</code> has grown. A double rotation
-as shown in the following picture is to be done. </p>
+as shown in the following picture is to be done.</p>
 <figure>
 <p><img alt="" src="../../../diagrams/b/ads/avl-doublerot.svg" /></p>
 </figure>
@@ -1832,13 +1850,13 @@ quite similar to the stack, but the order of object retrieval is different.</p>
 </ul>
 <h2 id="max-heap">(Max)-Heap</h2>
 <p>The ADT Max-Heap has a clever way to sort its data allowing access to the maximum element in constant time.
-It is for example used in the sorting algorithm <em>HeapSort</em> and consists of the two main operations: </p>
+It is for example used in the sorting algorithm <em>HeapSort</em> and consists of the two main operations:</p>
 <ul>
 <li><code>insert(x, H)</code>: insert the value <code>x</code> into the heap</li>
 <li><code>extractMax(H)</code>: remove and return the maximum value from the heap</li>
 </ul>
-<p>A possible implementation uses a binary tree with a <strong>Heap condition</strong> that specifies how the tree must be 
-constructed to be valid: it specifies that the key of an element must be greater or equal to all keys of its 
+<p>A possible implementation uses a binary tree with a <strong>Heap condition</strong> that specifies how the tree must be
+constructed to be valid: it specifies that the key of an element must be greater or equal to all keys of its
 descendants.</p>
 <h3 id="in-memory-representation">In-memory representation</h3>
 <p>The heap is stored as an array. The indexes can be used to determine an element's position in the binary tree underlying
@@ -1867,6 +1885,69 @@ array. Another possibility is to reuse the given array and use it as the heap. A
 This means, the elements are compared to its children, and if necessary, swapped with the bigger of the two. This is
 then repeated for all levels up to the root of the heap, resulting in a heap meeting its heap-condition. The <em>sinking</em>
 process must be done all the way to the bottom of the tree.</p>
+<h2 id="union-find">Union-Find</h2>
+<p>The Union-Find ADT provides the means to efficiently keep track of sets, check if elements belong to the
+same set, and to create unions of the owner-sets of two entries. The following operations are define.</p>
+<ul>
+<li><code>make(E)</code>: create the data structures. Each entry in <code>E</code> is in a set of size <span class="arithmatex">\(1\)</span>. Runs in <span class="arithmatex">\(O(|E|)\)</span></li>
+<li><code>same(u,v)</code>: check if <span class="arithmatex">\(u\)</span> and <span class="arithmatex">\(v\)</span> are in the same set. Runs in <span class="arithmatex">\(O(1)\)</span></li>
+<li><code>union(u,v)</code>: create a union of the sets containing <span class="arithmatex">\(u\)</span> and <span class="arithmatex">\(v\)</span>. Runs in <span class="arithmatex">\(O(\text{min}\{|\text{SetOf}(u)|, 
+ |\text{SetOf}(v)|\})\)</span> </li>
+</ul>
+<details class="tip">
+<summary>Example implementation</summary>
+<p>A possible implementation of this data structure keeps two arrays in memory: </p>
+<ul>
+<li><code>rep[u]</code>: identification of the set that <span class="arithmatex">\(u\)</span> is in</li>
+<li><code>members[u]</code>: list of members of <span class="arithmatex">\(u\)</span>'s set, if <span class="arithmatex">\(u\)</span> is the set's representative</li>
+</ul>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">type</span><span class="w"> </span><span class="nx">UnionFind</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">rep</span><span class="w">     </span><span class="kt">int</span><span class="p">[]</span>
+<span class="w">    </span><span class="nx">members</span><span class="w"> </span><span class="kt">int</span><span class="p">[][]</span>
+<span class="p">}</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="nx">NewUnionFind</span><span class="p">(</span><span class="nx">E</span><span class="w"> </span><span class="kt">int</span><span class="p">[])</span><span class="w"> </span><span class="o">*</span><span class="nx">UnionFind</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">U</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">UnionFind</span><span class="w"> </span><span class="p">{</span><span class="nb">make</span><span class="p">(</span><span class="kt">int</span><span class="p">[],</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="nx">E</span><span class="p">)),</span><span class="w"> </span><span class="nb">make</span><span class="p">(</span><span class="kt">int</span><span class="p">[][],</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="nx">E</span><span class="p">))}</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="nx">e</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">range</span><span class="w"> </span><span class="nx">E</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">U</span><span class="p">.</span><span class="nx">rep</span><span class="p">[</span><span class="nx">e</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">e</span>
+<span class="w">        </span><span class="nx">U</span><span class="p">.</span><span class="nx">members</span><span class="p">[</span><span class="nx">e</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">make</span><span class="p">(</span><span class="kt">int</span><span class="p">[],</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">U</span><span class="w"> </span><span class="o">*</span><span class="nx">UnionFind</span><span class="p">)</span><span class="w"> </span><span class="nx">Same</span><span class="p">(</span><span class="nx">u</span><span class="p">,</span><span class="w"> </span><span class="nx">v</span><span class="w"> </span><span class="kt">int</span><span class="p">)</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">U</span><span class="p">.</span><span class="nx">rep</span><span class="p">[</span><span class="nx">u</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nx">U</span><span class="p">.</span><span class="nx">rep</span><span class="p">[</span><span class="nx">v</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">U</span><span class="w"> </span><span class="o">*</span><span class="nx">UnionFind</span><span class="p">)</span><span class="w"> </span><span class="nx">Union</span><span class="p">(</span><span class="nx">u</span><span class="p">,</span><span class="w"> </span><span class="nx">v</span><span class="w"> </span><span class="kt">int</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">range</span><span class="w"> </span><span class="nx">U</span><span class="p">.</span><span class="nx">members</span><span class="p">[</span><span class="nx">U</span><span class="p">.</span><span class="nx">rep</span><span class="p">[</span><span class="nx">u</span><span class="p">]]</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">// improve by iterating over the smaller member list </span>
+<span class="w">        </span><span class="nx">U</span><span class="p">.</span><span class="nx">rep</span><span class="p">[</span><span class="nx">x</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">U</span><span class="p">.</span><span class="nx">rep</span><span class="p">[</span><span class="nx">v</span><span class="p">]</span>
+<span class="w">        </span><span class="nx">U</span><span class="p">.</span><span class="nx">members</span><span class="p">[</span><span class="nx">U</span><span class="p">.</span><span class="nx">rep</span><span class="p">[</span><span class="nx">v</span><span class="p">]]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">append</span><span class="p">(</span><span class="nx">U</span><span class="p">.</span><span class="nx">members</span><span class="p">[</span><span class="nx">U</span><span class="p">.</span><span class="nx">rep</span><span class="p">[</span><span class="nx">v</span><span class="p">]],</span><span class="w"> </span><span class="nx">x</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+</details>
 
 
 
@@ -1889,7 +1970,7 @@ process must be done all the way to the bottom of the tree.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">December 29, 2023</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">January 4, 2024</span>
   </span>
 
     

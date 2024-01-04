@@ -842,6 +842,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Floyd-Warshall">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#finding-negative-cycles_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Finding negative cycles
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
           <li class="md-nav__item">
@@ -930,6 +945,30 @@
       Layered graphs
     </span>
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#graphs-and-matrices" class="md-nav__link">
+    <span class="md-ellipsis">
+      Graphs and matrices
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Graphs and matrices">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#use-cases" class="md-nav__link">
+    <span class="md-ellipsis">
+      Use cases
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1818,6 +1857,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Floyd-Warshall">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#finding-negative-cycles_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Finding negative cycles
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
           <li class="md-nav__item">
@@ -1909,6 +1963,30 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#graphs-and-matrices" class="md-nav__link">
+    <span class="md-ellipsis">
+      Graphs and matrices
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Graphs and matrices">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#use-cases" class="md-nav__link">
+    <span class="md-ellipsis">
+      Use cases
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1930,6 +2008,20 @@
 <h1 id="graph-theory">Graph theory</h1>
 <p>A graph <span class="arithmatex">\(G\)</span> is a set of vertices <span class="arithmatex">\(V\)</span> and edges <span class="arithmatex">\(E\)</span> where an edge is defined as an <em>unordered pair</em> of vertices <span class="arithmatex">\(e = uv\)</span>
 with <span class="arithmatex">\(u \neq v\)</span>. Directed graphs are quite similar, but edges are defined as <em>ordered pairs</em>.</p>
+<details class="info">
+<summary>Variable names</summary>
+<p>The following chapters will use a series o variable names that, if not signaled otherwise, have the following 
+meaning.</p>
+<ul>
+<li><span class="arithmatex">\(V\)</span>: set of vertices</li>
+<li><span class="arithmatex">\(E\)</span>: set of edges</li>
+<li><span class="arithmatex">\(e\)</span>: one specific edge</li>
+<li><span class="arithmatex">\(n = |V|\)</span>: number of vertices in the graph</li>
+<li><span class="arithmatex">\(m = |E|\)</span>: number of edges in the graph</li>
+<li><span class="arithmatex">\(d(u, v)\)</span>: distance function between vertices <span class="arithmatex">\(u\)</span>, <span class="arithmatex">\(v\)</span></li>
+<li><span class="arithmatex">\(c(e)\)</span>: cost/weight of the edge <span class="arithmatex">\(e\)</span></li>
+</ul>
+</details>
 <h2 id="definitions">Definitions</h2>
 <p><strong>Vertices</strong>:</p>
 <ul>
@@ -1942,6 +2034,7 @@ with <span class="arithmatex">\(u \neq v\)</span>. Directed graphs are quite sim
 <li><strong>Incident (Inzident, angliegen)</strong>: edges connected to a vertex</li>
 <li><strong><span class="arithmatex">\(u\)</span> reaches <span class="arithmatex">\(v\)</span></strong>: There exists a path from <span class="arithmatex">\(u\)</span> to <span class="arithmatex">\(v\)</span></li>
 <li><strong>Strongly connected</strong> (in directed graphs): both edges <span class="arithmatex">\(uv\)</span> and <span class="arithmatex">\(vu\)</span> exist</li>
+<li><strong>Loop</strong>: an edge <span class="arithmatex">\(uu\)</span></li>
 </ul>
 <p><strong>Graphs</strong>:</p>
 <ul>
@@ -2304,18 +2397,90 @@ d(s,v) &amp;= min\{d(s,u) + c(u,v) \mid u \to v,\; u \in S_{\leq l-1}\}
 </tbody>
 </table>
 <h4 id="finding-negative-cycles">Finding negative cycles</h4>
-<p>As soon as an algorithm has negative cycles, there is the potential to have negative cycles. To find if such a cycle
+<p>As soon as a graph has negative edge costs, there is the potential to have negative cycles. To find if such a cycle
 exists, we simply execute the Bellman-Ford algorithm. If a negative cycle exists, the algorithm will never terminate
 as the weights become smaller in each iteration.</p>
 <h3 id="floyd-warshall">Floyd-Warshall</h3>
+<p>The Floyd-Warshall algorithm applies a solution using the dynamic-programming technique. We define the sub-problem as
+<span class="arithmatex">\(d_{u,v}^{i}\)</span>: shortest path from <span class="arithmatex">\(u\)</span> to <span class="arithmatex">\(v\)</span> using the intermediate nodes <span class="arithmatex">\(\{1,...,i\}\)</span>. The recursion gives us the
+following case distinction.</p>
+<ol>
+<li><span class="arithmatex">\(i\)</span> is not an intermediate node: <span class="arithmatex">\(d_{u,v}^{i} = d_{u,v}^{i-1}\)</span></li>
+<li><span class="arithmatex">\(i\)</span> is an intermediate node exactly once: <span class="arithmatex">\(d_{u,v}^{i} = d_{u,i}^{i-1} + d_{i,v}^{i-1}\)</span></li>
+<li><span class="arithmatex">\(i\)</span> is an intermediate node multiple times: ignore this case if no negative cycles exist</li>
+</ol>
+<p>This can be translated into pseudocode as follows. This algorithm has a running time and memory usage of <span class="arithmatex">\(O(n^3)\)</span></p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span></pre></div></td><td class="code"><div><pre><span></span><code>FloydWarshall(V, E):
+    d = int[n][n][n] // weights on diagonal are left at 0
+    for u in V:
+        for v in V:
+            if u != v &amp;&amp; E.contains(u,v):
+                d[0][u][v] = E.contains(u,v) ? c(u,v) : infinity
+
+    for i in 1..len(V): 
+        for u in 0..len(V):
+            for v in 0..len(V):
+                d[i][u][v] = min(d[i-1][u][v], d[i-1][u][i] + d[i-1][i][v])
+
+    return d[len(v)-1]
+</code></pre></div></td></tr></table></div>
+<h4 id="finding-negative-cycles_1">Finding negative cycles</h4>
+<p>After the algorithm has been executed, we can look at the diagonal of the DP table. If any value on this diagonal
+is negative, there exists a walk from some <span class="arithmatex">\(u\)</span> to itself having a negative distance. In this case we can conclude
+that at least one negative cycle exists.</p>
+<p>In our algorithm, we can now conclude that: if for any <span class="arithmatex">\(u \to v\)</span> walk, there exists a walk (not necessarily the shortest
+one) through some vertex <span class="arithmatex">\(w\)</span> with <span class="arithmatex">\(d[n][w][w] &lt; 0\)</span>, the walk <span class="arithmatex">\(u \to v\)</span> has a shortest distance of <span class="arithmatex">\(-\infty\)</span>. Otherwise,
+its distance is defined by <span class="arithmatex">\(d[n][u][v]\)</span>.</p>
 <h3 id="johnson">Johnson</h3>
+<p>The algorithm of Johnson applies the Dijkstra algorithm <span class="arithmatex">\(n\)</span>-times, which is faster than using Floyd-Warshall. However,
+as we have discussed before, Dijkstra only works for graphs without negative edge costs. Now, Johnson modifies the edge
+costs in a clever way such that they are all positive but without changing the outcome of the algorithm.</p>
+<p>This is for example a problem if we simply add the minimum weight in the graph to all edges. While this eliminates
+negative weights, the outcome might change: say we have a shortest path crossing <span class="arithmatex">\(n\)</span> edges. The minimum weight is added
+<span class="arithmatex">\(n\)</span>-times to the path. There might exist some more direct path with fewer edge crossings and thus the minimum weight is
+added fewer times. This path might now become the shortest path.</p>
+<p>This problem is overcome by using a <strong>telescoping sum</strong> to modify the cost function. We chose some height <span class="arithmatex">\(h(u) \in
+\mathbb{R}\)</span> for each vertex such that for any edge in the graph, the modified cost function defined below remains
+positive.</p>
+<div class="arithmatex">\[
+\hat{c}(u,v) = c(u,v) + h(u) - h(v)
+\]</div>
+<p>Due to the nature of the telescoping sum, the distance of any path between <span class="arithmatex">\(s\)</span> and <span class="arithmatex">\(t\)</span> is defined as follows. As we can
+see, the final distance contains only the height of the starting and ending vertex - all other heights have canceled
+out.</p>
+<div class="arithmatex">\[\begin{align}
+\hat{d}(s, t) &amp;= \sum_{i=0}^{K-1} \hat{c}(v_i,v_{i+1})\\
+&amp;= \sum_{i=0}^{K-1} \Bigg(c(v_i,v_{i+1}) + h(v_i) - h(v_{i+1})\Bigg)\\
+&amp;= \Bigg(\sum_{i=0}^{K-1} c(v_i,v_{i+1})\Bigg) + h(v_0) - h(v_k)\\
+&amp;= \Bigg(\sum_{i=0}^{K-1} c(v_i,v_{i+1})\Bigg) + h(s) - h(t)
+\end{align}\]</div>
+<p>To compute the height function, we add a vertex <span class="arithmatex">\(z\)</span> and connected it to all other vertices in the graph with <span class="arithmatex">\(c(z,v)=0\)</span>.
+The height of some vertex <span class="arithmatex">\(u\)</span> is then defined as the shortest path from <span class="arithmatex">\(z\)</span> to <span class="arithmatex">\(u\)</span>. Due to the construction of the
+graph, <span class="arithmatex">\(h(u) \leq 0 \forall u \in V\)</span>. Further, the following holds for any <span class="arithmatex">\((uv) \in E\)</span>:</p>
+<div class="arithmatex">\[\begin{align}
+h(v) &amp;\leq h(u) + c(u,v)\\
+0 &amp;\leq c(u,v) +h(u) - h(v)
+\end{align}\]</div>
+<p>The height computation requires the graph to have <strong>no negative cycles</strong>.</p>
 <h2 id="minimum-spanning-tree-mst">Minimum spanning tree (MST)</h2>
 <p>A Spanning tree is a connected subgraph with minimum weights. To find such a tree we can look for the minimum edge
 incident to each vertex and add it to the MST. This, however, most certainly leaves us with a forest instead of a
 tree - we now have a series of connected components. To connect the forest into a single tree, we repeatedly add the
 minimum weight edge on each ZHK to the MST.</p>
-<p>While the MST results in the minimum graph weight, it should not be confused with an alternative to find the 
-shortest paths. </p>
+<p>While the MST results in the minimum graph weight, it should not be confused with an alternative to find the
+shortest paths.</p>
 <h3 id="uniqueness">Uniqueness</h3>
 <p>In graphs with unique weights, the MST is <strong>always</strong> unique.</p>
 <h3 id="algorithms">Algorithms</h3>
@@ -2339,7 +2504,7 @@ shortest paths. </p>
 </tbody>
 </table>
 <h4 id="boruvka">Boruvka</h4>
-<p>This first algorithm was already described in the introduction to the MSTs. The following pseudocode describes it 
+<p>This first algorithm was already described in the introduction to the MSTs. The following pseudocode describes it
 in more details. In the first iteration, every vertex is its own ZHK. One iteration of the loop has a duration of <span class="arithmatex">\(O
 (n+m)\)</span>, and it is executed <span class="arithmatex">\(log(n)\)</span>-times, as after each iteration, the number of ZHKs is halved.</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
@@ -2357,7 +2522,7 @@ in more details. In the first iteration, every vertex is its own ZHK. One iterat
         F.append(e1,...,ek)
 </code></pre></div></td></tr></table></div>
 <h4 id="prim">Prim</h4>
-<p>Prim's algorithm is quite similar but here we look at one vertex after the other. Some starting vertex represents 
+<p>Prim's algorithm is quite similar but here we look at one vertex after the other. Some starting vertex represents
 the first ZHK, which is getting extended after each iteration until the spanning-tree is complete. In each iteration,
 the minimum weighted edge incident to the ZHK is added.</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
@@ -2391,16 +2556,94 @@ the minimum weighted edge incident to the ZHK is added.</p>
                 decrease_key(v, d[v])
 </code></pre></div></td></tr></table></div>
 <h4 id="kruskal">Kruskal</h4>
+<p>This algorithm sorts the edges by their weights (in ascending order), and then iteratively evaluates each edge. If it
+connects two independent ZHKs, the edge is added to the MST. To start, each vertex is one ZHK. Implemented like this,
+the algorithm will run in <span class="arithmatex">\(O(n \cdot m)\)</span> (<span class="arithmatex">\(m\)</span> iterations, and each iteration requires <span class="arithmatex">\(n\)</span> comparisons to check if the
+vertices are in the same ZHK). The running time can be improved to <span class="arithmatex">\(O((n+m) \cdot log(n))\)</span> by using the data structure
+<em>union-find</em> to keep track of the ZHKs.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span></pre></div></td><td class="code"><div><pre><span></span><code>func Kruskal(V Vertex[], E Edge[]) Edge[] {
+  F := make(Edge[], 0)
+  ZHK := new UnionFind(V)
+  E = E.sort()
+
+  for e := range E {
+    if !ZHK.same(e.u, e.v) {
+      ZHK.union(e.u, e.v)
+      F.add(e)
+    }
+  }
+  return F
+}
+</code></pre></div></td></tr></table></div>
+<details class="info">
+<summary>A note on the running time</summary>
+<p>If analysed like this, the running time of the algorithm would <span class="arithmatex">\(O(n \cdot m)\)</span>. However, due to how the UnionFind
+algorithm is designed, an amortised analysis provides us with a better running time. </p>
+<p>The worst case running time of a union is said to be </p>
+<div class="arithmatex">\[
+\Theta(\text{min}\{\text{ZHK}(u), \text{ZHK}(v)\}) = \Theta(n/2) = \Theta(n)
+\]</div>
+<p>This worst case, however, is only the case in a few cases as with every iteration the sets are at least being 
+doubled in size. This leads to a mean running time of <span class="arithmatex">\(O(log(n))\)</span>.</p>
+</details>
 <h2 id="layered-graphs">Layered graphs</h2>
-<p>Sometimes, it is beneficial to modify a given graph for an improved algorithm performance. An approach that is often 
-taken is to create multiple layers of the same graph, where the layers serve as a sort of <strong>memory</strong>. An example for 
-such a problem is finding the shortest path in a graph where <span class="arithmatex">\(k\)</span> cheats are allowed. A cheat is defined as 
-essentially setting the weight of an edge to <span class="arithmatex">\(0\)</span>. </p>
-<p>To solve this problem, our modified graph <span class="arithmatex">\(G'\)</span> contains <span class="arithmatex">\(k+1\)</span> copies of the original graph (including all edges). 
-Next, we add the edges such that for every edge <span class="arithmatex">\(uv \in E\)</span>, we add the edge <span class="arithmatex">\(u_iu_{i+1}\)</span> with a weight of 
-<span class="arithmatex">\(c(u_i,u_{i+1}) = 0\)</span>. Now, as long as we are in the first layer, we have cheated on <span class="arithmatex">\(0\)</span> edges. Once we pass a layer 
-down, we have cheated on one additional layer. </p>
+<p>Sometimes, it is beneficial to modify a given graph for an improved algorithm performance. An approach that is often
+taken is to create multiple layers of the same graph, where the layers serve as a sort of <strong>memory</strong>. An example for
+such a problem is finding the shortest path in a graph where <span class="arithmatex">\(k\)</span> cheats are allowed. A cheat is defined as
+essentially setting the weight of an edge to <span class="arithmatex">\(0\)</span>.</p>
+<p>To solve this problem, our modified graph <span class="arithmatex">\(G'\)</span> contains <span class="arithmatex">\(k+1\)</span> copies of the original graph (including all edges).
+Next, we add the edges such that for every edge <span class="arithmatex">\(uv \in E\)</span>, we add the edge <span class="arithmatex">\(u_iu_{i+1}\)</span> with a weight of
+<span class="arithmatex">\(c(u_i,u_{i+1}) = 0\)</span>. Now, as long as we are in the first layer, we have cheated on <span class="arithmatex">\(0\)</span> edges. Once we pass a layer
+down, we have cheated on one additional layer.</p>
 <p>The problem in this modified graph <span class="arithmatex">\(G'\)</span> is now to find the shortest path between <span class="arithmatex">\(s_0\)</span> and <span class="arithmatex">\(d_k\)</span>.</p>
+<h2 id="graphs-and-matrices">Graphs and matrices</h2>
+<p>Matrices are actually quite close to graphs. In this chapter, we will see three possible applications on graphs. We
+consider <span class="arithmatex">\(i\)</span>-<span class="arithmatex">\(j\)</span>-walks of length <span class="arithmatex">\(K\)</span> (here, we refer to the length as the number of crossed edges). We always start
+with a matrix of size <span class="arithmatex">\(n \times n\)</span>. Additionally, we know that any <span class="arithmatex">\(i\)</span>-<span class="arithmatex">\(j\)</span>-walk has a before-last vertex
+<span class="arithmatex">\(s\)</span>.</p>
+<p><span class="arithmatex">\(L_{ij}^{(K)}\)</span>: does an <span class="arithmatex">\(i\)</span>-<span class="arithmatex">\(j\)</span>-walk of length <span class="arithmatex">\(k\)</span> exist? <span class="arithmatex">\(L^{(1)}\)</span> is the adjacency list.</p>
+<div class="arithmatex">\[
+L_{ij}^{(K)} = \bigvee_{s=1}^n \big(L_{is}^{(K-1)} \land L_{sj}^{(1)}\big)
+\]</div>
+<p><span class="arithmatex">\(M_{ij}^{(K)}\)</span>: what's the minimum cost for an <span class="arithmatex">\(i\)</span>-<span class="arithmatex">\(j\)</span>-walk of length <span class="arithmatex">\(K\)</span>? <span class="arithmatex">\(M^{(1)}\)</span> is the adjacency list but
+instead of storing <span class="arithmatex">\(1\)</span> and <span class="arithmatex">\(0\)</span>, we store the costs of edges connecting two vertices.</p>
+<div class="arithmatex">\[
+M_{ij}^{(K)} = \text{min}_{s=1..n}\big\{M_{is}^{(K-1)} + M_{sj}^{(1)}\big\}
+\]</div>
+<p><span class="arithmatex">\(N_{ij}^{(K)}\)</span>: how many <span class="arithmatex">\(i\)</span>-<span class="arithmatex">\(j\)</span>-walk of length <span class="arithmatex">\(K\)</span> exist? <span class="arithmatex">\(N^{(1)}\)</span> is the adjacency list.</p>
+<div class="arithmatex">\[
+N_{ij}^{(K)} = \sum_{s=1}^n N_{is}^{(K-1)} \cdot N_{sj}^{(1)}
+\]</div>
+<p>This last formula is actually a simple matrix multiplication: <span class="arithmatex">\(N^{(K)}\)</span> is equal to the <span class="arithmatex">\(K\)</span>-th power of the
+adjacency matrix.</p>
+<h3 id="use-cases">Use cases</h3>
+<p><strong>Counting the number of triangles</strong> (in a graph without loops):  A triangle is defined as a <span class="arithmatex">\(u\)</span>-<span class="arithmatex">\(u\)</span>-walk of length <span class="arithmatex">\(3\)</span>.
+To compute the number of such triangles, we simply take the third power of the adjacency list <span class="arithmatex">\(A_G\)</span>, and take the sum
+over the diagonal: <span class="arithmatex">\(tr(A_G^3)/3\)</span>. The division by <span class="arithmatex">\(3\)</span> is necessary because each triangle is found three times (once for
+each of the three vertices).</p>
+<p><strong>Is every vertex reachable from every other vertex</strong> (in directed graphs): For this use case, the graph must be
+slightly modified. A loop is added on each vertex, allowing us to find walks of length <span class="arithmatex">\(\leq K\)</span>. Any two vertices, are
+connected by a walk of length <span class="arithmatex">\(\leq n-1\)</span>, if a walk exists. We can thus compute <span class="arithmatex">\(A_G^{n-1}\)</span> and check that all entries 
+are <span class="arithmatex">\(&gt; 0\)</span>. </p>
+<ul>
+<li>Naive algorithm (multiplying <span class="arithmatex">\(n-1\)</span>-times): $O(n^4)</li>
+<li>Iterative squaring (<span class="arithmatex">\(A^n = A^\frac{n}{2} \cdot A^\frac{n}{2}\)</span>): <span class="arithmatex">\(O(n^3 \cdot log(n))\)</span></li>
+<li>Strassen (dividing an <span class="arithmatex">\(n \times n\)</span> matrix into four <span class="arithmatex">\(\frac{n}{2}\times \frac{n}{2}\)</span> matrices): <span class="arithmatex">\(\Theta(n^{2.807})\)</span>,
+  useful once <span class="arithmatex">\(n &gt; 1000\)</span>, otherwise the constant factor is too big</li>
+<li>Best algorithm: <span class="arithmatex">\(O(n^{2.3715})\)</span>, in reality not applicable due to the constant factor being too big</li>
+</ul>
 <div class="footnote">
 <hr />
 <ol>
@@ -2434,7 +2677,7 @@ down, we have cheated on one additional layer. </p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">January 2, 2024</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">January 4, 2024</span>
   </span>
 
     

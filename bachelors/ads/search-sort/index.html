@@ -1916,13 +1916,13 @@ recursion levels)</p>
 </code></pre></div></td></tr></table></div>
 </details>
 <h3 id="quick-sort">Quick sort</h3>
-<p><strong>Recursion</strong>: All elements left to the <em>pivot</em> are smaller, all elements to the right are bigger. </p>
+<p><strong>Recursion</strong>: All elements left to the <em>pivot</em> are smaller, all elements to the right are bigger.</p>
 <p>The QuickSort algorithm is a randomized and recursive algorithm. In every recursion step, a random <strong>pivot</strong> element is
 chosen. Next, the algorithm iterates through the array, making sure that the pivot element is put at a position where
-all elements to its left are smaller, and all elements to its right are bigger. This will also be the final position of 
-the pivot. This procedure is then recursively applied on both sides of the array. </p>
-<p>Due to its probabilistic nature, the algorithm has a worst case complexity of <span class="arithmatex">\(O(n^2)\)</span>. However, this is only the case 
-if the chosen pivot is always the biggest or smallest element of the array. As this is very unlikely, the mean 
+all elements to its left are smaller, and all elements to its right are bigger. This will also be the final position of
+the pivot. This procedure is then recursively applied on both sides of the array.</p>
+<p>Due to its probabilistic nature, the algorithm has a worst case complexity of <span class="arithmatex">\(O(n^2)\)</span>. However, this is only the case
+if the chosen pivot is always the biggest or smallest element of the array. As this is very unlikely, the mean
 complexity is <span class="arithmatex">\(O(n \cdot log(n))\)</span>.</p>
 <p><strong>Complexity</strong>: Compare: <span class="arithmatex">\(O(n \cdot log(n))\)</span>, Swap: <span class="arithmatex">\(O(n \cdot log(n))\)</span></p>
 <details class="tip">
@@ -1982,19 +1982,67 @@ complexity is <span class="arithmatex">\(O(n \cdot log(n))\)</span>.</p>
 <span class="p">}</span>
 </code></pre></div></td></tr></table></div>
 </details>
+<details class="info">
+<summary>Running QuickSort deterministically in <span class="arithmatex">\(0(n \cdot log(n))\)</span></summary>
+<p>It is possible to have a deterministic running time of <span class="arithmatex">\(0(n \cdot log(n))\)</span>, if we are able to find the median (thus
+  the pivot element) in <span class="arithmatex">\(O(n)\)</span>. In reality this is not one for the QuickSort algorithm.</p>
+<p>The QuickSelect algorithm finds the median recursively in <span class="arithmatex">\(O(n)\)</span>. Actually, it is able to find the <span class="arithmatex">\(i\)</span>-th smallest
+  element, and the median is then a special case of this algorithm.</p>
+<p>We need to find a pivot that is not too close to the ends of the given array. In fact, it must not be under the first
+  <span class="arithmatex">\(\epsilon n\)</span> elements. In the worst case, the recursion runs on <span class="arithmatex">\((1-\epsilon)n\)</span> elements. Using the master-theorem,
+  we can compute a running time of <span class="arithmatex">\(O(n)\)</span>:</p>
+<ul>
+<li><span class="arithmatex">\(T(n) \leq T((1-\epsilon)n) + cn\)</span></li>
+<li><span class="arithmatex">\(\leq T((1-\epsilon)^2n) + c(1-\epsilon)n + cn\)</span></li>
+<li><span class="arithmatex">\(\leq T((1-\epsilon)^3n) + c(1-\epsilon)^2n + c(1-\epsilon)n + cn\)</span></li>
+<li><span class="arithmatex">\(...\)</span></li>
+<li><span class="arithmatex">\(\leq T(1) + cn \sum_{i=0}^{...}(1-\epsilon)^i \leq O(n)\)</span></li>
+</ul>
+<p>To achieve this, the algorithm splits the input into groups of five elements, and then finds the median of these
+  elements in a linear time factor.</p>
+<p><span class="arithmatex">\(\text{QuickSelect}(A,i)\)</span></p>
+<ol>
+<li>Select pivot <span class="arithmatex">\(p\)</span>:<ol>
+<li>Split <span class="arithmatex">\(A\)</span> into groups of five</li>
+<li>Find the median of each group, and put them into <span class="arithmatex">\(A'\)</span> of length <span class="arithmatex">\(\lceil \frac{n}{5} \rceil\)</span></li>
+<li><span class="arithmatex">\(p = \text{QuickSelect}(A',\frac{1+ \lceil n/5 \rceil}{2})\)</span></li>
+</ol>
+</li>
+<li><span class="arithmatex">\(k = \text{Split}(A[1..n],p)\)</span>, split on pivot where <span class="arithmatex">\(k\)</span> is the pivot index</li>
+<li>Recursion:<ul>
+<li><span class="arithmatex">\(i=k\)</span>: return <span class="arithmatex">\(k\)</span></li>
+<li><span class="arithmatex">\(i&lt;k\)</span>: <span class="arithmatex">\(\text{QuickSelect}(A[1..k-1],i)\)</span></li>
+<li><span class="arithmatex">\(i&gt;k\)</span>: <span class="arithmatex">\(\text{QuickSelect}(A[k+1..n],i-k)\)</span></li>
+</ul>
+</li>
+</ol>
+<p>With this algorithm we find a pivot where at least <span class="arithmatex">\(3n/10\)</span> elements are smaller and <span class="arithmatex">\(3n/10\)</span> elements are bigger than
+  <span class="arithmatex">\(p\)</span>. Our recursion finds the pivot in <span class="arithmatex">\(A'\)</span> to be in the middle, and thus <span class="arithmatex">\(n/10\)</span> elements are smaller than <span class="arithmatex">\(p\)</span> (half of
+  <span class="arithmatex">\(A'\)</span>s size). Additionally, we know that for each element in <span class="arithmatex">\(A'\)</span>, there are two elements that were left out that were 
+  smaller than those other medians to the left of <span class="arithmatex">\(p\)</span>.</p>
+<p>To find the running time, we use the master-theorem. We have a double recursion. The recursion in 1c is <span class="arithmatex">\(T(n/5)\)</span>, the
+  recursion in 3 is <span class="arithmatex">\(T(7n/10)\)</span>, giving us <span class="arithmatex">\(T(n) \leq T(n/5) + T(7n/10) + cn\)</span>. We state that <span class="arithmatex">\(T(n) \leq 10cn\)</span>, which we 
+  prove through induction: </p>
+<ul>
+<li><span class="arithmatex">\(T(n) \leq T(n/5) + T(7n/10) + cn\)</span></li>
+<li><span class="arithmatex">\(\leq 10c \frac{n}{5} + 10cn\frac{7}{10} + cn\)</span></li>
+<li><span class="arithmatex">\(=10c(\frac{9}{10}n) + cn\)</span></li>
+<li><span class="arithmatex">\(= 10cn \leq O(n)\)</span></li>
+</ul>
+</details>
 <h3 id="heap-sort">Heap sort</h3>
 <p><strong>Recursion</strong>: The root of the heap is the biggest element of the array.</p>
 <p>Unlike all other sorting algorithms, this one makes use of an alternative data structure. In fact, the sorting algorithm
 only uses the basic operations of the data structure to sort an array. The data structure at stake is the <strong>Max-heap</strong>.
-This is a complete binary tree where the keys are the values of the array. The key of each vertex must be greater or 
-equal to all keys of its descendants. More on this data structure is to be found in the respective chapter. </p>
+This is a complete binary tree where the keys are the values of the array. The key of each vertex must be greater or
+equal to all keys of its descendants. More on this data structure is to be found in the respective chapter.</p>
 <p>As mentioned, the algorithm is fairly simple. The max-heap is created using the array, and then the maximum is extracted
-until the hea is empty. The order of these maximums is the reverse order of the array. Due to the max-heaps structure, 
-the sorting algorithm has memory accesses that are jumping all over the memory, which somewhat reduces the speed. </p>
-<p>As shown in the chapter about the max-heap data structure, the operations <code>Insert</code> and <code>ExtractMax</code> both have a time 
+until the hea is empty. The order of these maximums is the reverse order of the array. Due to the max-heaps structure,
+the sorting algorithm has memory accesses that are jumping all over the memory, which somewhat reduces the speed.</p>
+<p>As shown in the chapter about the max-heap data structure, the operations <code>Insert</code> and <code>ExtractMax</code> both have a time
 complexity of <span class="arithmatex">\(log(n)\)</span>. The complete time complexity comes from the fact that both operations are executed <span class="arithmatex">\(n\)</span>-times to
 get the sorted array. Although the algorithm below would let you think that additional memory is required, some clever
-thinking allows the array to be sorted in place by using it to store the heap. </p>
+thinking allows the array to be sorted in place by using it to store the heap.</p>
 <p><strong>Complexity</strong>: Compare: <span class="arithmatex">\(O(n \cdot log(n))\)</span>, Swap: <span class="arithmatex">\(O(n \cdot log(n))\)</span></p>
 <details class="tip">
 <summary>Pseudocode</summary>
@@ -2039,7 +2087,7 @@ thinking allows the array to be sorted in place by using it to store the heap. <
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">December 29, 2023</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">January 4, 2024</span>
   </span>
 
     
