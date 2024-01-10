@@ -29,5 +29,5 @@ $$
 $$
 
 The $l_2$-norm is often used for attacks, but rarely for certification of models due to the difficulties that come
-with the quadratic nature of said norm. $l_\infitiy$ can be imagined as a box around the center point. It is also said
+with the quadratic nature of said norm. $l_\infty$ can be imagined as a box around the center point. It is also said
 to most naturally capture the human vision, and it is simpler to certify. 

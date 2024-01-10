@@ -55,7 +55,7 @@ The $\Omega$-notation tells us that one function **grows at least as fast** as s
 $\lim_{n \to \infty} \frac{g(n)}{f(n)} = \infty$. 
 
 $$
-\Omega(f) := \{g: \mathbb{N} \to \mathbb{R}^+ \mid f \leq O(g)\}
+\Omega(f) := \{g: \mathbb{N} \to \mathbb{R}^+ \mid g \leq O(f)\}
 $$
 
 We can restate the above definitions using the limits: 
