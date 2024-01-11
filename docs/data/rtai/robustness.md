@@ -38,7 +38,7 @@ The following chapters only discuss white box attacks. Below table describes the
 
 This attack uses the gradient descent of the classification model. The loss function of the gradient descent is
 computed, and the added/removed from the input to form a modified output that should be classified with some other
-label. The loss function is, however, modified before being added/removed: only the sing of the values is looked at,
+label. The loss function is, however, modified before being added/removed: only the sign of the values is looked at,
 not the exact value. This lead to better results than taking the gradient itself.
 
 First, the perturbation is computed. This is slightly different for the targeted (T) and untargeted (U) mode. In T, the
@@ -49,7 +49,7 @@ $$
 $$
 
 where $\epsilon$ a small value indicating how large the perturbation should be, and $sign(g)$ returning -1 if $g < 0$, 0
-if $g = 0$, or 1 if $g > 0$. When applied to an image, $x_i$ is a pixel of the image.
+if $g = 0$, or 1 if $g > 0$.
 
 As the output of the loss function is passed through the sign function, and then multiplied by $\epsilon$, the output is
 guaranteed to stay in the range $x \pm \epsilon$. The original paper had a single iteration of this algorithm. If the
@@ -72,7 +72,7 @@ $$
 \mathsf{if} \; obj_t(x + \eta) \leq 0 \; \mathsf{then} (x + \eta) = t
 $$
 
-Using this function, we are now trying to minimize $$||\eta||_p + c \cdot obj_t(x + \eta)$. Notice that we are talking
+Using this function, we are now trying to minimize $||\eta||_p + c \cdot obj_t(x + \eta)$. Notice that we are talking
 about an **if** relation and not an **iff**.
 
 The paper[^1] cites a series of soft functions. One highlighted in the course is
@@ -141,7 +141,7 @@ inputs $\phi$ (pre-conditions), and a property over outputs $\psi$ (post conditi
 We can now instantiate this problem definition for an image classification neural network in the following steps.
 
 1. **Define $\phi$**: to prove adversarial robustness, we define $\phi$ as the $l_\infty$-ball around an input $x$:
-   $ball(x)_\epsilon = \{x' \in I \mid ||x-x'||_\infty < \epsilon \}.
+   $ball(x)_\epsilon = \{x' \in I \mid ||x-x'||_\infty < \epsilon \}$.
 2. **Verify $\psi$ satisfies $\phi$**. We define the property $\phi$ as: We want to prove that all inputs inside the
    ball around $x$ are classified identically to $x$.
 
@@ -202,7 +202,7 @@ therefore not be able to make the correct distinction on every input in the inpu
 made by the box relaxation include also many points that are not achievable by the input regions - **the method is not
 precise**.
 
-One possibility to improve the precision somewhat is **merging the outputs, and no longer requiring that the intervals
+One possibility to improve the precision somewhat is **merging the outputs**, and no longer requiring that the intervals
 don't overlap, but that one's lower bound minus the other's upper bound is strictly greater than 0:
 
 \begin{align}
@@ -224,7 +224,7 @@ intervals are combined leading to imprecise results. DeepPoly also works with in
 of the different neurons. Upon combining layers, we can apply back substitution of those relations which leads to
 simplifications in the relations and improve the respective precisions.
 
-Let's look for example at the following affine layers. For both x_1 and x_2, we have an input interval of $[-1;1]$.
+Let's look for example at the following affine layers. For both $x_1$ and $x_2$, we have an input interval of $[-1;1]$.
 In addition of defining these intervals for each neuron of the first layer, we also compute the lower and upper bound
 $l_1, u_1$. We do the same thing for the second layer but this time we define the intervals using the previous layer's
 neurons. The lower and upper bounds are computed through back propagation of above intervals.
@@ -285,7 +285,7 @@ complicated. We discuss three possible relaxations.
 
         The $\alpha$-relaxation keeps some room for optimisation. The upper y limit is again identical. However, the 
         lower bound can be optimised through its slope to get the area of the shape as small as possible while staying
-        inside the interval $\alpha = [0,1].
+        inside the interval $\alpha = [0,1]$.
 
         - Lower $y$ bound: $y \geq \alpha x, \alpha \in [0,1]$
         - Upper $y$ bound: $y \leq \gamma * (x - x_l)$ with a slope of $\gamma = \frac{u_x}{u_x - l_x}$
@@ -401,16 +401,15 @@ is used here to check which ReLUs are crossing. This allows the reduction of bra
     - $y \geq 0$
 
 As a **pre-condition**, we take $\phi = L_{\infty}$ around $x$ as an example. This is encoded as $x_i - \epsilon \leq
-x_i'
-\leq x_i + \epsilon$, introducing bounds for each input neuron $x_i'$.
+x_i' \leq x_i + \epsilon$, introducing bounds for each input neuron $x_i'$.
 
 The **post-condition** $\psi$ defines that one label is always more probable than the other labels, no matter the input
 from $\phi$: for two inputs, we say: $\psi = o_0 > o_1$ - this is what the MILP tries to prove, and we must thus form
-the objective around this post-condition. The encoding is defined as $\text{min} o_0 - o_1$.
+the objective around this post-condition. The encoding is defined as $\text{min}(o_0 - o_1)$.
 
 With the above encodings, we can define the MILP instance as follows:
 
-- **Minimization objective**: $\text{min} o_0 - o_1$
+- **Minimization objective**: $\min(o_0 - o_1)$
 - **Linear constraints**: Afine and ReLU encodings
 - **Bounds**: Bounds per neuron $l_i \leq x_i^p \leq u_i$, bounds on input $x_i - \epsilon \leq x_i' \leq x_i +
   \epsilon$
@@ -430,7 +429,7 @@ With the above encodings, we can define the MILP instance as follows:
         - $x_3 = x_1 + x_2$
         - $x_4 = x_1 - x_2$
         - $o_0 = x_5 + x_6 + 0.5$
-        - $0_1 = x_5 - x_6 - 0.5$
+        - $o_1 = x_5 - x_6 - 0.5$
     - ReLU
         - $x_5: x_3 \leq x_5 \leq x_3 - 0.1 \cdot (1-a_5)$
         - $x_5: 0 \leq x_5 \leq 1.3 \cdot a_5$
@@ -485,7 +484,7 @@ We are trying to get the split $x=0$ and $x=x$, but with the additional constrai
     Applied on our splitting problem, this gets converted into: 
 
     $$
-    \max_{x \in \mathcal{X} ax + c \leq \max_{x\in \mathcal{X}} \min_{\beta \geq 0} ax + c + \beta x_i
+    \max_{x \in \mathcal{X}} ax + c \leq \max_{x\in \mathcal{X}} \min_{\beta \geq 0} ax + c + \beta x_i
     $$
     
     $$
