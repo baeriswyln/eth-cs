@@ -161,7 +161,7 @@ restricted types of computation, generally on small scaled networks.
 This chapter covers two kinds of sound methods:
 
 - Scalable but incomplete: Box relaxation, DeepPoly relaxation
-- Not scalable but complete: MILP, Brand and Bound with Lagrange Multipliers and DeepPoly
+- Not scalable but complete: MILP, Branch and Bound with Lagrange Multipliers and DeepPoly
 
 ### Incomplete certifications
 
@@ -589,3 +589,100 @@ complexity of the abstractions, rendering the problem harder to optimize.
 
 ## Randomized smoothing
 
+Contrary to the prior techniques that were deterministic, we now look at a randomized approach. We create a classifier
+that is robuts by construction.
+
+Given a classifier $f$, we construct a smoothed classifier that finds the most probable class given some noise $\epsilon$
+that follows an isotropic gaussian noise.
+
+$$
+g(x) := \text{argmax}_c\in\mathcal{y} \quad \mathbb{P}_{\epsilon}(f(x+\epsilon) = c)
+$$
+
+The classifier $g$ can tell us thus the probability for each class given the perturbation, and most importantly the most
+probable class. Now, using above definition, we can compute a lower bound probability for the most probable class
+$\underline{p_{A,x}}$ and an upper bound for the next most probable class $B$ (runner-up) $\overline{p_{B,x}}$. Very
+important: all those computations are for one very specific input $x$.
+
+This allows as to get a certification
+
+$$
+g(x + \delta) = c_A \quad \forall || \delta||_2 < R_x
+$$
+
+$$
+R_x := \frac{\sigma}{2}(\Phi^{-1}(\underline{p_{A,x}})- \Phi{^-1}(\overline{p_{B,x}})
+$$
+
+with $\Phi^{-1}$ the inverse of the standard Gaussian CDF.
+
+To increase the radius, we try to maximize $\sigma$ - the noise added to the input. However, the value must not get too
+big as this will break the classification algorithm.
+
+The hard part is the computation of the probabilities $p_{A,x}$ and $p_{B,x}$ efficiently and soundly. In a first step, we change
+the formula for radius computation such that it is only depending on $p_{A,x}$:
+
+\begin{align}
+R_x := \frac{\sigma}{2}(\Phi^{-1}(\underline{p_{A,x}})- \Phi{^-1}(\underline{p_{B,x}}) &\geq
+\frac{\sigma}{2}(\Phi^{-1}(\underline{p_{A,x}})- \Phi{^-1}(\underline{1-p_{A,x}})\\
+&= \frac{\sigma}{2}(\Phi^{-1}(\underline{p_{A,x}}) + \Phi{^-1}(\underline{p_{A,x}})\\
+&= \sigma \Phi^{-1}(\underline{p_{A,x}})
+\end{align}
+
+### Certification procedure
+
+The following procedure roughly outlines how the certification is done.
+
+```
+function CERTIFY(f, sigma, x, n0, n, alpha):
+   ca = guess_top_class(f, sigma, x, n0)
+   pa = lower_bound_prob(ca, f, sigma, x, n, alpha)
+
+   if pa > 0.5:
+      R = sigma * phi_inv(pa)
+      return ca, R
+   else:
+      return ABSTAIN // pa too low, lower bound of pa is too low,
+                     // or we estimated wrong pa
+```
+
+To compute the lower bound probability, we get help by the **Monte Carlo Integration**, as otherwise the integral would
+be too hard. The Monte Carlo Integration essentially samples many points and computes the final probability based on how
+often the sample was classified as $c_A$.
+
+$$
+p_A(x) \approx \frac{1}{n} \Sigma^n_{i=1}[f(x + \epsilon_i) = c_A] = \widehat{p_A}
+$$
+
+Now, we need to get a statistical bound for this $\widehat{p_A}$, as we don't know if its value is bigger or smaller than the
+true $p_A$. This can be done using a **binomial confidence bound**. Essentially, the above sum expects a binomial
+distribution. We can define probability bounds for an error rate $\alpha$ as $\mathbb{P}(\underline{p_{A,x}} \leq p_{A,x} \leq
+\overline{p_{A,x}}) \leq 1 - \alpha$. Increasing $\alpha$ means allowing more errors, and thus the lower bound will get closer
+to the true probability.
+
+<figure markdown>
+![](../../diagrams/d/rtai/binomial_confidence.png)
+</figure>
+
+### Inference procedure
+
+Using this model we can now compute the class that would be predicted by $g(x)$.
+
+```
+function PREDICT(f, sigma, x, n, alpha):
+   // take n samples and compute monte carlo probability
+   ca, na, cb, nb = top_two_classes(f, sigma, x, n)
+
+   // compute the p-value, that na and nb are equally probable
+   if BinomPValue(na, na + nb, =, 0.5) <= alpha:
+      return ca
+   else:
+      return ABSTAIN
+```
+
+### Deterministic vs Randomized
+
+|                                | Robustness Certificate | Adaption to new model class | Adaption to new specification        | Suitable for NN scale                             |
+|--------------------------------|------------------------|-----------------------------|--------------------------------------|---------------------------------------------------|
+| **Deterministic Verification** | Through sound analysis | Requires new transformers   | Encode perturbation as convex region | small to mid size                                 |
+| **Randomized Smoothing**       | By construction        | Model Agnostic              | Requires new mathematical insights   | All sizes, but added latency might be prohibitive |
