@@ -1461,6 +1461,57 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#regulations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Regulations
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Regulations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gdpr" class="md-nav__link">
+    <span class="md-ellipsis">
+      GDPR
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#eu-ai-act" class="md-nav__link">
+    <span class="md-ellipsis">
+      EU AI act
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#other-ai-acts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Other AI acts
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#emerging-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      Emerging issues
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1482,8 +1533,8 @@
 <h1 id="reliable-and-trustworthy-artificial-intelligence">Reliable and Trustworthy Artificial Intelligence</h1>
 <h2 id="general-notions">General notions</h2>
 <h3 id="l_p-norm"><span class="arithmatex">\(l_p\)</span>-norm</h3>
-<p>The similarity of two vectors <span class="arithmatex">\(x\)</span> and <span class="arithmatex">\(x'\)</span> is usually captured through an <span class="arithmatex">\(l_p\)</span> norm. In the following formula, 
-<span class="arithmatex">\(\epsilon\)</span> is a threshold of similarity that can be arbitrary. </p>
+<p>The similarity of two vectors <span class="arithmatex">\(x\)</span> and <span class="arithmatex">\(x'\)</span> is usually captured through an <span class="arithmatex">\(l_p\)</span> norm. In the following formula,
+<span class="arithmatex">\(\epsilon\)</span> is a threshold of similarity that can be arbitrary.</p>
 <div class="arithmatex">\[
 x \sim x' \; \mathrm{iff} \; ||x-x'||_p &lt; \epsilon
 \]</div>
@@ -1496,14 +1547,79 @@ component of the vector <span class="arithmatex">\(x\)</span>.</p>
 <ul>
 <li><span class="arithmatex">\(l_0\)</span>: adds up all changes. Counts, for example, the number of changed pixels in an image</li>
 <li><span class="arithmatex">\(l_2\)</span>: Euclidean distance between <span class="arithmatex">\(x\)</span> and <span class="arithmatex">\(x'\)</span></li>
-<li><span class="arithmatex">\(l_\infty\)</span>: maximum noise (change) added to any component of the vectors. The formula can be simplified as </li>
+<li><span class="arithmatex">\(l_\infty\)</span>: maximum noise (change) added to any component of the vectors. The formula can be simplified as</li>
 </ul>
 <div class="arithmatex">\[
 ||x-x'||_\infty = max(|x_1-x_1'|, ..., |x_n-x_n'|)
 \]</div>
 <p>The <span class="arithmatex">\(l_2\)</span>-norm is often used for attacks, but rarely for certification of models due to the difficulties that come
 with the quadratic nature of said norm. <span class="arithmatex">\(l_\infty\)</span> can be imagined as a box around the center point. It is also said
-to most naturally capture the human vision, and it is simpler to certify. </p>
+to most naturally capture the human vision, and it is simpler to certify.</p>
+<h2 id="regulations">Regulations</h2>
+<p>In the past couple of years, first regulations were introduced aiming to preserve a citizen's privacy regarding data
+collection done by many companies. In the coming years, bills will be introduced to add further regularization regarding
+AI and its use. Already, huge fines have been imposed regarding privacy.</p>
+<p>A huge part of the AI regulations require the system to have <strong>fairness</strong>. Discriminating systems are already in use.
+This is mostly due to biased data, or data missing out on minorities. Regulations define <strong>sensitive attributes</strong>, some
+even define <strong>fairness metrics</strong> making sure that systems do not discriminate.</p>
+<p>Further, <strong>explainability</strong> is required - the provider must be able to explain how a certain decision was reached.
+This is one point that gets often criticised: even human decisions are not always explainable, and the output of
+neural networks cannot be explained, although it is an open field in research.</p>
+<h3 id="gdpr">GDPR</h3>
+<p>GDPR (EU's bill for privacy) was not created for AI, but it applies to automated decision-making, thus it has also power
+over AI systems. It tries to minimize the data collected, and prevent it from being shared whilst AI systems always
+require more data. GDPR defines three data types:</p>
+<ul>
+<li>Personal data: data related to an identified or identifiable natural person</li>
+<li>Pseudo-anonymized data: personal data no longer related directly to a data subject. Additional information is required
+  to get to the data subject (e.g. through values replaced by references)</li>
+<li>Anonymized data: personal data that can no longer be related to the data subject. This is the only type of information
+  not subject to GDPR</li>
+</ul>
+<p>Further, it identifies the following privacy risks.</p>
+<ul>
+<li>Singling out: identifying a person by comparing known information about them with attributes in a different dataset</li>
+<li>Linkability: linking information form different data sets through some attribute (e.g. a person's address)</li>
+<li>Inference: estimating personal data from other attributes</li>
+</ul>
+<p>Possible counter measurements to the above risks include <em>federated learning</em>, <em>trusted execution environment</em>,
+<em>homomorphic encryption</em>, and <em>synthetic data</em>.</p>
+<p>Further, the following principles are required by the GDPR.</p>
+<ul>
+<li>Unlearning: a user has the right to be forgotten. We must thus be able to "remove" a training sample from a model.</li>
+<li>Data minimization: the training process must only use the data that is strictly necessary. The formalization of this
+  requirement is an open problem.</li>
+</ul>
+<h3 id="eu-ai-act">EU AI act</h3>
+<p>The EU AI act assesses risks of AI application, dividing the systems into four risk levels. Based on the risk level,
+different requirements are to be met.</p>
+<ul>
+<li><strong>Unacceptable risk</strong>: social scoring, distorting human behavior, real-time biometric data for law enforcement (face
+  recognition)</li>
+<li><strong>High risk</strong>: critical infrastructure, education access, employment, migration, justice</li>
+<li><strong>Limited risk</strong>: chatbots, video games, spam filters</li>
+<li><strong>Minimal or no risk</strong>: most other systems</li>
+</ul>
+<p>High risk systems require a risk management system, data governance, technical doc, record-keeping, transparency,
+human oversight, and good accuracy and robustness.</p>
+<h3 id="other-ai-acts">Other AI acts</h3>
+<p><strong>AI Bill of rights (US)</strong>: this foundation for upcoming regulations (e.g. Algorithmic Accountability Act) requires 
+people to be protected from safe and inefficient systems, they should not be discriminated, be protected from abusive
+data practices, know about automated systems in use, and have the option to opt out and have access to a human 
+alternative. </p>
+<p><strong>Digital Services Act (EU)</strong>: not explicit about AI, but AI is also affected. Aimed at large platforms, they are 
+required to be assessed by an independent third party regarding societal risks, they must have transparency reports
+on automated systems, and limit manipulative advertising platforms. </p>
+<p><strong>Recommendation Algorithms Regulation (CN)</strong>: regarding recommendation algorithms, users should have the right for 
+explanation, must be able to edit tags used for recommendation by themselves, addictive behavior should not be 
+encouraged, and preferences should not influence a different treatment. </p>
+<h3 id="emerging-issues">Emerging issues</h3>
+<ul>
+<li>Copyright: if copyrighted data is used for training, the output might be subject to a copyright infringement</li>
+<li>AI generators trained on sensitive data: models are trained on everything. They can then be used to generate sensitive
+  content.</li>
+<li>Large scale fake content</li>
+</ul>
 
 
 
@@ -1526,7 +1642,7 @@ to most naturally capture the human vision, and it is simpler to certify. </p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">January 10, 2024</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">January 12, 2024</span>
   </span>
 
     

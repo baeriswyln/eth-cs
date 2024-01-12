@@ -1400,14 +1400,20 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#regulations" class="md-nav__link">
+    <nav class="md-nav" aria-label="Synthetic data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#select-measure-generate" class="md-nav__link">
     <span class="md-ellipsis">
-      Regulations
+      Select-Measure-Generate
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1718,14 +1724,20 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#regulations" class="md-nav__link">
+    <nav class="md-nav" aria-label="Synthetic data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#select-measure-generate" class="md-nav__link">
     <span class="md-ellipsis">
-      Regulations
+      Select-Measure-Generate
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1777,7 +1789,7 @@ part of the dataset. The real model output can then be put through this classifi
 <p>(Model inversion/data extraction)</p>
 <p>In federated learning, we try to train a model on data comming from third parties clients that do not want to share their data.
 Insetad, the clients shair a <strong>training update</strong> without sending the data itself. These updates are collected on a central
-server and result in a global model. Even though the data never leaves the client, the updaets still contain information
+server and result in a global model. Even though the data never leaves the client, the updates still contain information
 regarding the data. A malicious server might be able to reconstruct the data based on the update.</p>
 <h3 id="fedsgd">FedSGD</h3>
 <p>In FedSGD, each client <span class="arithmatex">\(k\)</span> computes a gradient update <span class="arithmatex">\(g_k\)</span> based on a minibatch of their data <span class="arithmatex">\(\mathcal{D}_k\)</span> and sends
@@ -1795,15 +1807,15 @@ initialization, and then finding data that leads to the closest gradient updates
 <div class="arithmatex">\[
 \text{argmin}_{x^*} \; d(\nabla_\Theta\mathcal{L}(f_\Theta(x^*), y^*), g_k) + \alpha_{reg} \cdot \mathcal{R}(x^*)
 \]</div>
-<p>Where <span class="arithmatex">\(d\)</span> computes the distance between the reconstructed gradient and the true gradient, and <span class="arithmatex">\(\mathcal{R}\)</span> the domain-
-specific knowledge (what do we know about the data we try to uncover).</p>
+<p>Where <span class="arithmatex">\(d\)</span> computes the distance between the reconstructed gradient and the true gradient, and <span class="arithmatex">\(\mathcal{R}\)</span> the 
+domain-specific knowledge (what do we know about the data we try to uncover).</p>
 <p>Such attacks are fairly straight forward on images (continuous data), but are also possible on tabular data by using
 one-hot encodings on categorical features. The difficulty then lies in distinguishing good and bad reconstructions. To get
 some notion of reconstruction quality, a possibility is to have a series of random initializations, and create normalized
 histograms for each tabular cell. By measuring the <strong>entropy</strong> of the histograms, we can see if our reconstruction was
 probably correct. Low entropy means that the reconstruction is good.</p>
 <h3 id="fedavg-federated-averaging">FedAvg (federated averaging)</h3>
-<p>A more common setup includes an averaging process on the server. The client computes its gradients over multiple epochs.
+<p>A more common setup includes an averaging process on the server. The client computes its weights over multiple epochs.
 The server then averages the weight updates over all clients. The client could even add some randomness that should be
 canceled out in the global model. This method has the advantage of reducing the number of require communication rounds.</p>
 <p>The question now is if the weight updates do preserve privacy. The challenge for the attacker is that he is unable to
@@ -1814,7 +1826,7 @@ some guessed input samples. The
 distance between the final simulated weight and the weight update is then fed to automatic differentiation which is
 used to optiize the reconstruction of the data points.</p>
 <p>An <strong>Order-invariant prior</strong> is used to enforce that the set of reconstructed images in different epochs are identical.
-This is done by adding a weak prior <span class="arithmatex">\(\mathcal{R}\)</span> that averages the input per epoch accros epochs.</p>
+This is done by adding a weak prior <span class="arithmatex">\(\mathcal{R}\)</span> that averages the input per epoch across epochs.</p>
 <div class="arithmatex">\[
 \text{argmin}_{\tilde{x}^k} d(\tilde{\Theta}^k, \Theta^k) + \alpha_{reg} \cdot \frac{1}{E^2}\sum_{e_1,e_2}
 \mathcal{R}(g(\{\tilde{x}^k_{e1,b}\}), g(\{\tilde{x}^k_{e_2,b}\}))
@@ -1876,16 +1888,56 @@ function <span class="arithmatex">\(f\)</span> is defined as</p>
 <div class="arithmatex">\[
 f(x) = arg\max_j\{n_j(x) + Lap(0, 2/\varepsilon)\}
 \]</div>
-<p>One such query s (<span class="arithmatex">\(\varepsilon, 0)-DP. For <span class="arithmatex">\(T\)</span> queries, this degrades to (\)</span>T\varepsilon, 0$)-DP.</p>
+<p>One such query is (<span class="arithmatex">\(\varepsilon, 0\)</span>)-DP. For <span class="arithmatex">\(T\)</span> queries, this degrades to (<span class="arithmatex">\(T\varepsilon, 0\)</span>)-DP.</p>
+<p>When compared with DP-SGD, PATE can be used on any algorithm, and achieves better results (<span class="arithmatex">\(2.04, 10^{-5}\)</span>-DP for 98% accuracy
+on MNIST, compared to ($8,10^{-5})-DP with 97% accuracy). </p>
 <p><strong>FedSGD</strong>: each client clips the gradient, and adds some gaussian noise to its computed gradient.</p>
 <p><strong>FedAVG</strong>: each client clips its final weights, and then adds some gaussian noise before sending them to the server.</p>
 <h2 id="synthetic-data">Synthetic data</h2>
-<h2 id="regulations">Regulations</h2>
-<p>Regulations are put in place to have more privacy.</p>
-<ul>
-<li>Unlearning: a user has the right to be forgotten (GDPR). We must thus be able to "remove" a training sample from a model</li>
-<li>Data minimization: the training process must only use the data that is strictily necessary.</li>
-</ul>
+<p>Private sensitive data sets cannot be shared with the public due to privacy regulations. However, in some case this 
+might still be interesting: e.g. a hospital would like to share data to research groups. In such cases, a new data set
+can be generated that contains only synthetic data and has provable differential privacy guarantees. </p>
+<p>The key challenge here is to generate data having similar statistical properties to the original data but preserving 
+privacy. </p>
+<h3 id="select-measure-generate">Select-Measure-Generate</h3>
+<p>We define a three-step procedure for generating synthetic data:</p>
+<ol>
+<li><strong>Select</strong>: we define <em>marginal queries</em> we want to measure. The output data should have similar properties according
+   to these queries. They can be 1-way or 2-way.</li>
+<li><strong>Measure</strong>: we measure the marginal queries using differential privacy by adding some noise (as seen in differential
+   privacy).</li>
+<li><strong>Generate</strong>: we generate the data</li>
+</ol>
+<p>A <strong>Marginal</strong> is defined on a subset of attributes <span class="arithmatex">\(C \subseteq \mathcal{A}\)</span>. For each of these attributes, we compute
+how many entries have some specific value for this attribute. E.g. the 1-way marginal for an attribute <em>nationality</em>
+counts how many entries in the original dataset have a specific nationality. In SQL, this could be compared to a 
+<code>GROUP BY 'Nationality'</code> with the aggregation function <code>COUNT</code>. </p>
+<p>2-Way marginals are quite similar, but they also cover relationship between two marginals. This can be compared with a
+<code>GROUP BY</code> on two columns. </p>
+<p>Each such marginal has a <strong>sensitivity</strong> of <span class="arithmatex">\(1\)</span>, because adding one entry will only change a single entry in the output.</p>
+<p>The attribute selection can be done automatically by generating a graph based on the data. Each variable defines a 
+vertex, and the weight of the edges connecting these vertices is defined by the mutual dependency <span class="arithmatex">\(I(X,Y)\)</span>. The 
+<strong>Chow-Liu algorithm</strong> then computes the maximum spanning tree of this graph. </p>
+<div class="arithmatex">\[
+I(X,Y) = \sum_x \sum_y \frac{p(X=x,Y=y)}{p(X=x)p(Y=y)}
+\]</div>
+<p>Let's say the following graph results from above step. </p>
+<figure>
+<p><img alt="" src="../../../diagrams/d/rtai/syndata.png" /></p>
+</figure>
+<p>We can now generate data based on the following probabilities. This is called <strong>belief propagation</strong>.</p>
+<div class="arithmatex">\[\begin{align}
+&amp;p(\text{Nat}=N, \text{Smoke}=S, \text{Kids}=K) 
+= &amp;p(\text{Nat}=N) p(\text{Smoke}=S | \text{Nat}=N)p(\text{Kids}=K|\text{Nat}=N)
+\end{align}\]</div>
+<div class="admonition danger">
+<p class="admonition-title">Privacy</p>
+<p>Using the above approach, we have a generation process. However, the generated data is not yet private. The marginal 
+selection must be differential private, and the measurement require some level of noise.</p>
+</div>
+<p>During the selection process, the MST must be estimated in a differentially private manner. This is done by using 
+<strong>exponential mechanism</strong> to estimate the maximum weight edge between two connected components. In the measure phase,
+we simply add some gaussian noise.</p>
 
 
 
@@ -1908,7 +1960,7 @@ f(x) = arg\max_j\{n_j(x) + Lap(0, 2/\varepsilon)\}
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">January 11, 2024</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">January 12, 2024</span>
   </span>
 
     
