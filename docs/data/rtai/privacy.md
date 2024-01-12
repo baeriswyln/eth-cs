@@ -42,7 +42,7 @@ part of the dataset. The real model output can then be put through this classifi
 
 In federated learning, we try to train a model on data comming from third parties clients that do not want to share their data.
 Insetad, the clients shair a **training update** without sending the data itself. These updates are collected on a central
-server and result in a global model. Even though the data never leaves the client, the updaets still contain information
+server and result in a global model. Even though the data never leaves the client, the updates still contain information
 regarding the data. A malicious server might be able to reconstruct the data based on the update.
 
 ### FedSGD
@@ -65,8 +65,8 @@ $$
 \text{argmin}_{x^*} \; d(\nabla_\Theta\mathcal{L}(f_\Theta(x^*), y^*), g_k) + \alpha_{reg} \cdot \mathcal{R}(x^*)
 $$
 
-Where $d$ computes the distance between the reconstructed gradient and the true gradient, and $\mathcal{R}$ the domain-
-specific knowledge (what do we know about the data we try to uncover).
+Where $d$ computes the distance between the reconstructed gradient and the true gradient, and $\mathcal{R}$ the 
+domain-specific knowledge (what do we know about the data we try to uncover).
 
 Such attacks are fairly straight forward on images (continuous data), but are also possible on tabular data by using
 one-hot encodings on categorical features. The difficulty then lies in distinguishing good and bad reconstructions. To get
@@ -76,7 +76,7 @@ probably correct. Low entropy means that the reconstruction is good.
 
 ### FedAvg (federated averaging)
 
-A more common setup includes an averaging process on the server. The client computes its gradients over multiple epochs.
+A more common setup includes an averaging process on the server. The client computes its weights over multiple epochs.
 The server then averages the weight updates over all clients. The client could even add some randomness that should be
 canceled out in the global model. This method has the advantage of reducing the number of require communication rounds.
 
@@ -90,7 +90,7 @@ distance between the final simulated weight and the weight update is then fed to
 used to optiize the reconstruction of the data points.
 
 An **Order-invariant prior** is used to enforce that the set of reconstructed images in different epochs are identical.
-This is done by adding a weak prior $\mathcal{R}$ that averages the input per epoch accros epochs.
+This is done by adding a weak prior $\mathcal{R}$ that averages the input per epoch across epochs.
 
 $$
 \text{argmin}_{\tilde{x}^k} d(\tilde{\Theta}^k, \Theta^k) + \alpha_{reg} \cdot \frac{1}{E^2}\sum_{e_1,e_2}
@@ -172,7 +172,10 @@ $$
 f(x) = arg\max_j\{n_j(x) + Lap(0, 2/\varepsilon)\}
 $$
 
-One such query s ($\varepsilon, 0)-DP. For $T$ queries, this degrades to ($T\varepsilon, 0$)-DP.
+One such query is ($\varepsilon, 0$)-DP. For $T$ queries, this degrades to ($T\varepsilon, 0$)-DP.
+
+When compared with DP-SGD, PATE can be used on any algorithm, and achieves better results ($2.04, 10^{-5}$-DP for 98% accuracy
+on MNIST, compared to ($8,10^{-5})-DP with 97% accuracy). 
 
 **FedSGD**: each client clips the gradient, and adds some gaussian noise to its computed gradient.
 
@@ -180,9 +183,59 @@ One such query s ($\varepsilon, 0)-DP. For $T$ queries, this degrades to ($T\var
 
 ## Synthetic data
 
-## Regulations
+Private sensitive data sets cannot be shared with the public due to privacy regulations. However, in some case this 
+might still be interesting: e.g. a hospital would like to share data to research groups. In such cases, a new data set
+can be generated that contains only synthetic data and has provable differential privacy guarantees. 
 
-Regulations are put in place to have more privacy.
+The key challenge here is to generate data having similar statistical properties to the original data but preserving 
+privacy. 
 
-- Unlearning: a user has the right to be forgotten (GDPR). We must thus be able to "remove" a training sample from a model
-- Data minimization: the training process must only use the data that is strictily necessary.
+### Select-Measure-Generate
+
+We define a three-step procedure for generating synthetic data:
+
+1. **Select**: we define _marginal queries_ we want to measure. The output data should have similar properties according
+   to these queries. They can be 1-way or 2-way.
+2. **Measure**: we measure the marginal queries using differential privacy by adding some noise (as seen in differential
+   privacy).
+3. **Generate**: we generate the data
+
+A **Marginal** is defined on a subset of attributes $C \subseteq \mathcal{A}$. For each of these attributes, we compute
+how many entries have some specific value for this attribute. E.g. the 1-way marginal for an attribute _nationality_
+counts how many entries in the original dataset have a specific nationality. In SQL, this could be compared to a 
+`GROUP BY 'Nationality'` with the aggregation function `COUNT`. 
+
+2-Way marginals are quite similar, but they also cover relationship between two marginals. This can be compared with a
+`GROUP BY` on two columns. 
+
+Each such marginal has a **sensitivity** of $1$, because adding one entry will only change a single entry in the output.
+
+The attribute selection can be done automatically by generating a graph based on the data. Each variable defines a 
+vertex, and the weight of the edges connecting these vertices is defined by the mutual dependency $I(X,Y)$. The 
+**Chow-Liu algorithm** then computes the maximum spanning tree of this graph. 
+
+$$
+I(X,Y) = \sum_x \sum_y \frac{p(X=x,Y=y)}{p(X=x)p(Y=y)}
+$$
+
+Let's say the following graph results from above step. 
+
+<figure markdown>
+![](../../diagrams/d/rtai/syndata.png)
+</figure>
+
+We can now generate data based on the following probabilities. This is called **belief propagation**.
+
+\begin{align}
+&p(\text{Nat}=N, \text{Smoke}=S, \text{Kids}=K) 
+= &p(\text{Nat}=N) p(\text{Smoke}=S | \text{Nat}=N)p(\text{Kids}=K|\text{Nat}=N)
+\end{align}
+
+!!! danger "Privacy"
+
+    Using the above approach, we have a generation process. However, the generated data is not yet private. The marginal 
+    selection must be differential private, and the measurement require some level of noise.
+
+During the selection process, the MST must be estimated in a differentially private manner. This is done by using 
+**exponential mechanism** to estimate the maximum weight edge between two connected components. In the measure phase,
+we simply add some gaussian noise.

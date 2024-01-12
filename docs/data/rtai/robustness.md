@@ -611,7 +611,7 @@ g(x + \delta) = c_A \quad \forall || \delta||_2 < R_x
 $$
 
 $$
-R_x := \frac{\sigma}{2}(\Phi^{-1}(\underline{p_{A,x}})- \Phi{^-1}(\overline{p_{B,x}})
+R_x := \frac{\sigma}{2}(\Phi^{-1}(\underline{p_{A,x}})- \Phi{^-1}(\overline{p_{B,x}}))
 $$
 
 with $\Phi^{-1}$ the inverse of the standard Gaussian CDF.

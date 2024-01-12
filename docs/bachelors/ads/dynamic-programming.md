@@ -21,9 +21,10 @@ the same value can simply return the value of a table lookup.
     Please note that the `memo` array is a global array whose values is not stored in the function. 
     
     ```go
+    memo[1] = 1 // base case 1
+    memo[2] = 1 // base case 2
     func fib(n) {
-        memo[n] = 1
-        if n > 2 {
+        if n > 2 && memo[n] == 0 {
             memo[n] = fib(n-1) + fib(n-2)
         }
         
