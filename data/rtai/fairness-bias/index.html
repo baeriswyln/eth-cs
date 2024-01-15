@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.3">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.4">
     
     
       
@@ -1313,6 +1313,48 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Individual Fairness">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      Issues
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fair-representation-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fair Representation Learning
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lcifr" class="md-nav__link">
+    <span class="md-ellipsis">
+      LCIFR
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lassi" class="md-nav__link">
+    <span class="md-ellipsis">
+      LASSI
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1511,6 +1553,48 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Individual Fairness">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      Issues
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fair-representation-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fair Representation Learning
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lcifr" class="md-nav__link">
+    <span class="md-ellipsis">
+      LCIFR
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lassi" class="md-nav__link">
+    <span class="md-ellipsis">
+      LASSI
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1550,7 +1634,34 @@
 
 
 <h1 id="fairness">Fairness</h1>
+<p>Our world is biased towards men of majority communities. This is often reflected in training data as underrepresented
+groups, with a lack of demographic diversity. If not treated carefully, AIs and ML models will reflect this bias in
+its results, leading to more unfairness.</p>
+<p>This chapter focuses on how to combat unfair models through careful modeling and data usage. The task of getting
+fair models is task and domain specific.</p>
+<p>Sometimes, one tries to combat unfairness by removing some attributes: <strong>fairness by obscurity</strong> (through unawareness).
+However, this is not very successful, as it is often possible to predict the removed attribute through other
+non-sensitive features.</p>
+<p>Based on the features <span class="arithmatex">\(X \in \mathcal{X}\)</span> describing the data, we want to predict the outcome (target) variable <span class="arithmatex">\(Y\)</span>.
+The prediction is done through the learning of a (binary) classifier <span class="arithmatex">\(h: \mathcal{X} \to \mathcal{Y}\)</span> or a model
+<span class="arithmatex">\(M: \mathcal{X} \to \Delta(\mathcal{Y})\)</span> mapping to probability distributions. The prediction is defined as
+<span class="arithmatex">\(\hat{Y} = h(X)\)</span>. Additionally, we introduce a random variable <span class="arithmatex">\(G\)</span> encoding membership status in a sensitive class.</p>
+<p>Note, that a model satisfying group fairness does not automatically satisfy individual fairness. </p>
 <h2 id="individual-fairness">Individual Fairness</h2>
+<p>Individual fairness (fairness through awareness) defines that two similar inputs produce a similar output. We require
+new formal definitions to measure the similarity of inputs and outputs.</p>
+<ul>
+<li>Input similarity: <span class="arithmatex">\(\mu: \mathcal{X} \times \mathcal{X} \to \mathbb{R}\)</span></li>
+<li>Output distribution similarity: <span class="arithmatex">\(\phi: \Delta(\mathcal{Y}) \times \Delta(\mathcal{Y}) \to \mathbb{R}\)</span></li>
+</ul>
+<p>Additionally, we define the <strong>Lipschitz mapping</strong>: The <span class="arithmatex">\((\mu,\phi)\)</span>-Lipschitz property is satisfied, if for every <span class="arithmatex">\(x,y
+\in \mathcal{X}\)</span>, we have <span class="arithmatex">\(D\big(M(x), M(y)\big) \leq d(x,y)\)</span>.</p>
+<p>Individual fairness can be reformulated for binary input and output metrics as $\phi(x, y) \Rightarrow \mu(M(x), M(x'))</p>
+<p>The key challenge here is to find suitable functions for <span class="arithmatex">\(d\)</span> and <span class="arithmatex">\(D\)</span>.</p>
+<h3 id="issues">Issues</h3>
+<h3 id="fair-representation-learning">Fair Representation Learning</h3>
+<h3 id="lcifr">LCIFR</h3>
+<h3 id="lassi">LASSI</h3>
 <h2 id="group-fairness">Group Fairness</h2>
 <h2 id="counterfactual-fairness">Counterfactual Fairness</h2>
 
@@ -1707,10 +1818,10 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.instant", "navigation.tabs", "navigation.top", "navigation.indexes", "navigation.footer", "search.suggest", "search.highlight"], "search": "../../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.instant", "navigation.tabs", "navigation.top", "navigation.indexes", "navigation.footer", "search.suggest", "search.highlight"], "search": "../../../assets/javascripts/workers/search.c011b7c0.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.d7c377c4.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.7389ff0e.min.js"></script>
       
         <script src="../../../javascripts/mathjax.js"></script>
       
