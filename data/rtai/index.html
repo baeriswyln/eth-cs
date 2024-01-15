@@ -1462,6 +1462,39 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#logic-in-deep-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      Logic in Deep Learning
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Logic in Deep Learning">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#querying" class="md-nav__link">
+    <span class="md-ellipsis">
+      Querying
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#training" class="md-nav__link">
+    <span class="md-ellipsis">
+      Training
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#regulations" class="md-nav__link">
     <span class="md-ellipsis">
       Regulations
@@ -1555,6 +1588,21 @@ component of the vector <span class="arithmatex">\(x\)</span>.</p>
 <p>The <span class="arithmatex">\(l_2\)</span>-norm is often used for attacks, but rarely for certification of models due to the difficulties that come
 with the quadratic nature of said norm. <span class="arithmatex">\(l_\infty\)</span> can be imagined as a box around the center point. It is also said
 to most naturally capture the human vision, and it is simpler to certify.</p>
+<h2 id="logic-in-deep-learning">Logic in Deep Learning</h2>
+<p>Logic can be translated such that it can be "understood" by neural nets. While querying, we can set some parameters
+that the output should satisfy. In fact, searching for adversarial examples is a special case of such a query with 
+logical constraints. Furthermore, it is possible to include logic already in the training process. If applied correctly, 
+this can improve accuracy. </p>
+<h3 id="querying">Querying</h3>
+<p>In this case, we start with a trained network, and we look for inputs that satisfy specific properties. The following
+standard logic can be used: </p>
+<ul>
+<li>Logical operators <span class="arithmatex">\(\not, \neq, \land, \lor, \leq, \geq, &lt;, &gt;, \Rightarrow\)</span></li>
+<li>Functions f: <span class="arithmatex">\(\mathbb{R}^m \to \mathbb{R}^n\)</span></li>
+<li>Variables, constants</li>
+<li>Arithmetic expressions</li>
+</ul>
+<h3 id="training">Training</h3>
 <h2 id="regulations">Regulations</h2>
 <p>In the past couple of years, first regulations were introduced aiming to preserve a citizen's privacy regarding data
 collection done by many companies. In the coming years, bills will be introduced to add further regularization regarding
@@ -1642,7 +1690,7 @@ encouraged, and preferences should not influence a different treatment. </p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">January 12, 2024</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">January 15, 2024</span>
   </span>
 
     
