@@ -32,6 +32,25 @@ The $l_2$-norm is often used for attacks, but rarely for certification of models
 with the quadratic nature of said norm. $l_\infty$ can be imagined as a box around the center point. It is also said
 to most naturally capture the human vision, and it is simpler to certify.
 
+## Logic in Deep Learning
+
+Logic can be translated such that it can be "understood" by neural nets. While querying, we can set some parameters
+that the output should satisfy. In fact, searching for adversarial examples is a special case of such a query with 
+logical constraints. Furthermore, it is possible to include logic already in the training process. If applied correctly, 
+this can improve accuracy. 
+
+### Querying
+
+In this case, we start with a trained network, and we look for inputs that satisfy specific properties. The following
+standard logic can be used: 
+
+- Logical operators $\not, \neq, \land, \lor, \leq, \geq, <, >, \Rightarrow$
+- Functions f: $\mathbb{R}^m \to \mathbb{R}^n$
+- Variables, constants
+- Arithmetic expressions
+
+### Training
+
 ## Regulations
 
 In the past couple of years, first regulations were introduced aiming to preserve a citizen's privacy regarding data

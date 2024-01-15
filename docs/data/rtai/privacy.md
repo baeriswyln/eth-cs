@@ -227,7 +227,7 @@ Let's say the following graph results from above step.
 We can now generate data based on the following probabilities. This is called **belief propagation**.
 
 \begin{align}
-&p(\text{Nat}=N, \text{Smoke}=S, \text{Kids}=K) 
+&p(\text{Nat}=N, \text{Smoke}=S, \text{Kids}=K) \\
 = &p(\text{Nat}=N) p(\text{Smoke}=S | \text{Nat}=N)p(\text{Kids}=K|\text{Nat}=N)
 \end{align}
 
