@@ -1317,9 +1317,9 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#issues" class="md-nav__link">
+  <a href="#robustness" class="md-nav__link">
     <span class="md-ellipsis">
-      Issues
+      Robustness
     </span>
   </a>
   
@@ -1364,14 +1364,38 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#counterfactual-fairness" class="md-nav__link">
+    <nav class="md-nav" aria-label="Group Fairness">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#laftr" class="md-nav__link">
     <span class="md-ellipsis">
-      Counterfactual Fairness
+      LAFTR
     </span>
   </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fnf" class="md-nav__link">
+    <span class="md-ellipsis">
+      FNF
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fare" class="md-nav__link">
+    <span class="md-ellipsis">
+      FARE
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1557,9 +1581,9 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#issues" class="md-nav__link">
+  <a href="#robustness" class="md-nav__link">
     <span class="md-ellipsis">
-      Issues
+      Robustness
     </span>
   </a>
   
@@ -1604,14 +1628,38 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#counterfactual-fairness" class="md-nav__link">
+    <nav class="md-nav" aria-label="Group Fairness">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#laftr" class="md-nav__link">
     <span class="md-ellipsis">
-      Counterfactual Fairness
+      LAFTR
     </span>
   </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fnf" class="md-nav__link">
+    <span class="md-ellipsis">
+      FNF
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fare" class="md-nav__link">
+    <span class="md-ellipsis">
+      FARE
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1646,24 +1694,240 @@ non-sensitive features.</p>
 The prediction is done through the learning of a (binary) classifier <span class="arithmatex">\(h: \mathcal{X} \to \mathcal{Y}\)</span> or a model
 <span class="arithmatex">\(M: \mathcal{X} \to \Delta(\mathcal{Y})\)</span> mapping to probability distributions. The prediction is defined as
 <span class="arithmatex">\(\hat{Y} = h(X)\)</span>. Additionally, we introduce a random variable <span class="arithmatex">\(G\)</span> encoding membership status in a sensitive class.</p>
-<p>Note, that a model satisfying group fairness does not automatically satisfy individual fairness. </p>
+<p>Note, that a model satisfying group fairness does not automatically satisfy individual fairness.</p>
 <h2 id="individual-fairness">Individual Fairness</h2>
 <p>Individual fairness (fairness through awareness) defines that two similar inputs produce a similar output. We require
 new formal definitions to measure the similarity of inputs and outputs.</p>
 <ul>
-<li>Input similarity: <span class="arithmatex">\(\mu: \mathcal{X} \times \mathcal{X} \to \mathbb{R}\)</span></li>
-<li>Output distribution similarity: <span class="arithmatex">\(\phi: \Delta(\mathcal{Y}) \times \Delta(\mathcal{Y}) \to \mathbb{R}\)</span></li>
+<li>Input similarity: <span class="arithmatex">\(\phi: \mathcal{X} \times \mathcal{X} \to \mathbb{R}\)</span></li>
+<li>Output distribution similarity: <span class="arithmatex">\(\mu: \Delta(\mathcal{Y}) \times \Delta(\mathcal{Y}) \to \mathbb{R}\)</span></li>
 </ul>
 <p>Additionally, we define the <strong>Lipschitz mapping</strong>: The <span class="arithmatex">\((\mu,\phi)\)</span>-Lipschitz property is satisfied, if for every <span class="arithmatex">\(x,y
-\in \mathcal{X}\)</span>, we have <span class="arithmatex">\(D\big(M(x), M(y)\big) \leq d(x,y)\)</span>.</p>
-<p>Individual fairness can be reformulated for binary input and output metrics as $\phi(x, y) \Rightarrow \mu(M(x), M(x'))</p>
-<p>The key challenge here is to find suitable functions for <span class="arithmatex">\(d\)</span> and <span class="arithmatex">\(D\)</span>.</p>
-<h3 id="issues">Issues</h3>
+\in \mathcal{X}\)</span>, we have <span class="arithmatex">\(\mu\big(M(x), M(y)\big) \leq \phi(x,y)\)</span>.</p>
+<p>Individual fairness can be reformulated for binary input and output metrics as <span class="arithmatex">\(\phi(x, y) \Rightarrow \mu(M(x), M(x'))\)</span></p>
+<h3 id="robustness">Robustness</h3>
+<p>The key challenge is to find suitable functions for <span class="arithmatex">\(\mu\)</span> and <span class="arithmatex">\(\phi\)</span>, as well as trying to train a model such that the
+individual fairness is satisfied, without the accuracy being sacrificed. And what is also important: how can we
+<em>guarantee</em> a certain degree of fairness?</p>
+<p>We define the following metrics:</p>
+<ul>
+<li><span class="arithmatex">\(\phi(x, y) := (x - y)^TS(x-y)\)</span> with <span class="arithmatex">\(S\)</span> a symmetric covariance matrix</li>
+<li><span class="arithmatex">\(\mu\big(M(x), M(y)\big) := [M(x) \neq M(y)]\)</span></li>
+<li>Mahalanobis norm <span class="arithmatex">\(||x||_S := \sqrt{x^TSx}\)</span></li>
+</ul>
+<p>Using the Lipschitz property, we find the following (<span class="arithmatex">\(L &gt; 0\)</span> being the Lipschitz constant).</p>
+<div class="arithmatex">\[\begin{align}
+\mu\big(M(x), M(y)\big) &amp;\leq L\phi(x,y)&amp;\\
+[M(x) \neq M(y)] &amp;\leq L||x - x'||_S^2 &amp;&amp;\quad \forall y\\
+||x - y||^2_S &amp;&lt; \frac{1}{L} \Rightarrow M(x) = M(y) &amp;&amp;\quad \forall y\\
+M(x) &amp;= M(x+\delta) &amp;&amp;\quad \forall \delta \text{ with } ||\delta||_S^2 &lt; \frac{1}{L}\\
+M(x) &amp;= M(x+\delta) &amp;&amp;\quad \forall \delta \text{ with } ||\delta||_S &lt; \frac{1}{\sqrt{L}}
+\end{align}\]</div>
+<p>The last line can be rephrased as: <span class="arithmatex">\(M\)</span> needs to be robust to adversarial perturbations of magnitudes up to
+<span class="arithmatex">\(\frac{1}{\sqrt{L}}\)</span> under the Mahalanobis norm. Using a suitable similarity metric, we can now use known techniques
+for robustness certification.</p>
 <h3 id="fair-representation-learning">Fair Representation Learning</h3>
+<p>In fair representation learning, the training process is partitioned into three parts. This leads to a modular system,
+often being more efficient than alternatives. It can also be used if the data provider is not interested in providing
+a fair data set. However, the performance tradeoff is harder to manage, and it might lead to overconfidence in the
+fairness, and we have no provable certificates.</p>
+<p>The <strong>Data Regulator</strong> defines fairness criteria and data sources. He does also the audits of the results.</p>
+<p>The <strong>Data Producer</strong> takes the requirements of the regulator, and applies them on the dataset using his encoder
+<span class="arithmatex">\(f_\theta: \mathbb{R}^n \to \mathbb{R}^k\)</span>.</p>
+<p>Finally, the <strong>Data Consumer</strong> uses the encoded data, and trains his predictors <span class="arithmatex">\(h_\psi: \mathbb{R}^k \to \mathbb{R}^o\)</span>.
+The design of this process allows the consumer to completely ignore the fairness aspect.</p>
 <h3 id="lcifr">LCIFR</h3>
+<p>As the name suggests, the <strong>Learning certified individually fair representations</strong> (LCIFR) framework adds
+certifiability to the fairness, while retaining the modularity.</p>
+<p>The <strong>Data Regulator</strong> defines logical constraints for the input similarity, which are mostly domain-specific. This
+<em>captures categorical features exactly</em>. These similarity metrics lead to a set <span class="arithmatex">\(S_\phi(x)\)</span> of inputs that are all
+similar to <span class="arithmatex">\(x\)</span>. He requires all values from this set to be classified equally.</p>
+<p>The <strong>Data Producer</strong> translates the logical constraints for minimization, and then trains his encoder <span class="arithmatex">\(f_\theta\)</span> to
+map similar points close together. We have the encoder constraint <span class="arithmatex">\(\phi(x,y) \Rightarrow ||f_\theta(x) - f_\theta(y)||
+_\infty \leq \delta\)</span> that we need to translate into a logical constraint. Using known logical transformations, we arrive
+at (<span class="arithmatex">\(\omega(x,y) = ||f_\theta(x) - f_\theta(y)||_\infty \leq \delta)\)</span></p>
+<div class="arithmatex">\[
+L(\neg \phi) \cdot L(\omega)
+\]</div>
+<p>using the function <span class="arithmatex">\(L\)</span> for translation of logical functions. Further, we can have</p>
+<div class="arithmatex">\[
+L(\omega)(x,y) = \max\{||f_\theta(x)- f_\theta(y)||_\infty - \delta, 0\}
+\]</div>
+<p>These translations result in a <strong>differentiable loss function</strong>, and can be used in the following functions where we
+search for a good encoder <span class="arithmatex">\(f_\theta\)</span> that maximizes the probability that the fairness is satisfied (<span class="arithmatex">\(\phi \Rightarrow
+\omega\)</span>). In a first step, we require a counterexample.</p>
+<div class="arithmatex">\[
+x^* = \arg\min_{y \in S_\phi(x)}L(\neg(\phi \Rightarrow \omega))(x,y)
+\]</div>
+<p>Then, we find the parameters <span class="arithmatex">\(\theta\)</span> that minimize the loss at <span class="arithmatex">\(x^*\)</span> regarding the logical constraints.</p>
+<div class="arithmatex">\[
+\arg\min_\theta E_{x\sim D}[L(\phi \Rightarrow \omega)(x,x^*)]
+\]</div>
+<p>Additionally, it is also possible to train a classifier <span class="arithmatex">\(q\)</span> making sure that the fairness does not cause a too large
+hit in accuracy. Using a classification loss <span class="arithmatex">\(L_C\)</span> and a fairness loss <span class="arithmatex">\(L_F\)</span> (obtained through above steps), we
+arrive at the following final optimization problem.</p>
+<div class="arithmatex">\[
+\arg\min_{f_\theta, q} E_{x,y}[L_C\Big(q\big(f_\theta(x)\big), y\Big) + \gamma L_f\big(x, f_\theta(x)\big)]
+\]</div>
+<p>The output is a bounding box of radius <span class="arithmatex">\(\delta\)</span> that are provably similar. The <strong>Data Consumer</strong>'s task is now pretty
+easy. He must classify all values in this region to the same output using a standard optimization.</p>
+<div class="arithmatex">\[
+\arg\min_\psi E_{z \sim D_z} [\max_{\pi\in[\pm \delta]} L_C\big(h_\psi(z + \pi), y)]
+\]</div>
+<p>The remaining issues regarding this approach are that they are not usable on <em>high-dimensional</em> datasets such as images,
+as the similarity cannot be measured through the features (pixels). Additionally, the techniques do not scale to
+real-world models.</p>
 <h3 id="lassi">LASSI</h3>
+<p>The <strong>Latent space smoothing for individually fair representations</strong> frameworks extends on LCIFR by making it suitable
+for high-dimensional inputs. Concretely, it allows the definition of attribute vectors for features of a data entry.
+Such an attribute vector could be a specific hair color. Using a generative model, such an attribute can be varied
+continuously to specify similar inputs.</p>
+<p class="annotate">The data producer uses <strong>center smoothing</strong>(1) to cluster similar points according to the defined feature vectors with a
+high probability of <span class="arithmatex">\(1 - \alpha_{cs}\)</span>. The data consumer uses <strong>randomized smoothing</strong> to certify that all points within
+a certain radius get classified to the same output with a high probability of <span class="arithmatex">\(1-\alpha_{rs}\)</span>.</p>
+<ol>
+<li>Extension to randomized smoothing for multidimensional regression computing a sound upper bound <span class="arithmatex">\(d_{cs}\)</span> on the
+   <span class="arithmatex">\(l_2\)</span>-ball of the smoothed function in the ball of radius <span class="arithmatex">\(\epsilon\)</span> with a center point <span class="arithmatex">\(z\)</span>. This ball contains at
+   least half of the points <span class="arithmatex">\(r_i \sim R(z + N(0, \sigma^2_{cs}I))\)</span>.</li>
+</ol>
+<p>One downside of this technique is that the fairness certificate depends heavily on the generative model. The similarity
+set might not include all points perceived as similar to the original input <span class="arithmatex">\(x\)</span>.</p>
 <h2 id="group-fairness">Group Fairness</h2>
-<h2 id="counterfactual-fairness">Counterfactual Fairness</h2>
+<p>In group fairness, we are more concerned on fairness on a distributional level. This means that we could be unfair
+towards one specific individual without losing group fairness. In general, we have three different constraints:</p>
+<ul>
+<li><strong>Demographic parity</strong>: The probability for a specific output is equal among two groups differing in a protected
+  attribute. <span class="arithmatex">\(\mathbb{P}(\hat{Y} = 1 | G = 0) = \mathbb{P}(\hat Y = 1 | G = 1)\)</span></li>
+<li><strong>Equal odds</strong>: The probability for a specific output is equal among two groups, depending on the true output.
+  <span class="arithmatex">\(\mathbb{P}(\hat{Y} = 1 | Y=0, G = 0) = \mathbb{P}(\hat Y = 1 | Y=0, G = 1)\)</span> and
+  <span class="arithmatex">\(\mathbb{P}(\hat{Y} = 1 | Y=1, G = 0) = \mathbb{P}(\hat Y = 1 | Y=1, G = 1)\)</span></li>
+<li><strong>Equal opportunity</strong>: The probability for a specific output is equal among two groups, where the predicted output
+  equals the true output. <span class="arithmatex">\(\mathbb{P}(\hat{Y} = 1 | Y=1, G = 0) = \mathbb{P}(\hat Y = 1 | Y=1, G = 1)\)</span></li>
+</ul>
+<p>There are three general techniques to guarantee the group fairness:</p>
+<ul>
+<li><strong>Pre-processing</strong> (Fair Representation Learning FRL): The data is transformed such that any classifier trained on
+  said data is faire. Any model can be
+  used to make prediction, and there is no need to know the sensitive attributes. However, accuracy might be overly
+  sacrificed, and malicious predictors might try hard to discriminate. We must thus check for the worst case classifier.</li>
+<li><strong>In-training</strong>: Brings the best tradeoff between fairness and accuracy, and we need no access at test time to
+  protected attributes. However, It is very expensive, requires access to the training pipeline, and the solution is
+  individual to each model. A possibility is to add a <em>demographic parity</em> constraint to the loss calculation of the
+  model.</li>
+<li><strong>Post-processing</strong>: This efficient method works for any classifier. However, it requires test-time access to
+  sensitive attributes, and it is not very flexible regarding the fairness/accuracy tradeoff. A possible approach is to
+  modify the thresholds for the classification, making sure that all protected groups are treated equally.</li>
+</ul>
+<p>The techniques discussed in the following chapters all focus on the <em>pre-processing</em> technique. The following notations
+well be of importance.</p>
+<ul>
+<li>Data <span class="arithmatex">\((x, s) \in \mathbb{R}^d \times \{0,1\}\)</span> with <span class="arithmatex">\(x\in X\)</span> the input and <span class="arithmatex">\(s\)</span> the sensitive group membership</li>
+<li>Encoder <span class="arithmatex">\(f: \mathbb{R}^d \times \{0,1\} \to \mathbb{R}^{d'}\)</span>, resulting in a fair version <span class="arithmatex">\(f(x,s) = z \in Z\)</span></li>
+<li>Classifier <span class="arithmatex">\(g: \mathbb{R}^{d'} \to \{0,1\}\)</span> trained for binary prediction <span class="arithmatex">\((z \to y)\)</span></li>
+<li>Adversary <span class="arithmatex">\(h: \mathbb{R}^{d'} \to \{0,1\}\)</span> trying to guess the sensitive group membership <span class="arithmatex">\((z \to s)\)</span></li>
+<li><span class="arithmatex">\(Z_0\)</span>, <span class="arithmatex">\(Z_1\)</span> the distributions of the encoded data regarding the sensitive group membership.</li>
+<li><span class="arithmatex">\(p_0(z) := P(z | s = 0)\)</span>, <span class="arithmatex">\(p_1(z) := P(z | s = 1)\)</span> the densities of sensitive group membership.</li>
+</ul>
+<h3 id="laftr">LAFTR</h3>
+<p>With LAFTR, we train an encoder, classifier and adversary at the same time. The goal is to learn an encoder that leads
+to representations <span class="arithmatex">\(z\)</span> allowing for good accuracy by the classifier but makes it hard for <span class="arithmatex">\(h\)</span> to predict the sensitive
+group membership.</p>
+<div class="admonition warning">
+<p class="admonition-title">Quality</p>
+<p>LAFTR is a theoretically-principled FRL, as we are not sure to find the best adversary. </p>
+<p>The resulting models are sometimes good, but the min-max optimisation (non-convex) is often not solved optimally, 
+leading to suboptimal results. Additionally, the adversary model is fixed and we only train the weights. It is 
+possible, that there exist other architectures leading to better adversaries. <strong>The fairness is overestimated</strong>.</p>
+</div>
+<p>LAFTR defines the following optimisation problem. The adversary found here is not guaranteed to be the best possible.</p>
+<div class="arithmatex">\[
+\min_{f,g}\max_{h\in\mathcal{H}} \Big(\mathcal{L}_{cl \;f}\big(f(x,s),g\big)-\gamma \cdot \mathcal{L}_{adv}\big(f(x,s)
+,h\big)\Big)
+\]</div>
+<p>The key challenge here is to upper-bound unfairness with an optimal adversary. This requires a <strong>soft unfairness
+measure</strong> based on the demographic parity (DP) hard-constraint, leading to the <strong>DP-distance</strong>. <span class="arithmatex">\(0\)</span> means perfect
+fairness, while <span class="arithmatex">\(1\)</span> means maximum unfair.</p>
+<div class="arithmatex">\[
+\Delta^{DP}_{Z_0,Z_1}(g) := \Big| \mathbb{E}_{z\sim Z_0}g(z) - \mathbb{E}_{z\sim Z_1} g(z)\Big|
+\]</div>
+<p>Additionally, we define the <strong>balanced accuracy</strong> <span class="arithmatex">\(BA \in [0.5,1]\)</span> of an adversary, which is a group-normalized accuracy
+especially useful for imbalanced datasets. If <span class="arithmatex">\(h\)</span> always predicts sensitive group 1: <span class="arithmatex">\(BA = 0.5\)</span>. In the following
+formula, <span class="arithmatex">\(h\)</span> is either <span class="arithmatex">\(1\)</span> or <span class="arithmatex">\(0\)</span>, and thus selects one of the two probabilities.</p>
+<div class="arithmatex">\[
+BA_{Z_0,Z_1}(h) := \frac{1}{2} \int_Z\Big(p_0(z)(1-h(z)) + p_1(z)h(z)\Big)dz
+\]</div>
+<p>Based on this metric, we now search for the <strong>optimal adversary</strong> <span class="arithmatex">\(h^*\)</span>. This adversary selects always the higher
+probability group: <span class="arithmatex">\(h^* = \mathbb{1}\{p_1(z) \geq p_0(z)\}\)</span>. Using all the above definitions, we can now define an
+upper bound DP-distance based on the optimal adversary:</p>
+<div class="arithmatex">\[
+\Delta^{DP}_{Z_0,Z_1}(g) \leq 2 \cdot BA_{Z_0,Z_1}(h^*)-1
+\]</div>
+<h3 id="fnf">FNF</h3>
+<p>The "Fair Normalizing Flows"  approach tries to find some provable upper bound using two normalizing flows <span class="arithmatex">\(f_0\)</span> and 
+<span class="arithmatex">\(f_1\)</span>. These flows are learned to encode <span class="arithmatex">\(Z_0\)</span> and <span class="arithmatex">\(Z_1\)</span>. We know the original distributions, and try to map original 
+densities onto similar densities <span class="arithmatex">\(p_0(z)\)</span> and <span class="arithmatex">\(p_1(z)\)</span>.</p>
+<p>The technique provides a provable upper bound on unfairness for any downstream classifier, and the training process
+is quite efficient reducing the adversary's success.</p>
+<div class="admonition info">
+<p class="admonition-title">Normalizing Flows</p>
+<p>Starting from some known distribution <span class="arithmatex">\(q\)</span> with known density <span class="arithmatex">\(q(x)\)</span>, we apply a composition of invertible functions
+<span class="arithmatex">\(z = f(x)\)</span> (the normalizing flow) to transform <span class="arithmatex">\(q\)</span> into a learned distribution <span class="arithmatex">\(p\)</span>. Using <em>change of variables</em>, 
+we can compute the density of the new distribution at <span class="arithmatex">\(p(z)\)</span>.</p>
+</div>
+<p>This process allows us to define a provable upper bound <span class="arithmatex">\(T\)</span></p>
+<div class="arithmatex">\[
+\Delta^{DP}_{Z_0,Z_1}(g) \leq 2 \cdot BA_{Z_0,Z_1}(h^*)-1 \leq T(w.p. 1-\varepsilon)
+\]</div>
+<ol>
+<li>For each saple <span class="arithmatex">\(x \in X\)</span>, compute the density <span class="arithmatex">\(q_{x[s]}(x)\)</span></li>
+<li>Apply the encoder <span class="arithmatex">\(z=f_{x[s]}(x)\)</span> and use flows to get <span class="arithmatex">\(p_{z[s]}(z)\)</span></li>
+<li>Use <span class="arithmatex">\(p_0(z)\)</span> and <span class="arithmatex">\(p_1(z)\)</span> to estimate <span class="arithmatex">\(h^*\)</span> and upper-bound its <em>BA</em> with a provability of <span class="arithmatex">\(1-\varepsilon\)</span></li>
+<li>Upper-bound the DP-distance using above inequality</li>
+</ol>
+<p>The above steps are not yet sufficient, as we want <span class="arithmatex">\(T\)</span> to be as small as possible. In the training process, we try to
+minimize the <strong>KL Divergence</strong>, which is equivalent in saying that we are trying to bring both distributions <span class="arithmatex">\(p_0\)</span> and
+<span class="arithmatex">\(p_1\)</span> as close together as possible. The loss computed for the KL divergence is combined with the standard
+classification loss, making sure that we are not sacrificing accuracy.</p>
+<div class="admonition warning">
+<p class="admonition-title">Assumptions</p>
+<p>The densities for <span class="arithmatex">\(q_0(x)\)</span> and <span class="arithmatex">\(q_1(x)\)</span> are only estimated. The certificates given by FNF are only valid if the
+following holds.</p>
+<ol>
+<li>The distance between estimated and real densities <span class="arithmatex">\(q\)</span> are provable</li>
+<li>Data distribution is known</li>
+</ol>
+<p>In reality, neither of these holds in most cases, which is an important limitation. </p>
+</div>
+<h3 id="fare">FARE</h3>
+<p>With <strong>Fairness with Restricted Encoders</strong>, we improve on FNF by having a provable upper-bound unfairness with practical
+certificates. This is done by skipping the estimation of <span class="arithmatex">\(q\)</span>, and directly compute an upper bound for <span class="arithmatex">\(p_0(z)\)</span>.</p>
+<p>As its name suggests, we use a <em>restricted encoder</em>, mapping each input on one of <span class="arithmatex">\(k\)</span> representations <span class="arithmatex">\(z_i\)</span>. The encoder
+is defined as <span class="arithmatex">\(f: \mathbb{R}^d \times \{0,1\} \to \{z_1,...,z_k\}\)</span>. Using this encoder, we can compute the probabilities
+<span class="arithmatex">\(p_0(z)\)</span> and <span class="arithmatex">\(p_1(z)\)</span> by looking at the group represented by <span class="arithmatex">\(f(z)\)</span>. </p>
+<div class="admonition info">
+<p class="admonition-title">Restricted Encoder</p>
+<p>Currently, there is no known "best" restricted encoder. One in use by the paper is a modified decision tree 
+classifier. Instead of simply using the Gini index, the classifier does the following: minimize entropy on the 
+output label, while maximising the entropy on the protected attribute (having an even distribution on both branches
+of the node)</p>
+</div>
+<p>The provable upper bound can now be computed as</p>
+<div class="arithmatex">\[
+BA_{Z_0,Z_1}(h^*) = \sum_{i=1}^k P(z = z_i) \cdot \max \Bigg( \big(\frac{1}{2}P(s=0)\big) \cdot P(s=0|z=z_i),
+\big(\frac{1}{2}P(s=1)\big) \cdot P(s=1|z=z_i)\Bigg)
+\]</div>
+<p>The upper bound of this expression is computed in three steps based on a finite dataset. Each step results in a constant
+that can be used in the following steps. </p>
+<ol>
+<li><strong>Bound base rates</strong>: <span class="arithmatex">\(0.5P(s=0)\)</span> and <span class="arithmatex">\(0.5P(s=1)\)</span> using the training set  (error <span class="arithmatex">\(\varepsilon_b\)</span>)</li>
+<li><strong>Bound per-cell balanced accuracy</strong>: bound the <span class="arithmatex">\(\max\)</span> expression to <span class="arithmatex">\(c_i \leq t_i\)</span> (error <span class="arithmatex">\(\varepsilon_c\)</span>)</li>
+<li><strong>Bound final sum</strong>:  <span class="arithmatex">\(\sum P(z=z_i) \cdot t_i \leq S\)</span> (error <span class="arithmatex">\(\varepsilon_s\)</span>)</li>
+</ol>
+<p>This gives us a total error of <span class="arithmatex">\(\varepsilon = \varepsilon_b + \varepsilon_c + \varepsilon_s\)</span> and an upper bound for the 
+DP-distance of</p>
+<div class="arithmatex">\[
+\Delta^{DP}_{Z_0,Z_1}(g) \leq 2S-1 = T(w.p. 1- \varepsilon)
+\]</div>
 
 
 
@@ -1686,7 +1950,7 @@ new formal definitions to measure the similarity of inputs and outputs.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">January 15, 2024</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">January 16, 2024</span>
   </span>
 
     
