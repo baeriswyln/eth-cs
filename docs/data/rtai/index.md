@@ -44,7 +44,7 @@ this can improve accuracy.
 In this case, we start with a trained network, and we look for inputs that satisfy specific properties. The following
 standard logic can be used:
 
-- Logical operators $\not, \neq, \land, \lor, \leq, \geq, <, >, \Rightarrow$
+- Logical operators $\neg, \neq, \land, \lor, \leq, \geq, <, >, \Rightarrow$
 - Functions f: $\mathbb{R}^m \to \mathbb{R}^n$
 - Variables, constants
 - Arithmetic expressions
@@ -80,15 +80,17 @@ optimization**. See the following translation table. (1)
 1. The translated expressions are not strictly differentiable, but they are good enough in practice. They can be
    solved by various solvers.
 
-| Logical expression    | Translation                          |
-|-----------------------|--------------------------------------|
-| $t_1 \leq t_2$        | $\max(0, t_1 -t_2)$                  |
-| $t_1 \neq t_2$        | $[t_1 = t_2]$                        |
-| $t_1 = t_2$           | $T(t_1 \leq t_2 \land t_2 \leq t_1)$ |
-| $t_1 < t_2$           | $T(t_1 \leq t_2 \land t_1 \neq t_2)$ |
-| $\varphi \lor \psi$   | $T(\varphi) \cdot T(\psi)$           |
-| $\varphi \land \psi$  | $T(\varphi) + T(\psi)$               |
-| $t_1 \Rightarrow t_2$ | $\neg t_1 \lor t_2$                  | 
+| Logical expression         | Translation                          |
+|----------------------------|--------------------------------------|
+| $t_1 \leq t_2$             | $\max(0, t_1 -t_2)$                  |
+| $t_1 \neq t_2$             | $[t_1 = t_2]$                        |
+| $t_1 = t_2$                | $T(t_1 \leq t_2 \land t_2 \leq t_1)$ |
+| $t_1 < t_2$                | $T(t_1 \leq t_2 \land t_1 \neq t_2)$ |
+| $\varphi \lor \psi$        | $T(\varphi) \cdot T(\psi)$           |
+| $\varphi \land \psi$       | $T(\varphi) + T(\psi)$               |
+| $\varphi \Rightarrow \psi$ | $\neg \varphi \lor \psi$             | 
+
+$[t_1 = t_2]$ evaluates to $1$ if the inside comparison evaluates to **True**.
 
 The (shortened) translation of our original logical constraint function follows. Note that the expansion of the logical
 AND series has been shortened for readability.
@@ -107,7 +109,7 @@ the network actually leads to an adversarial training - we search for adversaria
 training process.
 
 The following expression states that we are looking for weights $\theta$ for the network $\rho$ such that the maximum
-violation of the property \phi is minimized for any input $z$ when compared against a true image $s$ from the dataset
+violation of the property $\phi$ is minimized for any input $z$ when compared against a true image $s$ from the dataset
 $D$. $z$ is inside the $l_\infty$-ball of $s$.
 
 $$
@@ -118,11 +120,11 @@ Now, to translate this formula into an optimization problem, we split it into tw
 counterexample $bz$, which we then pass to the optimization problem minimizing the effect of this counterexample.
 
 \begin{align}
-bz = arg\min_z\big(T(\neg \phi)(z, s, \rho)\theta\big)\\
+bz = \arg\min_z\big(T(\neg \phi)(z, s, \rho)\theta\big)\\
 \rho(\theta) = E_{s \sim D}[T(\phi)(bz, s, \theta)]
 \end{align}
 
-Now, our counterexample $bz$ must stay inside the $l-\infty$-ball $\epsilon$ around $s$. As an example, we look at the
+Now, our counterexample $bz$ must stay inside the $l_\infty$-ball $\epsilon$ around $s$. As an example, we look at the
 following loss function for the above problem, that gets translated into an
 optimization problem. Here, we are searching for a $z$ that has a classification probability of at least $\delta$ for
 the class $3$.
