@@ -28,21 +28,21 @@ information about the parameters.
 
 The following chapters only discuss white box attacks. Below table describes the three attacks in brief.
 
-| Attack type                 | Region                                            | Optimization                                                   | Outcome                                                                            |
-|-----------------------------|---------------------------------------------------|----------------------------------------------------------------|------------------------------------------------------------------------------------|
-| FGSM (targeted, untargeted) | $[-\epsilon, +\epsilon]$                          | One step of size $\epsilon$                                    | Output will be on region boundary                                                  |
-| PGD (mostly untargeted)     | Any region for which projections exist            | Many steps, uses projections to stay inside the region         | Inside region with maximised loss                                                  |
-| Carlini (targeted)          | Image and input + $\eta$ must be in range $[0,1]$ | Produce change $\eta$ with small $l_\infty$, taking many steps | Image inside $[0,1]$ with (hopefully) small $_\infty$ distance from original image |
+| Attack type                 | Region                                            | Optimization                                                   | Outcome                                                                             |
+|-----------------------------|---------------------------------------------------|----------------------------------------------------------------|-------------------------------------------------------------------------------------|
+| FGSM (targeted, untargeted) | $[-\epsilon, +\epsilon]$                          | One step of size $\epsilon$                                    | Output will be on region boundary                                                   |
+| PGD (mostly untargeted)     | Any region for which projections exist            | Many steps, uses projections to stay inside the region         | Inside region with maximised loss                                                   |
+| Carlini (targeted)          | Image and input + $\eta$ must be in range $[0,1]$ | Produce change $\eta$ with small $l_\infty$, taking many steps | Image inside $[0,1]$ with (hopefully) small $l_\infty$ distance from original image |
 
 #### Fast Gradient Sign Method (FGSM)
 
 This attack uses the gradient descent of the classification model. The loss function of the gradient descent is
 computed, and the added/removed from the input to form a modified output that should be classified with some other
 label. The loss function is, however, modified before being added/removed: only the sign of the values is looked at,
-not the exact value. This lead to better results than taking the gradient itself.
+not the exact value. This leads to better results than taking the gradient itself.
 
 First, the perturbation is computed. This is slightly different for the targeted (T) and untargeted (U) mode. In T, the
-loss function is computed for the target label **3**, whereas in U, the original label **s** is used.
+loss function is computed for the target label **t**, whereas in U, the original label **s** is used.
 
 $$
 \eta_{t/s} = \epsilon \cdot sign(\nabla_xloss_{t/s}(x))
@@ -136,13 +136,13 @@ formal guarantees. This is what we try to establish in this chapter: prove prope
 **automated verifiers**. More formally we can state our fundamental problem, given a neural network $N$, a property over
 inputs $\phi$ (pre-conditions), and a property over outputs $\psi$ (post conditions):
 
-**Prove that $\forall i \in I. \models \phi \Rightarrow N(i) \models \psi$ holds or return a violation**.
+**Prove that $\forall i \in I. i \models \phi \Rightarrow N(i) \models \psi$ holds or return a violation**.
 
 We can now instantiate this problem definition for an image classification neural network in the following steps.
 
 1. **Define $\phi$**: to prove adversarial robustness, we define $\phi$ as the $l_\infty$-ball around an input $x$:
    $ball(x)_\epsilon = \{x' \in I \mid ||x-x'||_\infty < \epsilon \}$.
-2. **Verify $\psi$ satisfies $\phi$**. We define the property $\phi$ as: We want to prove that all inputs inside the
+2. **Verify $\phi$ satisfies $\psi$**. We define the property $\psi$ as: We want to prove that all inputs inside the
    ball around $x$ are classified identically to $x$.
 
 The challenge of this approach is, that we cannot simply prove the property for all points in the $l_\infty$-ball as
@@ -166,7 +166,7 @@ This chapter covers two kinds of sound methods:
 ### Incomplete certifications
 
 The incomplete certification processes are generally faster, but are only able to approximate the results. They are
-sound but incomplete. We start with initial preconditions $\phi$ and pushes them through the network. This leads to
+sound but incomplete. We start with initial preconditions $\phi$ and push them through the network. This leads to
 over-approximations that different methods try to reduce to improve the certification. In essence, we have a certain
 input region (in the case of an image, this can be represented with the image itself and a delta on each pixel), and we
 try to prove for every point in this region, that the classification leads to the same result $\psi$. This is called
@@ -227,7 +227,7 @@ simplifications in the relations and improve the respective precisions.
 Let's look for example at the following affine layers. For both $x_1$ and $x_2$, we have an input interval of $[-1;1]$.
 In addition of defining these intervals for each neuron of the first layer, we also compute the lower and upper bound
 $l_1, u_1$. We do the same thing for the second layer but this time we define the intervals using the previous layer's
-neurons. The lower and upper bounds are computed through back propagation of above intervals.
+neurons. The lower and upper bounds are computed through back substitution of above intervals.
 
 <figure markdown>
 ![](../../diagrams/d/rtai/deeppoly_1.svg)
@@ -348,9 +348,9 @@ with $c_i \in \mathbb{R}$, and $x_j$ integer or real (hence "mixed integer"). Th
 constraints
 
 \begin{align}
-a_{11}x_1 + ... + a_{1n}x_n \leq $b_1\\
+a_{11}x_1 + ... + a_{1n}x_n \leq b_1\\
 ...\\
-a_{m1}x_1 + ... + a_{mn}x_n \leq $b_1
+a_{m1}x_1 + ... + a_{mn}x_n \leq b_m
 \end{align}
 
 with $a_{ij}, b_i \in \mathbb{R}$. Lastly, bounds are defined on every neuron to improve MILP's performance.
@@ -465,13 +465,14 @@ not lose any precision by enforcing constraints on the input while staying diffe
 becomes an optimization problem.
 
 We are trying to get the split $x=0$ and $x=x$, but with the additional constraint $x=0 \mid x \leq 0$, $x=x \mid x >
-0$. This constraint is enforced through a **KTT condition**.
+0$. This constraint is enforced through a **KKT condition**.
 
 ??? info "KKT condition"
 
-    We have our splitting constraint $g(x)$. If this gets greater than 0, the function $f(x) - \beta g(x)$ gets to 
-    negative infinity for a growing $\beta$, thus incentivising the choice of a different $x$. Concretely, this computes
-    an upper bound. To compute a lower bound, it is sufficient to swap $\min$ with $\max$ and vice versa. 
+    We have our splitting constraint $g(x)$. If the constraint is violated ($g(x) > 0$), the function $f(x) - 
+    \beta g(x)$ gets to negative infinity for a growing $\beta$, thus incentivising the choice of a different $x$. 
+    Concretely, this computes an upper bound. To compute a lower bound, it is sufficient to swap $\min$ with $\max$ and 
+    vice versa. 
     
     $$
     \max_{x\in \mathcal{X}} f(x) \leq \max_{x\in \mathcal{X}} \min_{\beta \geq 0} f(x) - \beta g(x)
@@ -567,7 +568,7 @@ Incorporating provability into the training process is somewhat similar to PGD d
 parameters) that minimizes $\rho(\theta)$ where
 
 $$
-\rho(\theta) = E_{(x,y)\sim D} [\max_{z \in \gamma(NN^{\#}(S(x)))} \quad L(\Theta, z, y)]
+\rho(\theta) = E_{(x,y)\sim D} [\max_{z \in \gamma(NN^{\#}(S(x)))} \quad L(\theta, z, y)]
 $$
 
 In other words, we pass our sample $x$ and its region around it $S(x)$ through some relaxation $NN^{\#}$ (e.g.
@@ -596,7 +597,7 @@ Given a classifier $f$, we construct a smoothed classifier that finds the most p
 that follows an isotropic gaussian noise.
 
 $$
-g(x) := \text{argmax}_c\in\mathcal{y} \quad \mathbb{P}_{\epsilon}(f(x+\epsilon) = c)
+g(x) := \text{argmax}_{c\in\mathcal{y}} \quad \mathbb{P}_{\epsilon}(f(x+\epsilon) = c)
 $$
 
 The classifier $g$ can tell us thus the probability for each class given the perturbation, and most importantly the most
@@ -611,7 +612,7 @@ g(x + \delta) = c_A \quad \forall || \delta||_2 < R_x
 $$
 
 $$
-R_x := \frac{\sigma}{2}(\Phi^{-1}(\underline{p_{A,x}})- \Phi{^-1}(\overline{p_{B,x}}))
+R_x := \frac{\sigma}{2}(\Phi^{-1}(\underline{p_{A,x}})- \Phi^{-1}(\overline{p_{B,x}}))
 $$
 
 with $\Phi^{-1}$ the inverse of the standard Gaussian CDF.
@@ -623,9 +624,9 @@ The hard part is the computation of the probabilities $p_{A,x}$ and $p_{B,x}$ ef
 the formula for radius computation such that it is only depending on $p_{A,x}$:
 
 \begin{align}
-R_x := \frac{\sigma}{2}(\Phi^{-1}(\underline{p_{A,x}})- \Phi{^-1}(\underline{p_{B,x}}) &\geq
-\frac{\sigma}{2}(\Phi^{-1}(\underline{p_{A,x}})- \Phi{^-1}(\underline{1-p_{A,x}})\\
-&= \frac{\sigma}{2}(\Phi^{-1}(\underline{p_{A,x}}) + \Phi{^-1}(\underline{p_{A,x}})\\
+R_x := \frac{\sigma}{2}(\Phi^{-1}(\underline{p_{A,x}})- \Phi^{-1}(\overline{p_{B,x}}) &\geq
+\frac{\sigma}{2}(\Phi^{-1}(\underline{p_{A,x}})- \Phi^{-1}(1-\underline{p_{A,x}})\\
+&= \frac{\sigma}{2}(\Phi^{-1}(\underline{p_{A,x}}) + \Phi^{-1}(\underline{p_{A,x}})\\
 &= \sigma \Phi^{-1}(\underline{p_{A,x}})
 \end{align}
 

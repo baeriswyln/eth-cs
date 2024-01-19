@@ -128,7 +128,7 @@ A neighboring dataset is defined as (adding/removing one person) or (changing fe
 Laplacian noise with mean 0 can be added: $f(a) + Lap(0, \Delta_1/\varepsilon)$ is $\varepsilon$-DP, where $\Delta_1$ is
 the sensitifity (largest possible effect of changing input on output in L1 norm.
 
-Adding gaussian noise $f(a)+ \mathcal{N}(0 \sigma^2I)$ leads to ($\varepsilon, \delta$)-DP. $\sigma$ is defined as
+Adding gaussian noise $f(a)+ \mathcal{N}(0, \sigma^2I)$ leads to ($\varepsilon, \delta$)-DP. $\sigma$ is defined as
 
 $$
 \sigma = \frac{\sqrt{2log(1.25)/\delta} \cdot \Delta_2}{\varepsilon}
