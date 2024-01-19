@@ -1957,7 +1957,7 @@ information about the parameters.</p>
 <td>Carlini (targeted)</td>
 <td>Image and input + <span class="arithmatex">\(\eta\)</span> must be in range <span class="arithmatex">\([0,1]\)</span></td>
 <td>Produce change <span class="arithmatex">\(\eta\)</span> with small <span class="arithmatex">\(l_\infty\)</span>, taking many steps</td>
-<td>Image inside <span class="arithmatex">\([0,1]\)</span> with (hopefully) small <span class="arithmatex">\(_\infty\)</span> distance from original image</td>
+<td>Image inside <span class="arithmatex">\([0,1]\)</span> with (hopefully) small <span class="arithmatex">\(l_\infty\)</span> distance from original image</td>
 </tr>
 </tbody>
 </table>
@@ -1965,9 +1965,9 @@ information about the parameters.</p>
 <p>This attack uses the gradient descent of the classification model. The loss function of the gradient descent is
 computed, and the added/removed from the input to form a modified output that should be classified with some other
 label. The loss function is, however, modified before being added/removed: only the sign of the values is looked at,
-not the exact value. This lead to better results than taking the gradient itself.</p>
+not the exact value. This leads to better results than taking the gradient itself.</p>
 <p>First, the perturbation is computed. This is slightly different for the targeted (T) and untargeted (U) mode. In T, the
-loss function is computed for the target label <strong>3</strong>, whereas in U, the original label <strong>s</strong> is used.</p>
+loss function is computed for the target label <strong>t</strong>, whereas in U, the original label <strong>s</strong> is used.</p>
 <div class="arithmatex">\[
 \eta_{t/s} = \epsilon \cdot sign(\nabla_xloss_{t/s}(x))
 \]</div>
@@ -2035,12 +2035,12 @@ samples we found an adversarial example. The <strong>adversarial accuracy</stron
 formal guarantees. This is what we try to establish in this chapter: prove properties of realistic networks using
 <strong>automated verifiers</strong>. More formally we can state our fundamental problem, given a neural network <span class="arithmatex">\(N\)</span>, a property over
 inputs <span class="arithmatex">\(\phi\)</span> (pre-conditions), and a property over outputs <span class="arithmatex">\(\psi\)</span> (post conditions):</p>
-<p><strong>Prove that <span class="arithmatex">\(\forall i \in I. \models \phi \Rightarrow N(i) \models \psi\)</span> holds or return a violation</strong>.</p>
+<p><strong>Prove that <span class="arithmatex">\(\forall i \in I. i \models \phi \Rightarrow N(i) \models \psi\)</span> holds or return a violation</strong>.</p>
 <p>We can now instantiate this problem definition for an image classification neural network in the following steps.</p>
 <ol>
 <li><strong>Define <span class="arithmatex">\(\phi\)</span></strong>: to prove adversarial robustness, we define <span class="arithmatex">\(\phi\)</span> as the <span class="arithmatex">\(l_\infty\)</span>-ball around an input <span class="arithmatex">\(x\)</span>:
    <span class="arithmatex">\(ball(x)_\epsilon = \{x' \in I \mid ||x-x'||_\infty &lt; \epsilon \}\)</span>.</li>
-<li><strong>Verify <span class="arithmatex">\(\psi\)</span> satisfies <span class="arithmatex">\(\phi\)</span></strong>. We define the property <span class="arithmatex">\(\phi\)</span> as: We want to prove that all inputs inside the
+<li><strong>Verify <span class="arithmatex">\(\phi\)</span> satisfies <span class="arithmatex">\(\psi\)</span></strong>. We define the property <span class="arithmatex">\(\psi\)</span> as: We want to prove that all inputs inside the
    ball around <span class="arithmatex">\(x\)</span> are classified identically to <span class="arithmatex">\(x\)</span>.</li>
 </ol>
 <p>The challenge of this approach is, that we cannot simply prove the property for all points in the <span class="arithmatex">\(l_\infty\)</span>-ball as
@@ -2061,7 +2061,7 @@ restricted types of computation, generally on small scaled networks.</p>
 </ul>
 <h3 id="incomplete-certifications">Incomplete certifications</h3>
 <p>The incomplete certification processes are generally faster, but are only able to approximate the results. They are
-sound but incomplete. We start with initial preconditions <span class="arithmatex">\(\phi\)</span> and pushes them through the network. This leads to
+sound but incomplete. We start with initial preconditions <span class="arithmatex">\(\phi\)</span> and push them through the network. This leads to
 over-approximations that different methods try to reduce to improve the certification. In essence, we have a certain
 input region (in the case of an image, this can be represented with the image itself and a delta on each pixel), and we
 try to prove for every point in this region, that the classification leads to the same result <span class="arithmatex">\(\psi\)</span>. This is called
@@ -2112,7 +2112,7 @@ simplifications in the relations and improve the respective precisions.</p>
 <p>Let's look for example at the following affine layers. For both <span class="arithmatex">\(x_1\)</span> and <span class="arithmatex">\(x_2\)</span>, we have an input interval of <span class="arithmatex">\([-1;1]\)</span>.
 In addition of defining these intervals for each neuron of the first layer, we also compute the lower and upper bound
 <span class="arithmatex">\(l_1, u_1\)</span>. We do the same thing for the second layer but this time we define the intervals using the previous layer's
-neurons. The lower and upper bounds are computed through back propagation of above intervals.</p>
+neurons. The lower and upper bounds are computed through back substitution of above intervals.</p>
 <figure>
 <p><img alt="" src="../../../diagrams/d/rtai/deeppoly_1.svg" /></p>
 </figure>
@@ -2218,9 +2218,9 @@ losing the completeness.</p>
 <p>with <span class="arithmatex">\(c_i \in \mathbb{R}\)</span>, and <span class="arithmatex">\(x_j\)</span> integer or real (hence "mixed integer"). The objective is subject to some linear
 constraints</p>
 <div class="arithmatex">\[\begin{align}
-a_{11}x_1 + ... + a_{1n}x_n \leq $b_1\\
+a_{11}x_1 + ... + a_{1n}x_n \leq b_1\\
 ...\\
-a_{m1}x_1 + ... + a_{mn}x_n \leq $b_1
+a_{m1}x_1 + ... + a_{mn}x_n \leq b_m
 \end{align}\]</div>
 <p>with <span class="arithmatex">\(a_{ij}, b_i \in \mathbb{R}\)</span>. Lastly, bounds are defined on every neuron to improve MILP's performance.</p>
 <div class="arithmatex">\[
@@ -2335,12 +2335,13 @@ condition being infeasible for <span class="arithmatex">\(a_5=0\)</span>, as thi
 not lose any precision by enforcing constraints on the input while staying differentiable. Our verification problem
 becomes an optimization problem.</p>
 <p>We are trying to get the split <span class="arithmatex">\(x=0\)</span> and <span class="arithmatex">\(x=x\)</span>, but with the additional constraint <span class="arithmatex">\(x=0 \mid x \leq 0\)</span>, <span class="arithmatex">\(x=x \mid x &gt;
-0\)</span>. This constraint is enforced through a <strong>KTT condition</strong>.</p>
+0\)</span>. This constraint is enforced through a <strong>KKT condition</strong>.</p>
 <details class="info">
 <summary>KKT condition</summary>
-<p>We have our splitting constraint <span class="arithmatex">\(g(x)\)</span>. If this gets greater than 0, the function <span class="arithmatex">\(f(x) - \beta g(x)\)</span> gets to 
-negative infinity for a growing <span class="arithmatex">\(\beta\)</span>, thus incentivising the choice of a different <span class="arithmatex">\(x\)</span>. Concretely, this computes
-an upper bound. To compute a lower bound, it is sufficient to swap <span class="arithmatex">\(\min\)</span> with <span class="arithmatex">\(\max\)</span> and vice versa. </p>
+<p>We have our splitting constraint <span class="arithmatex">\(g(x)\)</span>. If the constraint is violated (<span class="arithmatex">\(g(x) &gt; 0\)</span>), the function <span class="arithmatex">\(f(x) - 
+\beta g(x)\)</span> gets to negative infinity for a growing <span class="arithmatex">\(\beta\)</span>, thus incentivising the choice of a different <span class="arithmatex">\(x\)</span>. 
+Concretely, this computes an upper bound. To compute a lower bound, it is sufficient to swap <span class="arithmatex">\(\min\)</span> with <span class="arithmatex">\(\max\)</span> and 
+vice versa. </p>
 <div class="arithmatex">\[
 \max_{x\in \mathcal{X}} f(x) \leq \max_{x\in \mathcal{X}} \min_{\beta \geq 0} f(x) - \beta g(x)
 \]</div>
@@ -2420,7 +2421,7 @@ properties we care about to be more provable.</p>
 <p>Incorporating provability into the training process is somewhat similar to PGD defense. We search for <span class="arithmatex">\(\theta\)</span> (network
 parameters) that minimizes <span class="arithmatex">\(\rho(\theta)\)</span> where</p>
 <div class="arithmatex">\[
-\rho(\theta) = E_{(x,y)\sim D} [\max_{z \in \gamma(NN^{\#}(S(x)))} \quad L(\Theta, z, y)]
+\rho(\theta) = E_{(x,y)\sim D} [\max_{z \in \gamma(NN^{\#}(S(x)))} \quad L(\theta, z, y)]
 \]</div>
 <p>In other words, we pass our sample <span class="arithmatex">\(x\)</span> and its region around it <span class="arithmatex">\(S(x)\)</span> through some relaxation <span class="arithmatex">\(NN^{\#}\)</span> (e.g.
 DeepPoly), and find <span class="arithmatex">\(z\)</span> in the relaxed output shape achieving the highest loss (contrary to the PGD attack where we
@@ -2441,7 +2442,7 @@ that is robuts by construction.</p>
 <p>Given a classifier <span class="arithmatex">\(f\)</span>, we construct a smoothed classifier that finds the most probable class given some noise <span class="arithmatex">\(\epsilon\)</span>
 that follows an isotropic gaussian noise.</p>
 <div class="arithmatex">\[
-g(x) := \text{argmax}_c\in\mathcal{y} \quad \mathbb{P}_{\epsilon}(f(x+\epsilon) = c)
+g(x) := \text{argmax}_{c\in\mathcal{y}} \quad \mathbb{P}_{\epsilon}(f(x+\epsilon) = c)
 \]</div>
 <p>The classifier <span class="arithmatex">\(g\)</span> can tell us thus the probability for each class given the perturbation, and most importantly the most
 probable class. Now, using above definition, we can compute a lower bound probability for the most probable class
@@ -2452,7 +2453,7 @@ important: all those computations are for one very specific input <span class="a
 g(x + \delta) = c_A \quad \forall || \delta||_2 &lt; R_x
 \]</div>
 <div class="arithmatex">\[
-R_x := \frac{\sigma}{2}(\Phi^{-1}(\underline{p_{A,x}})- \Phi{^-1}(\overline{p_{B,x}}))
+R_x := \frac{\sigma}{2}(\Phi^{-1}(\underline{p_{A,x}})- \Phi^{-1}(\overline{p_{B,x}}))
 \]</div>
 <p>with <span class="arithmatex">\(\Phi^{-1}\)</span> the inverse of the standard Gaussian CDF.</p>
 <p>To increase the radius, we try to maximize <span class="arithmatex">\(\sigma\)</span> - the noise added to the input. However, the value must not get too
@@ -2460,9 +2461,9 @@ big as this will break the classification algorithm.</p>
 <p>The hard part is the computation of the probabilities <span class="arithmatex">\(p_{A,x}\)</span> and <span class="arithmatex">\(p_{B,x}\)</span> efficiently and soundly. In a first step, we change
 the formula for radius computation such that it is only depending on <span class="arithmatex">\(p_{A,x}\)</span>:</p>
 <div class="arithmatex">\[\begin{align}
-R_x := \frac{\sigma}{2}(\Phi^{-1}(\underline{p_{A,x}})- \Phi{^-1}(\underline{p_{B,x}}) &amp;\geq
-\frac{\sigma}{2}(\Phi^{-1}(\underline{p_{A,x}})- \Phi{^-1}(\underline{1-p_{A,x}})\\
-&amp;= \frac{\sigma}{2}(\Phi^{-1}(\underline{p_{A,x}}) + \Phi{^-1}(\underline{p_{A,x}})\\
+R_x := \frac{\sigma}{2}(\Phi^{-1}(\underline{p_{A,x}})- \Phi^{-1}(\overline{p_{B,x}}) &amp;\geq
+\frac{\sigma}{2}(\Phi^{-1}(\underline{p_{A,x}})- \Phi^{-1}(1-\underline{p_{A,x}})\\
+&amp;= \frac{\sigma}{2}(\Phi^{-1}(\underline{p_{A,x}}) + \Phi^{-1}(\underline{p_{A,x}})\\
 &amp;= \sigma \Phi^{-1}(\underline{p_{A,x}})
 \end{align}\]</div>
 <h3 id="certification-procedure">Certification procedure</h3>
@@ -2579,7 +2580,7 @@ to the true probability.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">January 12, 2024</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">January 19, 2024</span>
   </span>
 
     

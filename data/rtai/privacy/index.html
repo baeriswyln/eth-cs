@@ -1856,7 +1856,7 @@ Pr[M(a) \in S] \leq e^\varepsilon Pr[M(a') \in S]
 A neighboring dataset is defined as (adding/removing one person) or (changing features of one person).</p>
 <p>Laplacian noise with mean 0 can be added: <span class="arithmatex">\(f(a) + Lap(0, \Delta_1/\varepsilon)\)</span> is <span class="arithmatex">\(\varepsilon\)</span>-DP, where <span class="arithmatex">\(\Delta_1\)</span> is
 the sensitifity (largest possible effect of changing input on output in L1 norm.</p>
-<p>Adding gaussian noise <span class="arithmatex">\(f(a)+ \mathcal{N}(0 \sigma^2I)\)</span> leads to (<span class="arithmatex">\(\varepsilon, \delta\)</span>)-DP. <span class="arithmatex">\(\sigma\)</span> is defined as</p>
+<p>Adding gaussian noise <span class="arithmatex">\(f(a)+ \mathcal{N}(0, \sigma^2I)\)</span> leads to (<span class="arithmatex">\(\varepsilon, \delta\)</span>)-DP. <span class="arithmatex">\(\sigma\)</span> is defined as</p>
 <div class="arithmatex">\[
 \sigma = \frac{\sqrt{2log(1.25)/\delta} \cdot \Delta_2}{\varepsilon}
 \]</div>
@@ -1991,7 +1991,7 @@ we simply add some gaussian noise. The probability for the exponential mechanism
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">January 16, 2024</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">January 19, 2024</span>
   </span>
 
     
