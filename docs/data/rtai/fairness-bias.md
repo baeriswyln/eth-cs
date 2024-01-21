@@ -251,7 +251,7 @@ $$
 \Delta^{DP}_{Z_0,Z_1}(g) \leq 2 \cdot BA_{Z_0,Z_1}(h^*)-1 \leq T(w.p. 1-\varepsilon)
 $$
 
-1. For each saple $x \in X$, compute the density $q_{x[s]}(x)$
+1. For each sample $x \in X$, compute the density $q_{x[s]}(x)$
 2. Apply the encoder $z=f_{x[s]}(x)$ and use flows to get $p_{z[s]}(z)$
 3. Use $p_0(z)$ and $p_1(z)$ to estimate $h^*$ and upper-bound its _BA_ with a provability of $1-\varepsilon$
 4. Upper-bound the DP-distance using above inequality

@@ -197,7 +197,7 @@ One such query is ($\varepsilon, 0$)-DP. For $T$ queries, this degrades to ($T\v
 
 When compared with DP-SGD, PATE can be used on any algorithm, and achieves better results ($2.04, 10^{-5}$-DP for 98%
 accuracy
-on MNIST, compared to ($8,10^{-5})-DP with 97% accuracy).
+on MNIST, compared to ($8,10^{-5}$)-DP with 97% accuracy).
 
 **FedSGD**: each client clips the gradient, and adds some gaussian noise to its computed gradient.
 

@@ -120,7 +120,7 @@ Now, to translate this formula into an optimization problem, we split it into tw
 counterexample $bz$, which we then pass to the optimization problem minimizing the effect of this counterexample.
 
 \begin{align}
-bz = \arg\min_z\big(T(\neg \phi)(z, s, \rho)\theta\big)\\
+bz = \arg\min_z\big(T(\neg \phi)(z, s, \theta)\big)\\
 \rho(\theta) = E_{s \sim D}[T(\phi)(bz, s, \theta)]
 \end{align}
 
